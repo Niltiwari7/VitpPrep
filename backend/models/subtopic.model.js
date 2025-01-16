@@ -20,5 +20,5 @@ const SubtopicSchema = new mongoose.Schema({
     ]
 })
 
-const Subtopic = mongoose.model('subtoics',SubtopicSchema);
+const Subtopic = mongoose.model('Subtopic',SubtopicSchema);
 export default Subtopic;

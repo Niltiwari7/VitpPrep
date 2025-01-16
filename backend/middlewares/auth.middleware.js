@@ -1,21 +1,22 @@
 import jwt from 'jsonwebtoken'
 import User from '../models/user.model.js';
-export const auth = (req,res,next) => {
-    const token = req.cookies.token;
-    if(!token){
-        return res.status(401).json({message:'Unauthorized'});
-    }
+
+export const auth = async (req, res, next) => {
 
     try {
-        const decoded = jwt.verify(token,process.env.JWT_SECRET);
-        const user = User.findById(decoded._id);
-        if(!user){
-            return res.status(401).json({message:'Unauthorized'});
+        const token = req.cookies.token;
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        const decoded = jwt.verify(token, process.env.JWT_SECRET); 
+        const user = await User.findById(decoded.id);
+        if (!user) {
+            return res.status(401).json({ message: 'Unauthorized' });
         }
 
         req.user = user;
         next();
     } catch (error) {
-        return res.status(401).json({message:error.message});
+        return res.status(401).json({ message: error.message });
     }
 }

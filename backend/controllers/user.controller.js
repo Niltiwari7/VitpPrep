@@ -50,8 +50,7 @@ export const loginUser = async(req,res)=>{
 
         const token = jwt.sign({email:findUser.email,id:findUser._id},process.env.JWT_SECRET,{expiresIn:'1d'});
         res.cookie('token',token,{ httpOnly:true });
-
-        res.status(200).json({message:'User logged in successfully'});
+        res.status(200).json({message:'User logged in successfully',token});
     } catch (error) {
         res.status(500).json({message:error.message});
     }
@@ -66,11 +65,40 @@ export const logoutUser = async(req,res)=>{
     }
 }
 
-export const getProfile = async(req,res)=>{
+export const getProfile = async(req, res) => {
     try {
         const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
         res.status(200).json(user);
     } catch (error) {
-        return res.status(500).json({message:error.message});
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+export const updateProfile = async(req,res)=>{
+    try{
+        const user = await User.findById(req.user._id);
+        if(!user){
+            return res.status(404).json({message:'User not found'});
+        }
+        const {fullName,email,password} = req.body;
+        if(fullName){
+            user.fullName = fullName;
+        }
+        if(email){
+            user.email = email;
+        }
+        if(password){
+            const hashedPassword = await bcrypt.hash(password,10);
+            user.password = hashedPassword;
+        }
+
+        await user.save();
+        res.status(200).json({message:'User updated successfully'});
+    }catch(error){
+        res.status(500).json({message:error.message});
     }
 }
+
