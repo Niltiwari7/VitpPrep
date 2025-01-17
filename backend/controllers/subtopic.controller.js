@@ -52,3 +52,16 @@ export const createSubtopic = async (req, res) => {
         });
     }
 };
+
+
+export const getAllSubtopics = async (req, res) => {
+    try {
+        const subtopics = await Subtopic.find().populate('topicId');
+        if (!subtopics || subtopics.length === 0) {
+            return res.status(404).json({ message: 'No subtopics found' });
+        }
+        res.status(200).json(subtopics);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};

@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import UserRouter from './routes/user.route.js';
 import TopicRouter from './routes/topic.route.js';
 import SubTopicRouter from './routes/subtopic.route.js';
+import QuestionRouter from './routes/question.route.js';
 import connectDB from './config/dbconfig.js';
 import cookieParser from 'cookie-parser';
 dotenv.config();
@@ -15,6 +16,7 @@ app.use(express.urlencoded({extended:true}));
 app.use('/users',UserRouter);
 app.use('/topics',TopicRouter);
 app.use('/subtopics',SubTopicRouter);
+app.use('/questions',QuestionRouter)
 const port = process.env.PORT || 3000;
 
 app.get('/',(req,res)=>{

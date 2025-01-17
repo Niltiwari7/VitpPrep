@@ -11,7 +11,7 @@ const TopicSchema = new mongoose.Schema({
     subtopics:[
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:'subtopics'
+            ref:'Subtopic'
         }
     ]
 })
