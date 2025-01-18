@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { updateUserInfo } from '../utils/slices/user.slice';
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: '',
+    fullName: '',
     email: '',
     password: '',
   });
 
   const [errors, setErrors] = useState({});
-
+  const [successMessage, setSuccessMessage] = useState('');
   // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,8 +24,8 @@ const SignUp = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.username.trim()) {
-      newErrors.username = 'Username is required';
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = 'Username is required';
     }
 
     if (!formData.email.trim()) {
@@ -40,38 +45,67 @@ const SignUp = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({})
     if (validateForm()) {
-      // Submit form data (you can integrate API here)
-      console.log('Form Submitted:', formData);
-      alert('SignUp Successful!');
+      try {
+        const response = await fetch('http://localhost:3000/users/register', {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+        if (data.error) {
+          setErrors(data.error);
+        }
+        
+        
+        if (data.status === 'success') {
+          localStorage.setItem('token', data.token);
+          dispatch(updateUserInfo(data.user));
+          navigate('/dashboard'); 
+        } else {
+          setErrors({ error: data.message || 'Something went wrong' });
+        }
+      } catch (error) {
+        setErrors({ error: error.message });
+      }
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-      <div className="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Sign Up</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded-lg shadow-xl">
+        {errors.error && (
+          <p className="text-red-500 text-sm mb-4 text-center">{errors.error}</p>
+        )}
+        <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-8">
+          Sign Up
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-6">
           {/* Username Field */}
           <div>
             <label
-              htmlFor="username"
+              htmlFor="fullName"
               className="block text-sm font-medium text-gray-700 dark:text-gray-200"
             >
               Username
             </label>
             <input
               type="text"
-              id="username"
-              name="username"
-              value={formData.username}
+              id="fullName"
+              name="fullName"
+              value={formData.fullName}
               onChange={handleChange}
-              className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:text-black dark:bg-white"
+              className="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             />
-            {errors.username && (
-              <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+            {errors.fullName && (
+              <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
             )}
           </div>
 
@@ -89,7 +123,7 @@ const SignUp = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-white dark:border-gray-600 dark:text-black"
+              className="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             />
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">{errors.email}</p>
@@ -110,7 +144,7 @@ const SignUp = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-white dark:border-gray-600 dark:text-white"
+              className="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             />
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">{errors.password}</p>
@@ -120,7 +154,7 @@ const SignUp = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300"
+            className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-300"
           >
             Sign Up
           </button>
