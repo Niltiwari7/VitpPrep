@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    role:{
+        type:String,
+        enum:['admin','user'],
+        default:'user'
+    },
     imageUrl:{
         type:String,
         default:"https://imgcdn.stablediffusionweb.com/2024/11/1/b51f49a9-82a1-4659-905d-c8cd8643bade.jpg"

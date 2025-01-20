@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {Link} from "react-router-dom"
+import Header from '../components/Header';
 const HomePage = () => {
-
+   
   return (
     <div className={`bg-gray-100 dark:bg-black transition duration-500`}>
+      <Header/>
       {/* Hero Section */}
       <header className="bg-blue-600 text-white py-20">
         <div className="container mx-auto text-center">

@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setDarkMode } from '../utils/slices/theme.slice';
+import { FaSun, FaMoon } from 'react-icons/fa'; // Import icons
 
 const Header = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const dispatch = useDispatch();
+  const darkMode = useSelector((state) => state.theme?.darkMode || false); // Ensure safe access to state
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setIsDarkMode(savedTheme === 'dark');
-    }
-  }, []);
-
-  useEffect(() => {
-    document.body.classList.toggle('dark', isDarkMode);
-    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-  }, [isDarkMode]);
+  // Theme toggle handler
+  const toggleTheme = () => {
+    dispatch(setDarkMode(!darkMode));
+  };
 
   return (
-    <header className="bg-gray-100 dark:bg-black shadow-md">
+    <header className={`shadow-md ${darkMode ? 'bg-black' : 'bg-gray-100'}`}>
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo and Brand Name */}
         <div className="flex items-center space-x-2">
@@ -27,7 +24,7 @@ const Header = () => {
             alt="PatternPrep Logo"
             className="h-10 w-10 object-contain rounded-full"
           />
-          <h3 className="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+          <h3 className="text-xl sm:text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
             PatternPrep
           </h3>
         </div>
@@ -74,17 +71,25 @@ const Header = () => {
             Contact Us
           </Link>
           <button
-            onClick={() => setIsDarkMode(!isDarkMode)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-full transition duration-300 hover:bg-blue-700"
+            onClick={toggleTheme}
+            className="bg-blue-600 text-white px-4 py-2 rounded-full flex items-center space-x-2 transition duration-300 hover:bg-blue-700"
           >
-            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+            {darkMode ? (
+              <>
+                <FaMoon size={20} /> 
+              </>
+            ) : (
+              <>
+                <FaSun size={20} /> 
+              </>
+            )}
           </button>
         </nav>
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <nav className="lg:hidden bg-gray-200 dark:bg-gray-800">
+        <nav className={`lg:hidden ${darkMode ? 'bg-gray-800' : 'bg-gray-200'}`}>
           <ul className="space-y-2 p-4">
             <li>
               <Link
@@ -116,12 +121,20 @@ const Header = () => {
             <li>
               <button
                 onClick={() => {
-                  setIsDarkMode(!isDarkMode);
+                  toggleTheme();
                   setIsMenuOpen(false);
                 }}
-                className="w-full bg-blue-600 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-blue-700"
+                className="w-full bg-blue-600 text-white px-4 py-2 rounded-md flex items-center space-x-2 transition duration-300 hover:bg-blue-700"
               >
-                {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+                {darkMode ? (
+                  <>
+                    <FaMoon size={20} /> <span>Dark Mode</span>
+                  </>
+                ) : (
+                  <>
+                    <FaSun size={20} /> <span>Light Mode</span>
+                  </>
+                )}
               </button>
             </li>
           </ul>

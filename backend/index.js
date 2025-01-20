@@ -4,6 +4,7 @@ import UserRouter from './routes/user.route.js';
 import TopicRouter from './routes/topic.route.js';
 import SubTopicRouter from './routes/subtopic.route.js';
 import QuestionRouter from './routes/question.route.js';
+import AdminRouter from './routes/admin.route.js';
 import connectDB from './config/dbconfig.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -19,7 +20,7 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-
+app.use('/admin',AdminRouter);
 app.use('/users',UserRouter);
 app.use('/topics',TopicRouter);
 app.use('/subtopics',SubTopicRouter);

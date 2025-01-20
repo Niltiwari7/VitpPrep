@@ -3,10 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const adminSlice = createSlice({
     name:'admin',
     initialState:{
+        adminInfo:{},
         isAuthenticated:false,
         dashboardStats:{},
     },
     reducers:{
+        updateAdminInfo:(state,action)=>{
+            state.adminInfo = action.payload;
+        },
         login:(state)=>{
             state.isAuthenticated = true;
         },
@@ -19,6 +23,6 @@ const adminSlice = createSlice({
         },
     },
 });
-export const {login,logout,setDashboardStats} = adminSlice.actions;
+export const {login,logout,setDashboardStats,updateAdminInfo} = adminSlice.actions;
 
 export default adminSlice.reducer;
