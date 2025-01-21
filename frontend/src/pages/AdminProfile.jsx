@@ -15,9 +15,6 @@ const AdminProfile = () => {
         dispatch(setDarkMode(!darkMode));
     };
     
-    const getAdminInfo = async()=>{
-        const admin = await fetch('http://localhost:3000/admin/info')
-    }
     return (
         <div className="flex flex-col md:flex-row h-screen">
             {/* Sidebar */}
