@@ -36,7 +36,7 @@ function App() {
       <Route path = '/dashboard' element = {<UserDashBoard/>}/>
       <Route path = '/admin/profile' element = {<AdminProfile/>}/>
     </Routes>
-    <Footer/>
+    
     </>
     
   )

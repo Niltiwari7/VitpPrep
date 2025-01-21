@@ -4,8 +4,9 @@ import Sidebar from '../components/sideBar'
 const AdminDashBoard = () => {
   return (
     <div>
-        <Sidebar/>
+      <Sidebar/>
     </div>
+    
   )
 }
 

@@ -153,3 +153,41 @@ export const logInAdmin = async (req, res) => {
 };
 
 
+export const getAdminInfo = async (req, res) => {
+    try {
+        // Fetch admin info based on the logged-in user ID
+        const admin = await User.findById(req.user._id);
+
+        // Check if admin exists
+        if (!admin) {
+            return res.status(404).json({
+                message: 'Admin not found',
+                statusCode: 404,
+                success: false,
+            });
+        }
+
+        // Optional: Verify if the user is an admin
+        if (!admin.role) {
+            return res.status(403).json({
+                message: 'Unauthorized access. User is not an admin',
+                statusCode: 403,
+                success: false,
+            });
+        }
+
+        // Send admin info in response
+        return res.status(200).json({
+            admin,
+            statusCode: 200,
+            success: true,
+        });
+    } catch (error) {
+        // Handle any server errors
+        return res.status(500).json({
+            message: error.message || 'Internal server error occurred',
+            statusCode: 500,
+            success: false,
+        });
+    }
+};
