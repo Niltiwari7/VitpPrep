@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false); // State to track sidebar visibility
+  const params = useParams();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -25,9 +26,8 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <div
-        className={`${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        } fixed inset-y-0 left-0 w-64 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-gray-300 h-screen p-5 transform transition-transform duration-300 md:translate-x-0 md:w-64 md:block`}
+        className={`${isOpen ? 'translate-x-0' : '-translate-x-full'
+          } fixed inset-y-0 left-0 w-64 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-gray-300 h-screen p-5 transform transition-transform duration-300 md:translate-x-0 md:w-64 md:block`}
       >
         {/* Logo and Brand */}
         <div className="flex items-center space-x-2 mb-8">
@@ -45,11 +45,12 @@ const Sidebar = () => {
         <ul>
           <li>
             <Link
-              to="/admin/profile"
+              to={`/admin/profile/${params.adminId}`}
               className="block py-2 px-4 text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded transition duration-200"
             >
               Profile
             </Link>
+
           </li>
           <li>
             <Link

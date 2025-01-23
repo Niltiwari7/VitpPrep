@@ -210,7 +210,7 @@ export const uploadImage = async (req, res) => {
                 success: false,
             });
         }
-        console.log(cloudinaryResponse);
+       
 
         // Extract the URL from the Cloudinary response
         const imageUrl = cloudinaryResponse.url;
@@ -245,10 +245,39 @@ export const uploadImage = async (req, res) => {
     }
 };
 
-const editAdmin = async (req,res)=>{
-    try{
-       
-    }catch(error){
-        return res.status(500).json({message:error.message,statusCode:500,success:false});
+
+// Update User Controller
+export const updateInformation = async (req, res) => {
+    try {
+        const userId  = req.params.adminId; // Assuming user ID is provided in the request URL
+        const updates = req.body; // Assuming updates are passed in the request body
+        
+        // Validate that the request body is not empty
+        if (!updates || Object.keys(updates).length === 0) {
+            return res.status(400).json({ message: 'No updates provided.' });
+        }
+        // checking userId is valid or not
+        const user = await User.findById(userId);
+        if(!user){
+            return res.status(404).json({message:"User not found.",statusCode:404,success:false});
+        }
+
+        // Find the user and apply updates
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $set: updates }, // Use $set to dynamically update only the fields provided
+            { new: true, runValidators: true } // Return the updated document and validate schema
+        );
+
+        // If user not found
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        // Respond with the updated user
+        res.status(200).json({ message: 'User updated successfully.', updatedUser });
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(500).json({ message: 'Failed to update user.', error: error.message });
     }
-}
+};

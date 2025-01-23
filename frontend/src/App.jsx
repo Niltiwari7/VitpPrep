@@ -13,6 +13,7 @@ import AdminSignIn from "./pages/AdminSignIn"
 import AdminProfile from "./pages/AdminProfile"
 import { useSelector } from "react-redux"
 import { useEffect } from "react"
+import AdminEdit from "./pages/AdminEdit"
 
 function App() {
   const darkMode = useSelector((state) => state.theme.darkMode);
@@ -35,6 +36,7 @@ function App() {
       {/* <Route path='/admin/dashboard/:id' element = {<AdminDashBoard/>}/> */}
       <Route path = '/dashboard' element = {<UserDashBoard/>}/>
       <Route path = '/admin/profile/:adminId' element = {<AdminProfile/>}/>
+      <Route path = '/admin/edit/:adminId' element = {<AdminEdit/>}/>
     </Routes>
     
     </>

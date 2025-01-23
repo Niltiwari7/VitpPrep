@@ -21,7 +21,7 @@ const AdminProfile = () => {
     const toggleTheme = () => {
         dispatch(setDarkMode(!darkMode));
     };
-    console.log(adminId);
+    
 
     useEffect(() => {
         const fetchAdminInfo = async () => {
