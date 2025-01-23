@@ -13,9 +13,18 @@ import cors from 'cors';
 dotenv.config();
 connectDB();
 const app = express();
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5175'];
+
+// CORS configuration
 app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
+    origin: (origin, callback) => {
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true, // Allow cookies to be sent with requests
 }));
 app.use(cookieParser());
 app.use(express.json());

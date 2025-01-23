@@ -32,9 +32,9 @@ function App() {
       <Route path = '/contact' element = {<Contact/>}/>
       <Route path = '/admin/signup' element = {<AdminSignUp/>}/>
       <Route path = '/admin/signin' element = {<AdminSignIn/>}/>
-      <Route path='/admin/dashboard' element = {<AdminDashBoard/>}/>
+      {/* <Route path='/admin/dashboard/:id' element = {<AdminDashBoard/>}/> */}
       <Route path = '/dashboard' element = {<UserDashBoard/>}/>
-      <Route path = '/admin/profile' element = {<AdminProfile/>}/>
+      <Route path = '/admin/profile/:adminId' element = {<AdminProfile/>}/>
     </Routes>
     
     </>

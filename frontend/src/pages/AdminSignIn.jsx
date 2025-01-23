@@ -36,9 +36,10 @@ const AdminSignIn = () => {
             if (!data.success) {
                 setError(data.message || 'Login failed.');
             } else {
+                const id = data.admin.id;
                 setError('');
                 dispatch(updateAdminInfo(data));
-                navigate('/admin/dashboard');
+                navigate(`/admin/profile/${id}`);
             }
         } catch (error) {
             setError(error.message || 'An error occurred while signing in.');
