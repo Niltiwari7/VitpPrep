@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAdminInfo, logInAdmin, RegisterAdmin, updateInformation, uploadImage } from '../controllers/admin.controller.js';
+import { getAdminInfo, logInAdmin, RegisterAdmin, updateInformation, updatePassword, updatePersonalInfo, updateSocialLinks, updateTechSkills, uploadImage } from '../controllers/admin.controller.js';
 import { auth } from '../middlewares/auth.middleware.js';
 import { upload } from '../middlewares/multer.middleware.js';
 
@@ -9,5 +9,10 @@ router.post('/create',RegisterAdmin);
 router.post('/login',logInAdmin);
 router.get('/getadmin/:adminId', auth,getAdminInfo)
 router.post('/uploadimage/:adminId',auth,upload.single('image'),uploadImage);
-router.post('/update/:adminId',auth, updateInformation)
+router.put('/updatePersonalInfo/:adminId',auth, updatePersonalInfo);
+router.put('/updateSocialLinks/:adminId',auth, updateSocialLinks);
+router.put('/updatePassword/:adminId',auth, updatePassword);
+router.put('/updateSkills/:adminId',auth, updateTechSkills);
+// router.post('/update/:adminId',auth, updateInformation)
+
 export default router;

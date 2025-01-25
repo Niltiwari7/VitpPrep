@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateAdminInfo } from '../utils/slices/admin.slice.js'; // Adjust the import based on your file structure
-
+import {Button} from "@/components/ui/button";
+import { Loader2 } from 'lucide-react';
 const ImageUpload = ({ adminId, adminInfo }) => {
     const dispatch = useDispatch();
     const [imagePreview, setImagePreview] = useState(adminInfo.imageUrl || "");
     const [selectedFile, setSelectedFile] = useState(null);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [loading,setLoading] = useState(false);
 
     // Handle file input change
     const handleImageChange = (e) => {
@@ -25,6 +27,7 @@ const ImageUpload = ({ adminId, adminInfo }) => {
     // Handle image upload
     const handleImageUpload = async () => {
         try {
+            setLoading(true);
             const formData = new FormData();
             if (!selectedFile) {
                 setError('Please select an image file.');
@@ -52,7 +55,7 @@ const ImageUpload = ({ adminId, adminInfo }) => {
             
             dispatch(updateAdminInfo(data.admin)); // Assuming you update the Redux store with the new user info
             
-            
+            setLoading(false);
             setSuccess(data.message); // Display success message
         } catch (error) {
             setError(error.message || 'An error occurred while uploading the image.');
@@ -91,13 +94,14 @@ const ImageUpload = ({ adminId, adminInfo }) => {
 
             {/* Upload button - trigger the upload process */}
             {selectedFile && (
-                <button
+                <Button disabled={loading}
                     type="button"
                     className="mt-2 w-full py-2 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition"
                     onClick={handleImageUpload} // Call handleImageUpload to upload the image
                 >
+                    {loading && <Loader2 className='mr-2 h-4 w-4 animate-spin'/>}
                     Upload
-                </button>
+                </Button>
             )}
         </div>
     );

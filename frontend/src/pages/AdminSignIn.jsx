@@ -3,7 +3,9 @@ import { AiFillGoogleCircle } from "react-icons/ai";
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { updateAdminInfo } from '../utils/slices/admin.slice';
-
+import { Button } from "@/components/ui/button"
+import { Loader2 } from "lucide-react"
+import {toast} from 'react-hot-toast';
 const AdminSignIn = () => {
     const [formData, setFormData] = useState({
         email: '',
@@ -11,6 +13,7 @@ const AdminSignIn = () => {
     });
 
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handleChange = (e) => {
@@ -21,6 +24,7 @@ const AdminSignIn = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
         try {
             const response = await fetch('http://localhost:3000/admin/login', {
                 method: 'POST',
@@ -34,15 +38,20 @@ const AdminSignIn = () => {
             const data = await response.json();
 
             if (!data.success) {
+                toast.error(data.message || 'Login failed.');
                 setError(data.message || 'Login failed.');
+                setLoading(false);
             } else {
                 const id = data.admin.id;
                 setError('');
                 dispatch(updateAdminInfo(data));
                 navigate(`/admin/profile/${id}`);
+                setLoading(false);
             }
         } catch (error) {
+            toast.error(error.message || 'An error occurred while signing in.');
             setError(error.message || 'An error occurred while signing in.');
+            setLoading(false);
         }
     };
 
@@ -98,12 +107,21 @@ const AdminSignIn = () => {
                     </div>
 
                     {/* Submit Button */}
-                    <button
+                    <Button
+                        disabled={loading}
                         type="submit"
                         className="w-full bg-blue-500 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                     >
-                        Sign In
-                    </button>
+                        {loading ? (
+                            <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Loading...
+                            </>
+                        ) : (
+                            'Sign In'
+                        )}
+                    </Button>
+
                 </form>
 
                 {/* Sign Up Link */}

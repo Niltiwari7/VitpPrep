@@ -81,7 +81,6 @@ export const RegisterAdmin = async (req, res) => {
 export const logInAdmin = async (req, res) => {
     try {
         const { email, password } = req.body;
-
         // Validate required fields
         if (!email || !password) {
             return res.status(400).json({
@@ -187,10 +186,10 @@ export const getAdminInfo = async (req, res) => {
 export const uploadImage = async (req, res) => {
     try {
         const localFilePath = req.file.path; // Path to the uploaded image on the local server
-       
-        
+
+
         const userId = req.params.adminId; // Extract the adminId from req.params
-        
+
         if (!localFilePath) {
             return res.status(400).json({
                 message: 'Image file is missing. Please try again.',
@@ -202,7 +201,7 @@ export const uploadImage = async (req, res) => {
         // Upload the image to Cloudinary
         const cloudinaryResponse = await uploadOnCloudinary(localFilePath);
         console.log(cloudinaryResponse);
-        
+
         if (!cloudinaryResponse) {
             return res.status(500).json({
                 message: 'Failed to upload image to Cloudinary.',
@@ -210,7 +209,7 @@ export const uploadImage = async (req, res) => {
                 success: false,
             });
         }
-       
+
 
         // Extract the URL from the Cloudinary response
         const imageUrl = cloudinaryResponse.url;
@@ -244,22 +243,52 @@ export const uploadImage = async (req, res) => {
         });
     }
 };
+// UPDATE PERSONAL INFORMATION
+
+export const updatePersonalInfo = async (req, res) => {
+    try {
+        const adminId = req.params.adminId;
+        const updates = req.body;
+
+        // Validate adminId
+        if (!adminId) {
+            return res.status(400).json({ message: "Admin ID is required", statusCode: 400, success: false });
+        }
+
+        // Validate updates
+        if (!updates || Object.keys(updates).length === 0) {
+            return res.status(400).json({ message: "No updates provided", statusCode: 400, success: false });
+        }
+
+        // Update personal information
+        const updateAdmin = await User.findByIdAndUpdate(adminId, updates, { new: true });
+
+        if (!updateAdmin) {
+            return res.status(404).json({ message: "Admin not found", statusCode: 404, success: false });
+        }
+
+        return res.status(200).json({ message: "Personal information updated successfully", statusCode: 200, success: true, admin: updateAdmin });
+    } catch (error) {
+        console.error(error); // Log the error
+        return res.status(500).json({ message: "Internal server error", statusCode: 500, success: false });
+    }
+};
 
 
 // Update User Controller
 export const updateInformation = async (req, res) => {
     try {
-        const userId  = req.params.adminId; // Assuming user ID is provided in the request URL
+        const userId = req.params.adminId; // Assuming user ID is provided in the request URL
         const updates = req.body; // Assuming updates are passed in the request body
-        
+
         // Validate that the request body is not empty
         if (!updates || Object.keys(updates).length === 0) {
             return res.status(400).json({ message: 'No updates provided.' });
         }
         // checking userId is valid or not
         const user = await User.findById(userId);
-        if(!user){
-            return res.status(404).json({message:"User not found.",statusCode:404,success:false});
+        if (!user) {
+            return res.status(404).json({ message: "User not found.", statusCode: 404, success: false });
         }
 
         // Find the user and apply updates
@@ -281,3 +310,147 @@ export const updateInformation = async (req, res) => {
         res.status(500).json({ message: 'Failed to update user.', error: error.message });
     }
 };
+
+
+// Update Social links Controller
+
+export const updateSocialLinks = async (req, res) => {
+    try {
+        const adminId = req.params.adminId;
+        const { github, linkedin, twitter, website } = req.body;
+        console.log(linkedin);
+        
+        // Validate adminId
+        if (!adminId) {
+            return res.status(400).json({ message: "Admin Id is required", statusCode: 400, success: false });
+        }
+
+        // validate social links
+        if (!github && !linkedin && !twitter && !website) {
+            return res.status(400).json({ message: "No social links provided", statusCode: 400, success: false });
+        }
+
+        // Upadate social links
+        const updateAdmin = await User.findByIdAndUpdate(adminId, { socialLinks: { github, linkedin, twitter, website } }, { new: true });
+
+        // If admin not found
+        if (!updateAdmin) {
+            return res.status(404).json({ message: "Admin not found", statusCode: 404, success: false });
+        }
+
+        return res.status(200).json({
+            message: "Social links updated successfully", statusCode: 200,
+            success: true, admin: updateAdmin
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error" || error.message, statusCode: 500, success: false });
+    }
+}
+
+// Update password controller
+
+export const updatePassword = async (req, res) => {
+    try {
+        const adminId = req.params.adminId;
+        const { newPassword, confirmPassword } = req.body;
+
+        // Validate adminId
+        if (!adminId) {
+            return res.status(400).json({
+                message: "Admin ID is required",
+                statusCode: 400,
+                success: false,
+            });
+        }
+
+        // Validate input fields
+        if (!newPassword || !confirmPassword) {
+            return res.status(400).json({
+                message: "New Password and Confirm Password are required",
+                statusCode: 400,
+                success: false,
+            });
+        }
+
+        // Check if newPassword and confirmPassword match
+        if (newPassword !== confirmPassword) {
+            return res.status(400).json({
+                message: "Passwords do not match",
+                statusCode: 400,
+                success: false,
+            });
+        }
+
+        // Hash the new password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        // Update the user's password
+        const updatedAdmin = await User.findByIdAndUpdate(
+            adminId,
+            { password: hashedPassword },
+            { new: true } // Return the updated document
+        );
+
+        // If admin not found
+        if (!updatedAdmin) {
+            return res.status(404).json({
+                message: "Admin not found",
+                statusCode: 404,
+                success: false,
+            });
+        }
+
+        return res.status(200).json({
+            message: "Password updated successfully",
+            statusCode: 200,
+            success: true,
+        });
+    } catch (error) {
+        console.error("Error updating password:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+            statusCode: 500,
+            success: false,
+        });
+    }
+};
+
+
+// Tech skills controller
+
+export const updateTechSkills = async (req,res)=>{
+    try {
+        const adminId = req.params.adminId;
+        const { technicalSkills} = req.body;
+        // Validate adminId
+        if(!adminId){
+            return res.status(400).json({message:"Admin Id is required",statusCode:400,success:false});
+        }
+        // Validate tech skills
+        if(!technicalSkills){
+            return res.status(400).json({message:"No technical skills provided",statusCode:400,success:false});
+        }
+
+        // Update tech skills
+        const updateAdmin = await User.findByIdAndUpdate(adminId,{skills:technicalSkills},{new:true});
+
+        // If admin not found
+        if(!updateAdmin){
+            return res.status(404).json({message: "Admin not found",statusCode:404,success:false});
+        }
+
+        return res.status(200).json({
+            message:"Technical skills updated successfully",
+            statusCode:200,
+            success:true,
+            admin:updateAdmin
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message:"Internal server error" || error.message,
+            statusCode:500,
+            success:false
+        })       
+    }
+}
