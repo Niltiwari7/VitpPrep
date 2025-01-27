@@ -319,7 +319,7 @@ export const updateSocialLinks = async (req, res) => {
         const adminId = req.params.adminId;
         const { github, linkedin, twitter, website } = req.body;
         console.log(linkedin);
-        
+
         // Validate adminId
         if (!adminId) {
             return res.status(400).json({ message: "Admin Id is required", statusCode: 400, success: false });
@@ -419,38 +419,60 @@ export const updatePassword = async (req, res) => {
 
 // Tech skills controller
 
-export const updateTechSkills = async (req,res)=>{
+export const updateTechSkills = async (req, res) => {
     try {
         const adminId = req.params.adminId;
-        const { technicalSkills} = req.body;
+        const { technicalSkills } = req.body;
         // Validate adminId
-        if(!adminId){
-            return res.status(400).json({message:"Admin Id is required",statusCode:400,success:false});
+        if (!adminId) {
+            return res.status(400).json({ message: "Admin Id is required", statusCode: 400, success: false });
         }
         // Validate tech skills
-        if(!technicalSkills){
-            return res.status(400).json({message:"No technical skills provided",statusCode:400,success:false});
+        if (!technicalSkills) {
+            return res.status(400).json({ message: "No technical skills provided", statusCode: 400, success: false });
         }
 
         // Update tech skills
-        const updateAdmin = await User.findByIdAndUpdate(adminId,{skills:technicalSkills},{new:true});
+        const updateAdmin = await User.findByIdAndUpdate(adminId, { skills: technicalSkills }, { new: true });
 
         // If admin not found
-        if(!updateAdmin){
-            return res.status(404).json({message: "Admin not found",statusCode:404,success:false});
+        if (!updateAdmin) {
+            return res.status(404).json({ message: "Admin not found", statusCode: 404, success: false });
         }
 
         return res.status(200).json({
-            message:"Technical skills updated successfully",
-            statusCode:200,
-            success:true,
-            admin:updateAdmin
+            message: "Technical skills updated successfully",
+            statusCode: 200,
+            success: true,
+            admin: updateAdmin
         })
     } catch (error) {
         return res.status(500).json({
-            message:"Internal server error" || error.message,
-            statusCode:500,
-            success:false
-        })       
+            message: "Internal server error" || error.message,
+            statusCode: 500,
+            success: false
+        })
+    }
+}
+
+// LogOut Controller
+
+export const logout = async (req, res) => {
+    try {
+        res.clearCookie('token',{
+            httpOnly:true,
+        });
+        return res.status(200).json({
+            message: "Admin logged out successfully",
+            statusCode: 200,
+            success: true
+        }
+    )
+    } catch (error) {
+        return res.status(500).json({
+            message: "Internal server error" || error.message,
+            statusCode: 500,
+            success: false
+        })
     }
 }

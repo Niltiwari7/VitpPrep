@@ -17,6 +17,7 @@ import AdminEdit from "./pages/AdminEdit";
 
 // Import the Toaster component
 import { Toaster } from "react-hot-toast";
+import AddQuestion from "./pages/AddQuestion";
 
 function App() {
   const darkMode = useSelector((state) => state.theme.darkMode);
@@ -63,6 +64,7 @@ function App() {
         <Route path="/dashboard" element={<UserDashBoard />} />
         <Route path="/admin/profile/:adminId" element={<AdminProfile />} />
         <Route path="/admin/edit/:adminId" element={<AdminEdit />} />
+        <Route path = "/admin/addQuestion" element = {<AddQuestion/>}/>
       </Routes>
     </>
   );

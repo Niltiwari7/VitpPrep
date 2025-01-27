@@ -8,9 +8,9 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import ImageUpload from "../components/ImageUpload";
 import { Button } from "@/components/ui/button";
 import { updateAdminInfo } from "../utils/slices/admin.slice";
-import { Loader2 } from "lucide-react";
+import { Loader2, University } from "lucide-react";
 import { toast } from "react-hot-toast";
-import { Textarea } from "@/components/ui/textarea"
+
 
 
 
@@ -34,7 +34,7 @@ const AdminEdit = () => {
         fullName: adminInfo.fullName || "",
         email: adminInfo.email || "",
         imageUrl: adminInfo.imageUrl || "",
-        University: adminInfo.University || "",
+        university: adminInfo.University || "",
         bio: adminInfo.bio || "",
         location: adminInfo.location || "",
         github: adminInfo.github || "",
@@ -46,8 +46,7 @@ const AdminEdit = () => {
         skill: "",
         technicalSkills: adminInfo.technicalSkills || [],
     });
-    console.log(formData.skill);
-    console.log("technical Skills",formData.technicalSkills);
+   // console.log(formData);
     
     const [success, setSuccess] = useState('');
     const toggleTheme = () => {
