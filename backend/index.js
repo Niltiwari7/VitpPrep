@@ -13,7 +13,7 @@ import cors from 'cors';
 dotenv.config();
 connectDB();
 const app = express();
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5175'];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5175','http://localhost:5174'];
 
 // CORS configuration
 app.use(cors({
