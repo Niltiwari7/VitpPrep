@@ -3,10 +3,10 @@ import { createQuestion, deleteQuestion, getAllQuestions, getQuestionById, updat
 
 const router = express.Router();
 
-router.post('/create',createQuestion);
-router.get('/getquestionbyid/:id',getQuestionById);
-router.put('/updatequestion/:id',updateQuestion);
-router.delete('/deletequestion/:id',deleteQuestion);
-router.get('/getallquestions/:subtopicId/questions',getAllQuestions);
+router.post('/admin/create',createQuestion);
+router.get('/:id',getQuestionById);
+router.put('/update/:id',updateQuestion);
+router.delete('/delete/:id',deleteQuestion);
+router.get('/subtopic/:subtopicId',getAllQuestions);
 
 export default router;

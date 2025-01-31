@@ -95,6 +95,9 @@ export const createQuestion = async (req, res) => {
 // Get a Question by ID
 export const getQuestionById = async (req, res) => {
     try {
+        const {id} = req.params;
+      
+        
         const question = await Question.findById(req.params.id).populate('subtopicId');
         if (!question) {
             return res.status(404).json({ message: 'Question not found' });
