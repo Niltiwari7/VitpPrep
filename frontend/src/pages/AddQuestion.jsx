@@ -11,25 +11,31 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { setDarkMode } from "../utils/slices/theme.slice.js"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";;
+import { addTopic, updateTopic } from "../utils/slices/topic.slice.js";
+import { toast } from 'react-hot-toast';
+import { updateSubtopics } from "../utils/slices/subtopic.slice.js";
 
 const AddContentPage = () => {
   const dispatch = useDispatch();
   const darkMode = useSelector((state) => state.theme.darkMode);
   const adminInfo = useSelector((state) => state.admin.adminInfo || {});
-
-  const [topics, setTopics] = useState([]);
+  const topics = useSelector((state) => state.topic.topics || {});
+  const subtopic = useSelector((state) => state.subtopic.subtopics || {});
+  const [errortopics, setErrorTopics] = useState('');
   const [selectedTopic, setSelectedTopic] = useState("");
   const [newTopic, setNewTopic] = useState("");
- 
-  const [subtopics, setSubtopics] = useState([]);
+  const [topicdesc, setTopicdesc] = useState("");
   const [selectedSubtopic, setSelectedSubtopic] = useState("");
   const [newSubtopic, setNewSubtopic] = useState("");
-  const [hint,setHint] = useState("");
+  const [SubtopicError, setSubtopicError] = useState('');
+  const [hint, setHint] = useState("");
+
+  // loader state
+  const [topicLoading, setTopicLoading] = useState(false);
 
   const [questionDetails, setQuestionDetails] = useState({
     title: "",
     description: "",
-
     difficulty: "easy",
     tags: [],
     miscellaneous: false,
@@ -38,6 +44,9 @@ const AddContentPage = () => {
     constraints: "",
     hints: [],
   });
+
+
+
 
   // Toggle Theme
   const toggleTheme = () => {
@@ -60,12 +69,50 @@ const AddContentPage = () => {
     }));
   };
 
+  const handleRemoveHints = (index) => {
+    setQuestionDetails((prev) => ({
+      ...prev,
+      hints: prev.hints.filter((_, i) => i !== index), // Fixed syntax
+    }));
+  };
+
   // Handle Adding a New Topic
-  const addNewTopic = () => {
+  const handleAddTopic = async () => {
     if (newTopic.trim()) {
-      setTopics([...topics, newTopic]);
-      setSelectedTopic(newTopic);
-      setNewTopic("");
+      try {
+        setErrorTopics(''); // Reset any previous error
+        setTopicLoading(true); // Show loading state
+
+        const response = await fetch('http://localhost:3000/topics/admin/create', {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name: newTopic, description: topicdesc.trim() }), // Request body
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          // Dispatch to Redux store
+          dispatch(addTopic(data.topic));
+
+          // Success message and clear inputs
+          toast.success('Topic Added Successfully');
+          setNewTopic(''); // Reset the newTopic state
+          setTopicdesc(''); // Reset the topicdesc state (if needed)
+          setErrorTopics(''); // Clear any error messages
+        } else {
+          // Handle error from API response
+          setErrorTopics(data.message);
+        }
+      } catch (error) {
+        // Handle network or other unexpected errors
+        setErrorTopics(error.message);
+      } finally {
+        setTopicLoading(false); // Reset loading state after operation
+      }
     }
   };
 
@@ -80,10 +127,75 @@ const AddContentPage = () => {
 
   // Handle Hint Addition
   const handleAddHint = () => {
-    setQuestionDetails((prev)=>{
-      return {...prev,hints:[...prev.hints,hint]}
+    setQuestionDetails((prev) => {
+      return { ...prev, hints: [...prev.hints, hint] }
     })
   }
+
+  // fetching the topic when page load
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        setErrorTopics('');
+        setTopicLoading(true);
+        const response = await fetch('http://localhost:3000/topics/getalltopics', {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+        const data = await response.json();
+        console.log(data);
+
+        if (data.success) {
+          dispatch(updateTopic(data.topics));
+          setSelectedTopic(data.topics[0]._id);
+          setErrorTopics('');
+        } else {
+          setErrorTopics(data.message);
+        }
+      } catch (error) {
+        setErrorTopics(error.message);
+      } finally {
+        setTopicLoading(false);
+      }
+    };
+
+    fetchTopics();
+  }, [topics.length]);
+
+  // fetching the subtopic of selected topic when page load
+  useEffect(() => {
+    const fetchSubtopicsById = async () => {
+      try {
+        setSubtopicError('');
+
+        // Fetch subtopics for the selected topic
+        const response = await fetch(`http://localhost:3000/subtopics/${selectedTopic}`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          dispatch(updateSubtopics(data.subtopics));
+          setSelectedSubtopic(data.subtopics[0]?._id);
+          setSubtopicError('');
+        }
+      } catch (error) {
+        setSubtopicError(error.message || 'An unexpected error occurred');
+      }
+    };
+
+    if (selectedTopic) {
+      fetchSubtopicsById();
+    }
+  }, [selectedTopic]);
+
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
       <aside className="w-full md:w-64 bg-white dark:bg-gray-800 shadow-md">
@@ -130,7 +242,7 @@ const AddContentPage = () => {
                     className="border-gray-300 dark:border-gray-700 dark:bg-gray-800"
                   />
                 </div>
-             
+
                 {/* Description */}
                 <div>
                   <Label className="text-base font-medium">Description</Label>
@@ -180,88 +292,114 @@ const AddContentPage = () => {
                 </div>
 
                 {/* Topic */}
-                <div >
+                <div>
+                  <Label className="text-base font-medium">Topic</Label>
+                  <div className="md:flex gap-2">
+                    {/* Show error if any */}
+                    {errortopics ? (
+                      <p className="text-red-500 text-sm">{errortopics}</p>
+                    ) : (
+                      <>
+                        {/* Ensure topics exist before rendering Select */}
+                        {topics && Object.keys(topics).length > 0 ? (
+                          <Select value={selectedTopic} onValueChange={value => setSelectedTopic(value)}>
+                            <SelectTrigger className="border-gray-300 dark:border-gray-700 dark:bg-gray-800">
+                              <SelectValue placeholder="Select Topic" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {Object.values(topics).map((topic, index) => (
 
-                <Label className="text-base font-medium">Topic</Label>
-                <div className="md:flex gap-2">
-                  {/* Select Topic Dropdown */}
-                  <Select value={selectedTopic} onValueChange={setSelectedTopic}>
-                    <SelectTrigger className="border-gray-300 dark:border-gray-700 dark:bg-gray-800">
-                      <SelectValue placeholder="Select Topic" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {topics.map((topic, index) => (
-                        <SelectItem key={index} value={topic}>
-                          {topic}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                                <SelectItem key={topic?._id || index} value={topic?._id}>
+                                  {topic?.name}
+                                </SelectItem>
+                              ))}
 
-                  {/* Add Topic Button & Dialog */}
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button
-                        className="w-full md:w-1/2 md:mt-0 px-6 py-3  bg-white
-                        text-black hover:bg-gray-200  transition-all duration-300 rounded-lg shadow-md flex items-center justify-center"
-                      >
-                        Add Topic
-                      </Button>
+                            </SelectContent>
+                          </Select>
+                        ) : (
+                          <p className="text-gray-500 text-sm">No topics available</p> // Show outside of Select
+                        )}
+                      </>
+                    )}
 
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Add a New Topic</DialogTitle>
-                      </DialogHeader>
-                      <div className="space-y-4">
-                        <Input
-                          placeholder="Enter New Topic"
-                          value={newTopic}
-                          onChange={(e) => setNewTopic(e.target.value)}
-                          className="border-gray-300 dark:border-gray-700 dark:bg-gray-800"
-                        />
+                    {/* Add Topic Button & Dialog */}
+                    <Dialog>
+                      <DialogTrigger asChild>
                         <Button
-                          onClick={() => {
-                            if (newTopic.trim()) {
-                              addNewTopic(newTopic);
-                              setNewTopic(""); // Reset input after adding
-                            }
-                          }}
+                          className="w-full md:w-1/2 md:mt-0 px-6 py-3 bg-white text-black hover:bg-gray-200 
+          transition-all duration-300 rounded-lg shadow-md flex items-center justify-center"
                         >
-                          Save Topic
+                          Add Topic
                         </Button>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                </div>
-                </div>
-              
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Add a New Topic</DialogTitle>
+                        </DialogHeader>
+                        <div className="space-y-4">
+                          <Input
+                            placeholder="Enter New Topic"
+                            value={newTopic}
+                            onChange={(e) => setNewTopic(e.target.value)}
+                            className="border-gray-300 dark:border-gray-700 dark:bg-gray-800"
+                          />
 
-                {/* Subtopic */}
+                          <Input
+                            placeholder="Enter the description"
+                            value={topicdesc}
+                            onChange={(e) => setTopicdesc(e.target.value)}
+                            className="border-gray-300 dark:border-gray-700 dark:bg-gray-800"
+                          />
+                          <Button
+                            onClick={handleAddTopic}
+                          >
+                            Save Topic
+                          </Button>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                </div>
+
                 <div>
                   <Label className="text-base font-medium">Subtopic</Label>
                   <div className="md:flex gap-2">
-                    {/* Select Subtopic Dropdown */}
-                    <Select value={selectedSubtopic} onValueChange={setSelectedSubtopic}>
-                      <SelectTrigger className="border-gray-300 dark:border-gray-700 dark:bg-gray-800">
-                        <SelectValue placeholder="Select Subtopic" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {subtopics.map((subtopic, index) => (
-                          <SelectItem key={index} value={subtopic}>
-                            {subtopic}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    {/* Show error if any */}
+                    {SubtopicError ? (
+                      <p className="text-red-500 text-sm">{SubtopicError}</p>
+                    ) : (
+                      <>
+                        {/* Ensure subtopics exist before rendering Select */}
+                        {subtopic && Object.keys(subtopic).length > 0 ? (
+                          <Select value={selectedSubtopic} onValueChange={value => setSelectedSubtopic(value)}>
+                            <SelectTrigger className="border-gray-300 dark:border-gray-700 dark:bg-gray-800">
+                              <SelectValue placeholder="Select Subtopic" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {Object.values(subtopic).map((sub, index) => (
+                                <SelectItem key={sub?._id || index} value={sub?._id}>
+                                  {sub?.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        ) : (
+                          <p className="text-gray-500 text-sm">No subtopics available</p>
+                        )}
+                      </>
+                    )}
 
                     {/* Add Subtopic Button & Dialog */}
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button variant="outline" className="w-full md:w-1/2 md:mt-0 px-6 py-3  bg-white
-                        text-black hover:bg-gray-200  transition-all duration-300 rounded-lg shadow-md flex items-center justify-center">Add Subtopic</Button>
+                        <Button
+                          className="w-full md:w-1/2 md:mt-0 px-6 py-3 bg-white text-black hover:bg-gray-200 transition-all duration-300 rounded-lg shadow-md flex items-center justify-center"
+                        >
+                          Add Subtopic
+                        </Button>
                       </DialogTrigger>
-                      <DialogContent className="w-full max-w-md">
+
+                      <DialogContent>
                         <DialogHeader>
                           <DialogTitle>Add a New Subtopic</DialogTitle>
                         </DialogHeader>
@@ -270,26 +408,20 @@ const AddContentPage = () => {
                             placeholder="Enter New Subtopic"
                             value={newSubtopic}
                             onChange={(e) => setNewSubtopic(e.target.value)}
-                            className="border-gray-300 dark:border-gray-700 dark:bg-gray-800 w-full"
+                            className="border-gray-300 dark:border-gray-700 dark:bg-gray-800"
                           />
-                          <Button
-                            className="w-full"
-                            onClick={() => {
-                              if (newSubtopic.trim()) {
-                                addNewSubtopic(newSubtopic);
-                                setNewSubtopic(""); // Reset input after adding
-                              }
-                            }}
-                          >
-                            Save Subtopic
-                          </Button>
+
+
+                          <Button>Save Subtopic</Button>
                         </div>
                       </DialogContent>
                     </Dialog>
                   </div>
                 </div>
-                 {/* Url */}
-                 <div>
+
+
+                {/* Url */}
+                <div>
                   <Label className="text-base font-medium">URL</Label>
                   <Input
                     type="text"
@@ -299,7 +431,7 @@ const AddContentPage = () => {
                     }
                     className="border-gray-300 dark:border-gray-700 dark:bg-gray-800"
                   />
-               </div>
+                </div>
 
                 {/* Miscellaneous */}
                 <div className="flex items-center space-x-2">
@@ -342,20 +474,37 @@ const AddContentPage = () => {
                       </Button>
                     </div>
                   ))}
-                  <Button className="w-full mt-4" onClick={handleAddExample}>Add Example</Button>
+                  <Button className="w-full mt-4" onClick={handleAddExample} type='button'>Add Example</Button>
                 </div>
                 {/* Hint */}
-                <div>
+
+                <div className="space-y-3">
                   <Label className="text-base font-medium">Hints</Label>
-                  <Textarea
-                    value={questionDetails.hints}
-                    onChange={(e) =>
-                      setHint((prev)=> prev = e.target.value)
-                    }
-                    className="border-gray-300 dark:border-gray-700 dark:bg-gray-800"
-                  /> 
-                  <Button onClick={handleAddHint} className="w-full mt-4">Add Hint</Button>                 
+                  {questionDetails.hints.map((hint, index) => (
+                    <div key={index} className="flex gap-2">
+                      <Input
+                        placeholder="Add Hint"
+                        value={hint}  // Directly accessing hint since hints is an array of strings
+                        className="border-gray-300 dark:border-gray-700 dark:bg-gray-800"
+                        onChange={(e) => {
+                          const updatedHints = [...questionDetails.hints];
+                          updatedHints[index] = e.target.value; // Correctly updating the index
+                          setQuestionDetails({ ...questionDetails, hints: updatedHints });
+                        }}
+                      />
+
+                      <Button variant="destructive" onClick={() => handleRemoveHints(index)}>
+                        Remove
+                      </Button>
+                    </div>
+                  ))}
+                  <Button className="w-full mt-4" onClick={handleAddHint} type="button">
+                    Add Hint
+                  </Button>
                 </div>
+
+
+
                 {/* Submit */}
                 <Button type="submit" className="w-full mt-4">
                   Submit

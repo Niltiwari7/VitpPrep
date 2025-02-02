@@ -5,12 +5,15 @@ import { combineReducers } from 'redux';
 import userReducer from '../utils/slices/user.slice.js';
 import adminReducer from '../utils/slices/admin.slice.js';
 import themeReducer from './slices/theme.slice.js';
-
+import topicReducer from './slices/topic.slice.js'
+import subTopicReducer from './slices/subtopic.slice.js';
 // Combine reducers
 const rootReducer = combineReducers({
     admin: adminReducer,
     user: userReducer,
     theme: themeReducer,
+    topic: topicReducer,
+    subtopic: subTopicReducer
 });
 
 // Persist configuration
