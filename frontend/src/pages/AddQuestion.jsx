@@ -13,14 +13,15 @@ import { setDarkMode } from "../utils/slices/theme.slice.js"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";;
 import { addTopic, updateTopic } from "../utils/slices/topic.slice.js";
 import { toast } from 'react-hot-toast';
-import { updateSubtopics } from "../utils/slices/subtopic.slice.js";
-
+import { addSubTopic, updateSubtopics } from "../utils/slices/subtopic.slice.js";
+import { Loader, Loader2 } from "lucide-react";
 const AddContentPage = () => {
   const dispatch = useDispatch();
   const darkMode = useSelector((state) => state.theme.darkMode);
   const adminInfo = useSelector((state) => state.admin.adminInfo || {});
   const topics = useSelector((state) => state.topic.topics || {});
   const subtopic = useSelector((state) => state.subtopic.subtopics || {});
+  const question = useSelector((state) => state.question.question | {});
   const [errortopics, setErrorTopics] = useState('');
   const [selectedTopic, setSelectedTopic] = useState("");
   const [newTopic, setNewTopic] = useState("");
@@ -28,10 +29,13 @@ const AddContentPage = () => {
   const [selectedSubtopic, setSelectedSubtopic] = useState("");
   const [newSubtopic, setNewSubtopic] = useState("");
   const [SubtopicError, setSubtopicError] = useState('');
+  const [questionError, setQuestionError] = useState('');
   const [hint, setHint] = useState("");
 
   // loader state
   const [topicLoading, setTopicLoading] = useState(false);
+  const [questionLoading, setQuestiongLoading] = useState(false);
+  const [subtopicLoading, setSubtopicLoading] = useState(false);
 
   const [questionDetails, setQuestionDetails] = useState({
     title: "",
@@ -41,12 +45,23 @@ const AddContentPage = () => {
     miscellaneous: false,
     url: "",
     examples: [{ input: "", output: "" }],
-    constraints: "",
+    constraints: [],
     hints: [],
+    topicId: "",
+    subtopicId: "",
   });
 
 
 
+  console.log(questionDetails);
+  
+
+ 
+  
+  useEffect(() => {
+    questionDetails.topicId = selectedTopic;
+    questionDetails.subtopicId = selectedSubtopic;
+  }, [selectedTopic, selectedSubtopic])
 
   // Toggle Theme
   const toggleTheme = () => {
@@ -117,13 +132,40 @@ const AddContentPage = () => {
   };
 
   // Handle Adding a New Subtopic
-  const addNewSubtopic = () => {
-    if (newSubtopic.trim()) {
-      setSubtopics([...subtopics, newSubtopic]);
-      setSelectedSubtopic(newSubtopic);
-      setNewSubtopic("");
+  const handleAddSubtopic = async ()=>{
+    if(newSubtopic.trim()){
+      try {
+        setSubtopicError(''); // Reset any previous error
+        setSubtopicLoading(true);
+        console.log("handle add subtopic",newSubtopic);
+        
+        const response = await fetch('http://localhost:3000/subtopics/admin/create',{
+          method: 'POST',
+          credentials:'include',
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify({name:newSubtopic,topicId:selectedTopic})
+        })
+
+        const data = await response.json();
+
+        if(data.success){
+          dispatch(addSubTopic(data.subtopic));
+          toast.success('SubTopic Added Successfully');
+          setNewSubtopic(''); // Reset the newSubtopic state
+          setSubtopicError(''); // Clear any error messages
+          setSubtopicLoading(false);
+        }else{
+          setSubtopicError(data.message);
+          setSubtopicLoading(false);
+        }
+      } catch (error) {
+        setSubtopicError(error.message);
+        setSubtopicLoading(false);
+      }
     }
-  };
+  }
 
   // Handle Hint Addition
   const handleAddHint = () => {
@@ -163,7 +205,7 @@ const AddContentPage = () => {
     };
 
     fetchTopics();
-  }, [topics.length]);
+  }, [topics.length,dispatch]);
 
   // fetching the subtopic of selected topic when page load
   useEffect(() => {
@@ -194,8 +236,37 @@ const AddContentPage = () => {
     if (selectedTopic) {
       fetchSubtopicsById();
     }
-  }, [selectedTopic]);
-
+  }, [selectedTopic,dispatch]);
+  const handleQuestionSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setQuestiongLoading(true);
+      setQuestionError('');
+      const response = await fetch('http://localhost:3000/questions/admin/create', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(questionDetails),
+      });
+  
+      const data = await response.json();
+      if (data.success) {
+        toast.success("Question Added Successfully");
+        dispatch(setQuestionDetails(data.question));
+        setQuestionError('');
+        setQuestiongLoading(false);
+      } else {
+        setQuestionError(data.message);
+        setQuestiongLoading(false);
+      }
+    } catch (error) {
+      setQuestionError(error.message);
+      setQuestiongLoading(false);
+    }
+  };
+  
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
       <aside className="w-full md:w-64 bg-white dark:bg-gray-800 shadow-md">
@@ -411,8 +482,10 @@ const AddContentPage = () => {
                             className="border-gray-300 dark:border-gray-700 dark:bg-gray-800"
                           />
 
-
-                          <Button>Save Subtopic</Button>
+                          {
+                            subtopicLoading ? (<Loader2 className="h-4 w-4 animate-spin"/>) :(<Button onClick={handleAddSubtopic}>Save Subtopic</Button>)
+                          }
+                          
                         </div>
                       </DialogContent>
                     </Dialog>
@@ -503,11 +576,33 @@ const AddContentPage = () => {
                   </Button>
                 </div>
 
+                {/* contraint */}
 
-
+                {/* Tags */}
+                <div>
+                  <Label className="text-base font-medium">Constraints (comma-separated)</Label>
+                  <Input
+                    type="text"
+                    value={questionDetails.constraints.join(", ")}
+                    onChange={(e) =>
+                      setQuestionDetails({
+                        ...questionDetails,
+                        constraints: e.target.value.split(", "),
+                      })
+                    }
+                    className="border-gray-300 dark:border-gray-700 dark:bg-gray-800"
+                  />
+                </div>
                 {/* Submit */}
-                <Button type="submit" className="w-full mt-4">
-                  Submit
+                <Button type="submit" onClick={handleQuestionSubmit} className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 w-full items-center flex justify-center mx-auto h-14" disabled={questionLoading}>
+                  {questionLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Saving...
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
                 </Button>
               </form>
             </CardContent>

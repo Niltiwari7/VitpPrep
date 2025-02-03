@@ -24,7 +24,7 @@
         },
         subtopicId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Subtopic', // Reference to Subtopic model
+            ref: 'Subtopic', 
         },
         miscellaneous: {
             type: Boolean,
@@ -45,6 +45,9 @@
             },
         ],
         hints:{
+            type:Array,
+        },
+        constraints:{
             type:Array,
         }
     });

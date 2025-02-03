@@ -6,7 +6,7 @@ import Topic from "../models/topic.model.js";
 // Create a new Question
 export const createQuestion = async (req, res) => {
     try {
-        const {
+        let {
             title,
             description,
             difficulty,
@@ -16,7 +16,8 @@ export const createQuestion = async (req, res) => {
             url,
             miscellaneous = false,
             examples = [],
-            hints = []
+            hints = [],
+            constraints = []
         } = req.body;
 
         // Input validation
@@ -50,6 +51,7 @@ export const createQuestion = async (req, res) => {
                 })
             }
         }
+        difficulty = difficulty.toLowerCase();
 
         // Checking for difficulty level
         if (!['easy', 'medium', 'hard'].includes(difficulty)) {
@@ -70,7 +72,8 @@ export const createQuestion = async (req, res) => {
             url,
             miscellaneous,
             examples,
-            hints
+            hints,
+            constraints
         });
 
         await question.save();
