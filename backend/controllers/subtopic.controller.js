@@ -1,3 +1,4 @@
+import Question from "../models/question.model.js";
 import Subtopic from "../models/subtopic.model.js";
 import Topic from "../models/topic.model.js";
 
@@ -191,3 +192,53 @@ export const deleteSubtopic = async (req, res) => {
         })
     }
 }
+
+// populate question array by subtopic Id
+
+export const QuestionSubtopicById = async (req, res) => {
+    try {
+        const { subtopicId } = req.params;
+        // Input validation: Check if subtopicId is provided
+        if (!subtopicId) {
+            return res.status(400).json({
+                message: "Subtopic ID is required",
+                success: false,
+                statusCode: 400,
+            });
+        }
+
+        // Find the subtopic by ID and populate its questions
+        const subtopic = await Subtopic.findById(subtopicId).populate("questions");
+
+        // If subtopic doesn't exist
+        if (!subtopic) {
+            return res.status(404).json({
+                message: "Subtopic not found",
+                success: false,
+                statusCode: 404,
+            });
+        }
+
+        // If no questions are associated with the subtopic
+        if (subtopic.questions.length === 0) {
+            return res.status(404).json({
+                message: "No questions found for this subtopic",
+                success: false,
+                statusCode: 404,
+            });
+        }
+
+        return res.status(200).json({
+            message: "Questions fetched successfully",
+            success: true,
+            statusCode: 200,
+            questions: subtopic.questions,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Internal server error",
+            statusCode: 500,
+            success: false,
+        });
+    }
+};

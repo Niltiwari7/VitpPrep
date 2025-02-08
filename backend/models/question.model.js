@@ -49,7 +49,15 @@
         },
         constraints:{
             type:Array,
+        },
+        like:{
+            type:Boolean,
+            default:false
+        },
+        videoLink:{
+            type:String
         }
+        
     });
 
     // Register the Question model

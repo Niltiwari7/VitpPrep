@@ -1,6 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const TopicCovered = () => {
+
+  const theme = useSelector((state)=>state.theme.darkMode);
+  const topic = useSelector((state)=>state.topic.topics);
+
+  console.log(topic);
+  
   const topics = [
     { name: 'Array', count: 144 },
     { name: 'String', count: 132 },

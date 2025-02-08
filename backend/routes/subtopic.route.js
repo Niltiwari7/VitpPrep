@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { auth } from '../middlewares/auth.middleware.js';
-import { createSubtopic, getAllSubtopics, getSubtopicsByTopic, getSubtopicId, updateSubtopic, deleteSubtopic } from '../controllers/subtopic.controller.js';
+import { createSubtopic, getAllSubtopics, getSubtopicsByTopic, getSubtopicId, updateSubtopic, deleteSubtopic, QuestionSubtopicById} from '../controllers/subtopic.controller.js';
 
 const router = express.Router();
 
@@ -16,6 +16,10 @@ router.get('/:id',auth,getSubtopicId);
 router.put('/admin/update/:id',auth,updateSubtopic);
 
 router.delete('/admin/delete/:id',auth,deleteSubtopic);
+
+router.get('/question/:subtopicId',auth,QuestionSubtopicById);
+
+
 
 
 export default router;

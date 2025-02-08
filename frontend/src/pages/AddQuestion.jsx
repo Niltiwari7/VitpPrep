@@ -22,6 +22,7 @@ const AddContentPage = () => {
   const topics = useSelector((state) => state.topic.topics || {});
   const subtopic = useSelector((state) => state.subtopic.subtopics || {});
   const question = useSelector((state) => state.question.question | {});
+  
   const [errortopics, setErrorTopics] = useState('');
   const [selectedTopic, setSelectedTopic] = useState("");
   const [newTopic, setNewTopic] = useState("");
@@ -51,13 +52,7 @@ const AddContentPage = () => {
     subtopicId: "",
   });
 
-
-
-  console.log(questionDetails);
-  
-
- 
-  
+    
   useEffect(() => {
     questionDetails.topicId = selectedTopic;
     questionDetails.subtopicId = selectedSubtopic;
@@ -188,7 +183,7 @@ const AddContentPage = () => {
           }
         });
         const data = await response.json();
-        console.log(data);
+       
 
         if (data.success) {
           dispatch(updateTopic(data.topics));

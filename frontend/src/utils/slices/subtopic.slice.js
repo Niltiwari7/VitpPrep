@@ -1,36 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const subtopicSlice = createSlice({
-  name: 'subtopic',
+  name: "subtopic",
   initialState: {
-    subtopics: {}
+    subtopics: {},
   },
   reducers: {
- 
     updateSubtopics: (state, action) => {
       if (Array.isArray(action.payload)) {
-        console.log('UpdatedSubtopic debuger: ',action.payload);
+        console.log("UpdatedSubtopic debugger: ", action.payload);
         state.subtopics = action.payload.reduce((acc, subtopic) => {
-            console.log('mere bharat mahan',subtopic);
-            
-          acc[subtopic._id] = subtopic; 
-          return acc; 
-        }, {});
+          acc[subtopic._id] = subtopic;
+          return acc;
+        }, {}); // ✅ Mutating state directly
       } else {
-        state.subtopics = { ...state.subtopics, ...action.payload };
+        Object.assign(state.subtopics, action.payload); // ✅ Merge objects correctly
       }
     },
+    
 
-    // Add a single subtopic
     addSubTopic: (state, action) => {
       state.subtopics[action.payload.id] = action.payload.subtopic;
     },
 
-    // Delete a subtopic by id
     deleteSubTopic: (state, action) => {
       delete state.subtopics[action.payload.id];
-    }
-  }
+    },
+  },
 });
 
 export const { updateSubtopics, addSubTopic, deleteSubTopic } = subtopicSlice.actions;

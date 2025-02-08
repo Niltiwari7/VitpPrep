@@ -3,14 +3,16 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { toast } from 'react-hot-toast'
 import { logout } from '../utils/slices/admin.slice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Loader2 } from 'lucide-react';
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const adminInfo = useSelector((state) => state.admin.adminInfo || {});
   const { adminId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [logoutLoading, setLogoutLoading] = useState(false);
+
 
   const handlelogOut = async () => {
 
@@ -90,15 +92,24 @@ const Sidebar = () => {
         <ul className="space-y-4">
           <li>
             <Link
-              to={`/admin/profile/${adminId}`}
+              to={`/admin/profile/${adminInfo._id}`}
               className="block py-2 px-4 text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition duration-200"
             >
               Profile
             </Link>
           </li>
+
           <li>
             <Link
-              to="/admin/topics"
+              to={`/admin/addQuestion`}
+              className='block py-2 px-4 text-gray-300 hover:text-yellow-400 hover:bg-gray-700 rounded-lg transition duration-200'
+            >Add Question</Link>
+
+          </li>
+
+          <li>
+            <Link
+              to={`/admin/topic/${adminInfo._id}`}
               className="block py-2 px-4 text-gray-300 hover:text-teal-400 hover:bg-gray-700 rounded-lg transition duration-200"
             >
               Topics

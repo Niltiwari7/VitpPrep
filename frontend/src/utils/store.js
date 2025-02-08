@@ -8,6 +8,8 @@ import themeReducer from './slices/theme.slice.js';
 import topicReducer from './slices/topic.slice.js'
 import subTopicReducer from './slices/subtopic.slice.js';
 import questionReducer from './slices/question.slice.js';
+import subtopicByIdReducer from './slices/topicQuestion.slice.js';
+import questionBysubtopicIdReducer from './slices/questionbyId.slice.js';
 // Combine reducers
 const rootReducer = combineReducers({
     admin: adminReducer,
@@ -16,6 +18,8 @@ const rootReducer = combineReducers({
     topic: topicReducer,
     subtopic: subTopicReducer,
     question: questionReducer,
+    subtopicById: subtopicByIdReducer,
+    questionBysubtopicId: questionBysubtopicIdReducer
 });
 
 // Persist configuration
