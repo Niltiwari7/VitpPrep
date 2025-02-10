@@ -4,17 +4,51 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { toast } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { updateTopic } from "../utils/slices/topic.slice.js";
 
-const UpdateTopic = ({ topic, className }) => {
+const API_URL = "http://localhost:3000";
+
+const UpdateTopic = ({ topic, className, onClose }) => {
   const [topicName, setTopicName] = useState(topic?.name || "");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleUpdate = (e) => {
+  const dispatch = useDispatch();
+
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    console.log("Updated Topic:", topicName);
-    
+
+    try {
+      setLoading(true);
+      setError("");
+      const response = await fetch(`${API_URL}/topics/admin/update/${topic._id}`, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: topicName }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        dispatch(updateTopic({_id:topic._id,name:topicName,description:topic.description}));
+        toast.success(data.message);
+        setError("");
+        onClose(); // Close drawer after successful update
+      } else {
+        setError(data.message);
+      }
+    } catch (error) {
+      setError(error.message || "An error occurred while updating the topic.");
+    } finally {
+      setLoading(false);
+    }
   };
-  console.log(topic);
-  
+
   return (
     <Card className={cn("w-full max-w-md shadow-lg rounded-xl", className)}>
       <CardHeader className="border-b">
@@ -46,11 +80,17 @@ const UpdateTopic = ({ topic, className }) => {
           type="button"
           variant="outline"
           className="hover:bg-gray-200 dark:hover:bg-gray-700"
+          onClick={onClose} // Close drawer when Cancel is clicked
         >
           Cancel
         </Button>
-        <Button type="submit" onClick={handleUpdate} className="bg-blue-600 hover:bg-blue-700">
-          Update
+        <Button
+          type="submit"
+          onClick={handleUpdate}
+          className="bg-blue-600 hover:bg-blue-700"
+          disabled={loading}
+        >
+          {loading ? "Updating..." : "Update"}
         </Button>
       </CardFooter>
     </Card>

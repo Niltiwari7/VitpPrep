@@ -7,29 +7,69 @@ import Sidebar from "../components/sideBar";
 import { Link } from "react-router-dom";
 import { updateSubtopicsById } from "../utils/slices/topicQuestion.slice.js";
 import QuestionBySubtopicId from "../components/QuestionBySubtopicId.jsx";
-import { Drawer, DrawerTrigger ,DrawerContent,DrawerHeader,DrawerTitle} from "@/components/ui/drawer";
+import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import UpdateTopic from "../components/UpdateTopic.jsx";
+
 
 const API_URL = 'http://localhost:3000';
 
 const Question = () => {
     const dispatch = useDispatch();
     const darkMode = useSelector((state) => state.theme?.darkMode || false);
-    const adminInfo = useSelector((state) => state.admin?.adminInfo || {}, shallowEqual);  // Use shallowEqual for performance
+    const adminInfo = useSelector((state) => state.admin?.adminInfo || {}, shallowEqual);
 
-    const topic = useSelector((state) => state.topic?.topics || {}, shallowEqual); // Optimizing with shallowEqual
-    const subtopic = useSelector((state) => state.subtopicById?.subtopicById || {}, shallowEqual);  // Optimizing with shallowEqual
-
-
+    const [topic, setTopic] = useState({});
+    const [subtopic,setSubtopic] = useState({})
     const [selectedTopic, setSelectedTopic] = useState("");
     const [expandedTopic, setExpandedTopic] = useState(null);
     const [subtopicError, setSubtopicError] = useState("");
     const [expandedSubtopic, setExpandedSubtopic] = useState(null);
     const [selectSubtopic, setSelectSubtopic] = useState("");
+    const [topicLoading, setTopicLoading] = useState(false);
+    const [subtopicLoading, setSubtopicLoading] = useState(false);
+    const [errorTopics, setErrorTopics] = useState('');
+
+    useEffect(() => {
+        const fetchTopics = async () => {
+            try {
+                setErrorTopics('');
+                const response = await fetch('http://localhost:3000/topics/getalltopics', {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                const data = await response.json();
+
+
+                if (data.success) {
+                    console.log(data);
+                    
+                    setTopic(data.topics);
+
+                    setErrorTopics('');
+                } else {
+                    setErrorTopics(data.message);
+                }
+            } catch (error) {
+                setErrorTopics(error.message);
+            } finally {
+                setTopicLoading(false);
+            }
+        };
+
+        fetchTopics();
+    }, [API_URL,dispatch]);
+
+    console.log("topic",topic);
+    
 
     const toggleTheme = () => {
         dispatch(setDarkMode(!darkMode));
     };
+
+
 
     useEffect(() => {
         if (selectedTopic) {
@@ -46,7 +86,7 @@ const Question = () => {
 
                     const data = await response.json();
                     if (data.success) {
-                        dispatch(updateSubtopicsById(data.subtopics));
+                        setSubtopic(data.subtopics);
                         setSubtopicError('');
                     } else {
                         setSubtopicError(data.message || 'Failed to fetch subtopics');
@@ -121,6 +161,8 @@ const Question = () => {
             </div>
         </div>
     ), [subtopic, expandedSubtopic]);
+
+
     // Memoize topic rendering
     const memoizedTopics = useMemo(() => (
         Object.entries(topic).map(([key, value]) => (
@@ -146,7 +188,7 @@ const Question = () => {
                                 <DrawerHeader>
                                     <DrawerTitle>Edit Topic</DrawerTitle>
                                 </DrawerHeader>
-                                <UpdateTopic topic = {value} />
+                                <UpdateTopic topic={value} />
                             </DrawerContent>
                         </Drawer>
                         <button
@@ -167,7 +209,10 @@ const Question = () => {
             </div>
         ))
     ), [topic, expandedTopic, memoizedSubtopics]);
-    
+
+
+
+
     return (
         <div className="flex flex-col md:flex-row h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
             <aside className="w-full md:w-64 bg-white dark:bg-gray-800 shadow-md">

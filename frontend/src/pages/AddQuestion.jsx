@@ -14,28 +14,32 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { addTopic, updateTopic } from "../utils/slices/topic.slice.js";
 import { toast } from 'react-hot-toast';
 import { addSubTopic, updateSubtopics } from "../utils/slices/subtopic.slice.js";
-import { Loader, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+
+
+const API_URL = "http://localhost:3000";
 const AddContentPage = () => {
   const dispatch = useDispatch();
   const darkMode = useSelector((state) => state.theme.darkMode);
   const adminInfo = useSelector((state) => state.admin.adminInfo || {});
-  const topics = useSelector((state) => state.topic.topics || {});
-  const subtopic = useSelector((state) => state.subtopic.subtopics || {});
-  const question = useSelector((state) => state.question.question | {});
-  
+  // states
+  const [topics, setTopics] = useState({});
+  const [subtopic, setSubtopic] = useState({});
   const [errortopics, setErrorTopics] = useState('');
   const [selectedTopic, setSelectedTopic] = useState("");
   const [newTopic, setNewTopic] = useState("");
   const [topicdesc, setTopicdesc] = useState("");
   const [selectedSubtopic, setSelectedSubtopic] = useState("");
   const [newSubtopic, setNewSubtopic] = useState("");
+
+  // Error state
   const [SubtopicError, setSubtopicError] = useState('');
   const [questionError, setQuestionError] = useState('');
   const [hint, setHint] = useState("");
 
   // loader state
   const [topicLoading, setTopicLoading] = useState(false);
-  const [questionLoading, setQuestiongLoading] = useState(false);
+  const [questionLoading, setQuestionLoading] = useState(false);
   const [subtopicLoading, setSubtopicLoading] = useState(false);
 
   const [questionDetails, setQuestionDetails] = useState({
@@ -52,143 +56,32 @@ const AddContentPage = () => {
     subtopicId: "",
   });
 
-    
-  useEffect(() => {
-    questionDetails.topicId = selectedTopic;
-    questionDetails.subtopicId = selectedSubtopic;
-  }, [selectedTopic, selectedSubtopic])
 
-  // Toggle Theme
   const toggleTheme = () => {
     dispatch(setDarkMode(!darkMode));
-  };
-
-  // Handle Example Addition
-  const handleAddExample = () => {
-    setQuestionDetails((prev) => ({
-      ...prev,
-      examples: [...prev.examples, { input: "", output: "" }],
-    }));
-  };
-
-  // Handle Example Removal
-  const handleRemoveExample = (index) => {
-    setQuestionDetails((prev) => ({
-      ...prev,
-      examples: prev.examples.filter((_, i) => i !== index),
-    }));
-  };
-
-  const handleRemoveHints = (index) => {
-    setQuestionDetails((prev) => ({
-      ...prev,
-      hints: prev.hints.filter((_, i) => i !== index), // Fixed syntax
-    }));
-  };
-
-  // Handle Adding a New Topic
-  const handleAddTopic = async () => {
-    if (newTopic.trim()) {
-      try {
-        setErrorTopics(''); // Reset any previous error
-        setTopicLoading(true); // Show loading state
-
-        const response = await fetch('http://localhost:3000/topics/admin/create', {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ name: newTopic, description: topicdesc.trim() }), // Request body
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          // Dispatch to Redux store
-          dispatch(addTopic(data.topic));
-
-          // Success message and clear inputs
-          toast.success('Topic Added Successfully');
-          setNewTopic(''); // Reset the newTopic state
-          setTopicdesc(''); // Reset the topicdesc state (if needed)
-          setErrorTopics(''); // Clear any error messages
-        } else {
-          // Handle error from API response
-          setErrorTopics(data.message);
-        }
-      } catch (error) {
-        // Handle network or other unexpected errors
-        setErrorTopics(error.message);
-      } finally {
-        setTopicLoading(false); // Reset loading state after operation
-      }
-    }
-  };
-
-  // Handle Adding a New Subtopic
-  const handleAddSubtopic = async ()=>{
-    if(newSubtopic.trim()){
-      try {
-        setSubtopicError(''); // Reset any previous error
-        setSubtopicLoading(true);
-        console.log("handle add subtopic",newSubtopic);
-        
-        const response = await fetch('http://localhost:3000/subtopics/admin/create',{
-          method: 'POST',
-          credentials:'include',
-          headers:{
-            'Content-Type':'application/json'
-          },
-          body:JSON.stringify({name:newSubtopic,topicId:selectedTopic})
-        })
-
-        const data = await response.json();
-
-        if(data.success){
-          dispatch(addSubTopic(data.subtopic));
-          toast.success('SubTopic Added Successfully');
-          setNewSubtopic(''); // Reset the newSubtopic state
-          setSubtopicError(''); // Clear any error messages
-          setSubtopicLoading(false);
-        }else{
-          setSubtopicError(data.message);
-          setSubtopicLoading(false);
-        }
-      } catch (error) {
-        setSubtopicError(error.message);
-        setSubtopicLoading(false);
-      }
-    }
   }
 
-  // Handle Hint Addition
-  const handleAddHint = () => {
-    setQuestionDetails((prev) => {
-      return { ...prev, hints: [...prev.hints, hint] }
-    })
-  }
+  // fetching the topics when page load and when topic got updated
 
-  // fetching the topic when page load
   useEffect(() => {
     const fetchTopics = async () => {
+      setTopicLoading(true);
+      setErrorTopics('');
+
       try {
-        setErrorTopics('');
-        setTopicLoading(true);
-        const response = await fetch('http://localhost:3000/topics/getalltopics', {
+        const response = await fetch(`${API_URL}/topics/getalltopics`, {
           method: 'GET',
           credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
           }
         });
-        const data = await response.json();
-       
+
+        const data = await response.json(); // Await the response correctly
 
         if (data.success) {
-          dispatch(updateTopic(data.topics));
-          setSelectedTopic(data.topics[0]._id);
-          setErrorTopics('');
+          setTopics(data.topics);
+          setSelectedTopic(data.topics[0]?._id); // Handle undefined cases safely
         } else {
           setErrorTopics(data.message);
         }
@@ -200,67 +93,206 @@ const AddContentPage = () => {
     };
 
     fetchTopics();
-  }, [topics.length,dispatch]);
+  }, [API_URL]);
 
-  // fetching the subtopic of selected topic when page load
+
+  // fetching the subtopics when page load and when subtopic got updated
+
   useEffect(() => {
-    const fetchSubtopicsById = async () => {
+    const fetchSubtopics = async () => {
       try {
         setSubtopicError('');
+        setSubtopicLoading(true);
 
-        // Fetch subtopics for the selected topic
-        const response = await fetch(`http://localhost:3000/subtopics/${selectedTopic}`, {
+        const response = await fetch(`${API_URL}/subtopics/${selectedTopic}`, {
           method: 'GET',
           credentials: 'include',
           headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+            'Content-Type': 'application/json'
+          }
+        })
 
         const data = await response.json();
+        console.log(data);
+
         if (data.success) {
-          dispatch(updateSubtopics(data.subtopics));
+          setSubtopic(data.subtopics);
           setSelectedSubtopic(data.subtopics[0]?._id);
-          setSubtopicError('');
+        } else {
+          setSubtopicError(data.message);
+
         }
       } catch (error) {
         setSubtopicError(error.message || 'An unexpected error occurred');
+      } finally {
+        setSubtopicLoading(false);
       }
-    };
-
-    if (selectedTopic) {
-      fetchSubtopicsById();
     }
-  }, [selectedTopic,dispatch]);
-  const handleQuestionSubmit = async (e) => {
-    e.preventDefault();
+    fetchSubtopics();
+  }, [selectedTopic, API_URL]);
+
+
+
+
+  const handleAddTopic = async () => {
     try {
-      setQuestiongLoading(true);
-      setQuestionError('');
-      const response = await fetch('http://localhost:3000/questions/admin/create', {
+      setErrorTopics('');
+      setTopicLoading(true);
+
+      const response = await fetch(`${API_URL}/topics/admin/create`, {
         method: 'POST',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(questionDetails),
+        body: JSON.stringify({ name: newTopic, description: topicdesc }),
       });
-  
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
       const data = await response.json();
+
       if (data.success) {
-        toast.success("Question Added Successfully");
-        dispatch(setQuestionDetails(data.question));
-        setQuestionError('');
-        setQuestiongLoading(false);
+        setTopics([...topics, data.topic]);
+        toast.success(data.message);
+        setNewTopic('');
+        setTopicdesc('');
+        setErrorTopics('');
       } else {
-        setQuestionError(data.message);
-        setQuestiongLoading(false);
+        toast.error(data.message);
+        setErrorTopics(data.message);
       }
     } catch (error) {
-      setQuestionError(error.message);
-      setQuestiongLoading(false);
+
+      setErrorTopics(error.message || 'An unexpected error occurred');
+    } finally {
+
+      setTopicLoading(false);
     }
   };
+
+
+
+  const handleAddSubtopic = async () => {
+    try {
+      setSubtopicError('');
+      setSubtopicLoading(true);
+
+      const response = await fetch(`${API_URL}/subtopics/admin/create`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: newSubtopic, topicId: selectedTopic }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubtopic((prevSubtopics) => [...prevSubtopics, data.subtopic]);
+        toast.success(data.message);
+        setNewSubtopic('');
+        setSubtopicError('');
+      } else {
+        toast.error(data.message);
+        setSubtopicError(data.message);
+      }
+    } catch (error) {
+      setSubtopicError(error.message || 'An unexpected error occurred');
+    } finally {
+      setSubtopicLoading(false);
+    }
+  };
+
+
+  const handleAddExample = () => {
+    setQuestionDetails((prev) => ({
+      ...prev,
+      examples: [...prev.examples, { input: "", output: "" }]
+    }))
+  }
+
+  const handleRemoveExample = (index) => {
+    setQuestionDetails((prev) => ({
+      ...prev,
+      examples: prev.examples.filter((_, i) => i !== index)
+    }));
+  };
+
+
+
+
+  const handleAddHint = () => {
+    setQuestionDetails((prev) => {
+      return {
+        ...prev,
+        hints: [...prev.hints, hint]
+      }
+    })
+  }
+
+
+  const handleRemoveHints = (index) => {
+    setQuestionDetails((prev) => {
+      return {
+        ...prev, hints: prev.hints.filter((_, i) => i !== index)
+      }
+    })
+  }
+
+
+
+
+
+  const handleQuestionSubmit = async () => {
+    try {
+        setQuestionLoading(true); 
+        setQuestionError('');
+
+       
+        const updatedQuestionDetails = {
+            ...questionDetails,
+            topicId: selectedTopic,
+            subtopicId: selectedSubtopic
+        };
+        
+        console.log(updatedQuestionDetails);
+        
+
+        const response = await fetch(`${API_URL}/questions/admin/create`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedQuestionDetails), 
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        if (data.success) {
+            toast.success(data.message);
+        } else {
+            toast.error(data.message);
+            setQuestionError(data.message);
+        }
+    } catch (error) {
+        setQuestionError(error.message || 'An unexpected error occurred');
+    } finally {
+        setQuestionLoading(false);
+    }
+};
+
   
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
@@ -416,11 +448,21 @@ const AddContentPage = () => {
                             onChange={(e) => setTopicdesc(e.target.value)}
                             className="border-gray-300 dark:border-gray-700 dark:bg-gray-800"
                           />
-                          <Button
-                            onClick={handleAddTopic}
-                          >
-                            Save Topic
-                          </Button>
+
+                          {
+                            topicLoading ? (
+                              <div className="flex justify-center items-center">
+                                <Loader2 className="h-6 w-6 animate-spin text-gray-200 dark:text-gray-700" />
+                              </div>
+                            ) : (
+                              <Button
+                                onClick={handleAddTopic} disabled={topicLoading}
+                              >
+                                Save Topic
+                              </Button>
+
+                            )
+                          }
                         </div>
                       </DialogContent>
                     </Dialog>
@@ -478,9 +520,15 @@ const AddContentPage = () => {
                           />
 
                           {
-                            subtopicLoading ? (<Loader2 className="h-4 w-4 animate-spin"/>) :(<Button onClick={handleAddSubtopic}>Save Subtopic</Button>)
+                            subtopicLoading ? (
+                              <div
+                                className="flex justify-center items-center">
+                                <Loader2 className="h-6 w-6 animate-spin text-gray-200 dark:text-gray-700" />
+                              </div>) : (
+                              <Button onClick={handleAddSubtopic}>Save Subtopic</Button>
+                            )
                           }
-                          
+
                         </div>
                       </DialogContent>
                     </Dialog>

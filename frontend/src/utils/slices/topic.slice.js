@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 const topicSlice = createSlice({
     name: 'topic',
     initialState: {
@@ -7,17 +6,22 @@ const topicSlice = createSlice({
     },
     reducers: {
         updateTopic: (state, action) => {
-            // Ensure topics are stored correctly
-            if (Array.isArray(action.payload)) {
-                state.topics = action.payload.reduce((acc, topic) => {
-                    acc[topic._id] = topic;
-                    return acc;
-                }, {});
-            } else {
-                state.topics = { ...state.topics, ...action.payload };
+            const { _id, name, description } = action.payload;
+            if (state.topics[_id]) {
+                console.log(typeof(action.payload));
+                
+                console.log(action.payload);
+                
+                state.topics = {
+                    ...state.topics,
+                    [_id]: {
+                        ...state.topics[_id],
+                        name,
+                        description
+                    }
+                };
             }
         },
-        
         addTopic: (state, action) => {
             state.topics[action.payload.id] = action.payload.topic;
         },
@@ -28,5 +32,4 @@ const topicSlice = createSlice({
 });
 
 export const { updateTopic, addTopic, removeTopic } = topicSlice.actions;
-
 export default topicSlice.reducer;
