@@ -9,6 +9,7 @@ import { updateSubtopicsById } from "../utils/slices/topicQuestion.slice.js";
 import QuestionBySubtopicId from "../components/QuestionBySubtopicId.jsx";
 import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import UpdateTopic from "../components/UpdateTopic.jsx";
+import UpdateSubtopic from "../components/UpdateSubtopic.jsx";
 
 
 const API_URL = 'http://localhost:3000';
@@ -19,7 +20,7 @@ const Question = () => {
     const adminInfo = useSelector((state) => state.admin?.adminInfo || {}, shallowEqual);
 
     const [topic, setTopic] = useState({});
-    const [subtopic,setSubtopic] = useState({})
+    const [subtopic, setSubtopic] = useState({})
     const [selectedTopic, setSelectedTopic] = useState("");
     const [expandedTopic, setExpandedTopic] = useState(null);
     const [subtopicError, setSubtopicError] = useState("");
@@ -45,7 +46,7 @@ const Question = () => {
 
                 if (data.success) {
                     console.log(data);
-                    
+
                     setTopic(data.topics);
 
                     setErrorTopics('');
@@ -60,10 +61,10 @@ const Question = () => {
         };
 
         fetchTopics();
-    }, [API_URL,dispatch]);
+    }, [API_URL, dispatch]);
 
-    console.log("topic",topic);
-    
+    console.log("topic", topic);
+
 
     const toggleTheme = () => {
         dispatch(setDarkMode(!darkMode));
@@ -107,6 +108,21 @@ const Question = () => {
         setSelectSubtopic(subtopicId);
         setExpandedSubtopic(expandedSubtopic === subtopicId ? null : subtopicId);
     };
+    // Handle topic update
+    const handleTopicUpdate = (updatedTopic) => {
+        setTopic((prev) => prev.map((topic) => topic._id === updatedTopic._id ? updatedTopic : topic))
+
+    };
+
+    const handleSubtopicUpdate = (updatedSubtopic) => {
+        setSubtopic((prev) =>
+            prev.map((subtopic) =>
+                subtopic._id === updatedSubtopic._id ? updatedSubtopic : subtopic
+            )
+        );
+    };
+
+
 
     // Memoize the topic rendering to avoid unnecessary re-renders
     const memoizedSubtopics = useMemo(() => (
@@ -127,7 +143,20 @@ const Question = () => {
                                 <div className="flex gap-3">
                                     {/* Edit Button */}
                                     <button className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 shadow-md hover:shadow-lg">
-                                        <FaEdit size={16} className="text-gray-700 dark:text-gray-300" />
+                                        <Drawer>
+                                            <DrawerTrigger asChild>
+                                                <button aria-label="Edit topic " className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                                                    <FaEdit size={20} className="text-gray-600 dark:text-gray-300" />
+                                                </button>
+                                            </DrawerTrigger>
+                                            {/* Move UpdateTopic inside DrawerContent */}
+                                            <DrawerContent className="flex justify-center items-center dark:bg-transparent bg-transparent">
+                                                <DrawerHeader>
+                                                    <DrawerTitle>Edit Subtopic</DrawerTitle>
+                                                </DrawerHeader>
+                                                <UpdateSubtopic subtopic={value} onSubtopicUpdate={handleSubtopicUpdate} />
+                                            </DrawerContent>
+                                        </Drawer>
                                     </button>
 
                                     {/* Expand Button */}
@@ -188,7 +217,7 @@ const Question = () => {
                                 <DrawerHeader>
                                     <DrawerTitle>Edit Topic</DrawerTitle>
                                 </DrawerHeader>
-                                <UpdateTopic topic={value} />
+                                <UpdateTopic topic={value} onTopicUpdate={handleTopicUpdate} />
                             </DrawerContent>
                         </Drawer>
                         <button

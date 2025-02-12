@@ -20,6 +20,7 @@ import { Toaster } from "react-hot-toast";
 import AddQuestion from "./pages/AddQuestion";
 import Topic from "./components/Topic";
 import Quesion from "./pages/Quesion";
+import UpdateQuestion from "./components/UpdateQuestion";
 
 
 function App() {
@@ -70,6 +71,8 @@ function App() {
         <Route path = "/admin/addQuestion" element = {<AddQuestion/>}/>
         <Route path = "/admin/topic/:adminId" element = {<Topic/>}/>
         <Route path = '/admin/questions' element = {<Quesion/>}/>
+        <Route path ='/admin/edit-question/:questionId' element = {<UpdateQuestion/>}/>
+
       </Routes>
     </>
   );

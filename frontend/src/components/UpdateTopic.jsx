@@ -5,17 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { toast } from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { updateTopic } from "../utils/slices/topic.slice.js";
+import {DrawerClose} from '@/components/ui/drawer';
 
 const API_URL = "http://localhost:3000";
 
-const UpdateTopic = ({ topic, className, onClose }) => {
+const UpdateTopic = ({ topic, className, onTopicUpdate }) => {
+  
+  
   const [topicName, setTopicName] = useState(topic?.name || "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  const dispatch = useDispatch();
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -23,6 +22,8 @@ const UpdateTopic = ({ topic, className, onClose }) => {
     try {
       setLoading(true);
       setError("");
+
+      // Send the updated data to the backend
       const response = await fetch(`${API_URL}/topics/admin/update/${topic._id}`, {
         method: "PUT",
         credentials: "include",
@@ -35,12 +36,13 @@ const UpdateTopic = ({ topic, className, onClose }) => {
       const data = await response.json();
 
       if (data.success) {
-        dispatch(updateTopic({_id:topic._id,name:topicName,description:topic.description}));
         toast.success(data.message);
+        console.log("by coming from updae topic",data);
+          
+        onTopicUpdate(data.topic);
         setError("");
-        onClose(); // Close drawer after successful update
       } else {
-        setError(data.message);
+        setError(data.message || "Failed to update topic.");
       }
     } catch (error) {
       setError(error.message || "An error occurred while updating the topic.");
@@ -72,18 +74,28 @@ const UpdateTopic = ({ topic, className, onClose }) => {
               placeholder="Enter topic name..."
             />
           </div>
+
+          {/* Error message */}
+          {error && (
+            <p className="text-sm text-red-500 mt-2">
+              ⚠️ {error}
+            </p>
+          )}
         </form>
       </CardContent>
 
       <CardFooter className="flex justify-between">
-        <Button
-          type="button"
-          variant="outline"
-          className="hover:bg-gray-200 dark:hover:bg-gray-700"
-          onClick={onClose} // Close drawer when Cancel is clicked
-        >
-          Cancel
-        </Button>
+        <DrawerClose  asChild>
+
+          <Button
+            type="button"
+            variant="outline"
+            className="hover:bg-gray-200 dark:hover:bg-gray-700"
+
+          >
+            Cancel
+          </Button>
+        </DrawerClose>
         <Button
           type="submit"
           onClick={handleUpdate}

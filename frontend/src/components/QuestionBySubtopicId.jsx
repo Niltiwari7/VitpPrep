@@ -1,19 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { Loader2 } from 'lucide-react';
 import { FaStar, FaPlay, FaEdit } from 'react-icons/fa';
 import { SiLeetcode } from 'react-icons/si';
-import { updateQuestionById } from '../utils/slices/questionbyId.slice.js';
-
+import { Link } from 'react-router-dom';
+import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
+import UpdateQuestion from './UpdateQuestion';
 const QuestionBySubtopicId = ({ selectSubtopic }) => {
     const API_URL = 'http://localhost:3000';
-    const dispatch = useDispatch();
-    const questionById = useSelector(
-        (state) => state.questionBysubtopicId?.data || {},
-        shallowEqual
-    );
+
+    // Local state to hold data and loading/error status
+    const [questionById, setQuestionById] = useState(null);
     const [questionByLoading, setQuestionByLoading] = useState(false);
     const [questionByIdError, setQuestionByIdError] = useState('');
+
+
+    const handleQuestionUpdate = (updatedData) => {
+        setQuestionById((prev) =>
+            prev.map((question) =>
+                question._id === updatedData._id
+                    ? { ...question, ...updatedData }  // Update only the given properties
+                    : question
+            )
+        );
+    };
+    
 
     useEffect(() => {
         if (!selectSubtopic) return; // If no subtopic is selected, don't fetch
@@ -22,21 +32,21 @@ const QuestionBySubtopicId = ({ selectSubtopic }) => {
 
         const fetchQuestionsBySubtopicId = async () => {
             try {
-                setQuestionByIdError('');
-                setQuestionByLoading(true);
+                setQuestionByIdError('');  // Reset error state
+                setQuestionByLoading(true);  // Set loading state to true
                 const response = await fetch(`${API_URL}/subtopics/question/${selectSubtopic}`, {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    signal: abortController.signal, // Attach the abort signal
+                    signal: abortController.signal,  // Attach abort signal
                 });
 
                 const data = await response.json();
                 if (data.success) {
-                    dispatch(updateQuestionById(data.questions));
-                    setQuestionByIdError('');
+                    setQuestionById(data.questions);  // Set data in state
+                    setQuestionByIdError('');  // Reset error state if successful
                 } else {
                     setQuestionByIdError(data.message || 'Failed to fetch questions');
                 }
@@ -45,15 +55,16 @@ const QuestionBySubtopicId = ({ selectSubtopic }) => {
                     setQuestionByIdError(error.message || 'An unexpected error occurred');
                 }
             } finally {
-                setQuestionByLoading(false);
+                setQuestionByLoading(false);  // Set loading state to false
             }
         };
 
         fetchQuestionsBySubtopicId();
 
-        return () => abortController.abort(); // Cleanup function to cancel fetch if component unmounts
-    }, [selectSubtopic]);
+        return () => abortController.abort();  // Cleanup function to cancel fetch if component unmounts
+    }, [selectSubtopic]);  // Trigger fetch when selectSubtopic changes
 
+    // If there is an error, show the error message
     if (questionByIdError) {
         return (
             <div className="text-red-500 dark:text-red-400 text-center py-4">
@@ -62,6 +73,7 @@ const QuestionBySubtopicId = ({ selectSubtopic }) => {
         );
     }
 
+    // If the data is still loading, show a loader
     if (questionByLoading) {
         return (
             <div className="flex justify-center items-center p-4">
@@ -73,7 +85,7 @@ const QuestionBySubtopicId = ({ selectSubtopic }) => {
     return (
         <div className="text-white font-semibold rounded-lg p-2 shadow-md transition-all duration-300 hover:shadow-lg">
             <div className="w-full dark:bg-gray-900 bg-white rounded-lg p-3">
-                {Object.keys(questionById).length > 0 ? (
+                {questionById && Object.keys(questionById).length > 0 ? (
                     Object.entries(questionById).map(([key, value]) => (
                         <div
                             key={key}
@@ -115,10 +127,20 @@ const QuestionBySubtopicId = ({ selectSubtopic }) => {
                                     <FaPlay size={16} className="text-blue-500" />
                                 </a>
 
-                                {/* Edit Button */}
-                                <button className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300">
-                                    <FaEdit size={16} className="text-gray-700 dark:text-gray-300" />
-                                </button>
+                                <Drawer>
+                                    <DrawerTrigger asChild>
+                                        <button aria-label="Edit topic " className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                                            <FaEdit size={20} className="text-gray-600 dark:text-gray-300" />
+                                        </button>
+                                    </DrawerTrigger>
+                                    {/* Move UpdateTopic inside DrawerContent */}
+                                    <DrawerContent className="flex justify-center items-center dark:bg-transparent bg-transparent">
+                                        <DrawerHeader>
+                                            <DrawerTitle>Edit Question</DrawerTitle>
+                                        </DrawerHeader>
+                                        <UpdateQuestion question={value} onQuestionUpdate={handleQuestionUpdate} />
+                                    </DrawerContent>
+                                </Drawer>
                             </div>
                         </div>
                     ))

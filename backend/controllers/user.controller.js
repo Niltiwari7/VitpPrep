@@ -132,3 +132,25 @@ export const updateProfile = async(req,res)=>{
     }
 }
 
+// get all User Count 
+export const countUser = async (req, res) => {
+  try {
+    // Get the total number of users directly
+    const userCount = await User.countDocuments();
+
+    return res.status(200).json({
+      message: "User count fetched successfully",
+      statusCode: 200,
+      success: true,
+      count: userCount
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal Server Error",
+      statusCode: 500,
+      success: false,
+      error: error.message 
+    });
+  }
+};

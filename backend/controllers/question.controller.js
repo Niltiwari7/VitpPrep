@@ -78,10 +78,10 @@ export const createQuestion = async (req, res) => {
         // push the question to the subtopic model 
         await question.save();
         const subtopic = await Subtopic.findById(subtopicId);
-       if(subtopic){
-        subtopic.questions.push(question._id);
-        await subtopic.save();
-       }
+        if (subtopic) {
+            subtopic.questions.push(question._id);
+            await subtopic.save();
+        }
 
         return res.status(201).json({
             success: true,
@@ -103,16 +103,28 @@ export const createQuestion = async (req, res) => {
 // Get a Question by ID
 export const getQuestionById = async (req, res) => {
     try {
-        const {id} = req.params;
-      
-        
+        const { id } = req.params;
+
+
         const question = await Question.findById(req.params.id).populate('subtopicId');
         if (!question) {
-            return res.status(404).json({ message: 'Question not found' });
+            return res.status(404).json({
+                message: 'Question not found',
+                statusCode: 404,
+                success: false
+            });
         }
-        res.status(200).json(question);
+        res.status(200).json({
+            success: true,
+            message: "Question fetched successfully",
+            question: question
+        });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(400).json({
+            message: error.message,
+            statusCode: 400,
+            success: fasle
+        });
     }
 };
 
@@ -120,14 +132,32 @@ export const getQuestionById = async (req, res) => {
 export const updateQuestion = async (req, res) => {
     try {
         const question = await Question.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
         if (!question) {
-            return res.status(404).json({ message: 'Question not found' });
+            return res.status(404).json({
+                message: 'Question not found',
+                statusCode: 404,
+                success: false
+            });
         }
-        res.status(200).json(question);
+
+        res.status(200).json({
+            success: true,
+            statusCode: 200,
+            question: question,
+            message:'Question Updated successfully'
+        });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        console.error('Error updating question:', error);  // Log the error
+
+        res.status(400).json({
+            message: error.message,
+            statusCode: 400,
+            success: false
+        });
     }
 };
+
 
 // Delete a Question by ID
 export const deleteQuestion = async (req, res) => {
@@ -146,8 +176,8 @@ export const deleteQuestion = async (req, res) => {
 export const getAllQuestions = async (req, res) => {
     try {
         const questions = await Question.find({ subtopicId: req.params.subtopicId });
-       
-        
+
+
         res.status(200).json(questions);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -155,29 +185,29 @@ export const getAllQuestions = async (req, res) => {
 };
 
 // Get all questions
-export const Questions = async(req,res)=>{
+export const Questions = async (req, res) => {
     try {
-       const questions = await Question.find({});
-       
-       if(questions.length===0){
-        return res.status(404).json({
-            message:"No question found",
-            success:false,
-            statusCode:404
-        })
-       }
+        const questions = await Question.find({});
 
-       return res.status(200).json({
-        message:"Questions fetched successfully",
-        success:true,
-        statusCode:200,
-        questions:questions
-       })
+        if (questions.length === 0) {
+            return res.status(404).json({
+                message: "No question found",
+                success: false,
+                statusCode: 404
+            })
+        }
+
+        return res.status(200).json({
+            message: "Questions fetched successfully",
+            success: true,
+            statusCode: 200,
+            questions: questions
+        })
     } catch (error) {
         return res.status(500).json({
             message: 'Internal Server error',
-            error:error.message,
-            success:false
+            error: error.message,
+            success: false
         })
     }
 }
