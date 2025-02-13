@@ -92,7 +92,7 @@ const Sidebar = () => {
         <ul className="space-y-4">
           <li>
             <Link
-              to={`/admin/profile/${adminInfo._id}`}
+              to={`/admin/profile/{${adminInfo._id}`}
               className="block py-2 px-4 text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition duration-200"
             >
               Profile

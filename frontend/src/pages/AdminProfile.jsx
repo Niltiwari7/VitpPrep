@@ -24,6 +24,7 @@ const AdminProfile = () => {
     const [topicLength, setTopicLength] = useState(0);
     const [subtopicLength, setSubTopicLength] = useState(0);
     const [questionLength, setQuestionLength] = useState(0);
+    const [topics,setTopics] = useState([])
     const [userCount, setUserCount] = useState(0);
     const toggleTheme = () => {
         dispatch(setDarkMode(!darkMode));
@@ -78,6 +79,7 @@ const AdminProfile = () => {
                 const data = await response.json();
 
                 if (data.success) {
+                    setTopics(data.topics);
                     setTopicLength(data.topics.length);
                 } else {
                     setStaticsError(data.message || 'Failed to fetch topics');
@@ -261,7 +263,7 @@ const AdminProfile = () => {
                                     <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">
                                         Topics Covered
                                     </h2>
-                                    <TopicCovered />
+                                    <TopicCovered  topics = {topics}/>
                                 </div>
                             </div>
                         </div>

@@ -1,34 +1,26 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { FaBook } from "react-icons/fa"; // Example icon, you can customize it
 
-const TopicCovered = () => {
-
-  const theme = useSelector((state)=>state.theme.darkMode);
-  const topic = useSelector((state)=>state.topic.topics);
-
-  console.log(topic);
-  
-  const topics = [
-    { name: 'Array', count: 144 },
-    { name: 'String', count: 132 },
-    { name: 'Linked List', count: 120 },
-    { name: 'Tree', count: 108 },
-    { name: 'Graph', count: 96 },
-    { name: 'Stack', count: 84 },
-    { name: 'Queue', count: 72 },
-  ];
-
+const TopicCovered = ({ topics }) => {
   return (
     <div className="p-6 bg-gray-100 dark:bg-gray-900 min-h-screen">
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6">Topics Covered</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {topics.map((topic, index) => (
+     
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {topics?.map((topic, index) => (
           <div
             key={index}
-            className="p-4 bg-white dark:bg-gray-800 shadow-md rounded-lg flex flex-col items-center hover:shadow-lg transition-shadow duration-300"
+            className="relative p-6 bg-gradient-to-r from-blue-500 to-indigo-600 dark:from-blue-700 dark:to-indigo-800 shadow-lg rounded-2xl flex flex-col items-center transition-transform transform hover:-translate-y-2 hover:shadow-xl duration-300"
           >
-            <h3 className="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-2">{topic.name}</h3>
-            <p className="text-3xl font-bold text-gray-800 dark:text-gray-200">{topic.count}</p>
+            {/* Floating Icon */}
+            <div className="absolute -top-6 bg-white dark:bg-gray-800 p-3 rounded-full shadow-md">
+              <FaBook size={30} className="text-blue-600 dark:text-blue-400" />
+            </div>
+
+            <h3 className="text-lg font-semibold text-white mt-8">{topic?.name}</h3>
+            <p className="text-4xl font-extrabold text-white mt-2">
+              {topic?.subtopics.length}
+            </p>
+            <p className="text-sm text-gray-200 mt-1">Subtopics</p>
           </div>
         ))}
       </div>

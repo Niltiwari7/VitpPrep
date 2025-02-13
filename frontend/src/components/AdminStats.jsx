@@ -34,7 +34,7 @@ const AdminStats = ({ topics, subtopics, questions, userCount }) => {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 p-6">
             {stats.map((stat, index) => (
-                <Card key={index} className="shadow-md hover:shadow-lg transition min-h-[180px]">
+                <Card key={index} className="shadow-md  transition min-h-[180px] hover:-translate-y-2 hover:shadow-xl duration-300">
                     <CardHeader className="flex items-center gap-4 p-4">
                         <div className={`bg-${stat.value > 0 ? 'green' : 'red'}-100 text-${stat.value > 0 ? 'green' : 'red'}-600 rounded-full p-2`}>
                             {stat.icon}
