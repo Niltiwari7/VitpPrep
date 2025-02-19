@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
-import { FaStar, FaPlay, FaEdit } from 'react-icons/fa';
+import { FaStar, FaPlay, FaEdit, FaYoutube } from 'react-icons/fa';
 import { SiLeetcode } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import UpdateQuestion from './UpdateQuestion';
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+
 const QuestionBySubtopicId = ({ selectSubtopic }) => {
     const API_URL = 'http://localhost:3000';
 
@@ -23,7 +25,7 @@ const QuestionBySubtopicId = ({ selectSubtopic }) => {
             )
         );
     };
-    
+
 
     useEffect(() => {
         if (!selectSubtopic) return; // If no subtopic is selected, don't fetch
@@ -81,69 +83,155 @@ const QuestionBySubtopicId = ({ selectSubtopic }) => {
             </div>
         );
     }
+    console.log(questionById);
+
 
     return (
-        <div className="text-white font-semibold rounded-lg p-2 shadow-md transition-all duration-300 hover:shadow-lg">
-            <div className="w-full dark:bg-gray-900 bg-white rounded-lg p-3">
+        <div className="text-white w-full font-semibold rounded-lg p-2 shadow-md transition-all duration-300 hover:shadow-lg">
+            <div className="w-full dark:bg-gray-900 bg-white rounded-lg p-3 sm:p-5">
                 {questionById && Object.keys(questionById).length > 0 ? (
-                    Object.entries(questionById).map(([key, value]) => (
-                        <div
-                            key={key}
-                            className="p-1 border-b last:border-b-0 flex justify-between items-center transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md hover:bg-gradient-to-r from-blue-500 to-purple-500 pointer"
-                        >
-                            {/* Question Name */}
-                            <h4 className="text-md text-gray-800 dark:text-gray-200 font-medium flex-1 px-3">
-                                {value.title}
-                            </h4>
+                    <Table className="w-full">
+                        <TableHeader>
+                            <TableRow className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-200">
+                                {/* Desktop: Status Column */}
+                                <TableHead className="hidden sm:table-cell text-center">Status</TableHead>
+                                <TableHead className="text-left">Question</TableHead>
+                                {/* Desktop: Difficulty Column */}
+                                <TableHead className="text-center hidden sm:table-cell">Difficulty</TableHead>
+                                {/* Desktop: Favoriate Column  */}
+                                <TableHead className="text-center hidden sm:table-cell">Favoriate</TableHead>
+                                {/* Desktop: Question Column  */}
+                                <TableHead className="text-center hidden sm:table-cell">QuestionLink</TableHead>
+                                {/* DeskTop: Video Link  */}
+                                <TableHead className="text-center hidden sm:table-cell">YouTube</TableHead>
+                                {/* Desktop: Actions Column */}
+                                <TableHead className="text-center hidden sm:table-cell">Edit</TableHead>
 
-                            <div className="flex gap-4">
-                                {/* Favorite Button */}
-                                <button className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300">
-                                    <FaStar size={20} className="text-yellow-500" />
-                                </button>
-
-                                {/* Difficulty */}
-                                <span className="px-3 py-1 rounded-lg bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold">
-                                    {value.difficulty}
-                                </span>
-
-                                {/* LeetCode Icon */}
-                                <a
-                                    href={value.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300"
+                                {/* Mobile: Only Edit Action */}
+                                <TableHead className="text-center sm:hidden ">Edit</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {Object.entries(questionById).map(([key, value]) => (
+                                <TableRow
+                                    key={key}
+                                    className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                                 >
-                                    <SiLeetcode size={16} className="text-orange-500" />
-                                </a>
+                                    {/* Desktop: Status */}
+                                    <TableCell className="hidden sm:table-cell text-center">
+                                        <input
+                                            className="h-5 w-5 mr-2 align-middle"
+                                            type="checkbox"
+                                            name={value._id}
+                                            id={value._id}
+                                        />
+                                        {value.miscellaneous}
+                                    </TableCell>
 
-                                {/* Video Link */}
-                                <a
-                                    href={value.videoLink}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300"
-                                >
-                                    <FaPlay size={16} className="text-blue-500" />
-                                </a>
+                                    {/* Question Name (always visible) */}
+                                    <TableCell className="text-gray-800 dark:text-gray-200 font-medium">
+                                        {value.title}
+                                    </TableCell>
 
-                                <Drawer>
-                                    <DrawerTrigger asChild>
-                                        <button aria-label="Edit topic " className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-                                            <FaEdit size={20} className="text-gray-600 dark:text-gray-300" />
+                                    {/* Desktop: Difficulty */}
+                                    <TableCell className="text-center hidden sm:table-cell">
+                                        <span
+                                            className={`
+                          px-3 py-1 rounded-lg font-semibold
+                          ${value.difficulty === "easy" ? "bg-green-200 dark:bg-green-700 text-green-800 dark:text-green-300" : ""}
+                          ${value.difficulty === "medium" ? "bg-yellow-200 dark:bg-yellow-700 text-yellow-800 dark:text-yellow-300" : ""}
+                          ${value.difficulty === "hard" ? "bg-red-200 dark:bg-red-700 text-red-800 dark:text-red-300" : ""}
+                        `}
+                                        >
+                                            {value.difficulty.charAt(0).toUpperCase() + value.difficulty.slice(1)}
+                                        </span>
+                                    </TableCell>
+                                    {/* Favoirate  */}
+                                    <TableCell className="text-center hidden sm:table-cell">
+                                        <button className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300">
+                                            <FaStar size={20} className="text-yellow-500" />
                                         </button>
-                                    </DrawerTrigger>
-                                    {/* Move UpdateTopic inside DrawerContent */}
-                                    <DrawerContent className="flex justify-center items-center dark:bg-transparent bg-transparent">
-                                        <DrawerHeader>
-                                            <DrawerTitle>Edit Question</DrawerTitle>
-                                        </DrawerHeader>
-                                        <UpdateQuestion question={value} onQuestionUpdate={handleQuestionUpdate} />
-                                    </DrawerContent>
-                                </Drawer>
-                            </div>
-                        </div>
-                    ))
+                                    </TableCell>
+                                    <TableCell className="text-center hidden sm:table-cell">
+                                        {value.url ? (
+                                            <a
+                                                href={value.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex justify-center items-center p-2 rounded-lg bg-gray-200 dark:bg-gray-700 
+            hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300"
+                                            >
+                                                <SiLeetcode size={18} className="text-orange-500" />
+                                            </a>
+                                        ) : (
+                                            <span className="text-gray-400">—</span> // Show a dash if no link
+                                        )}
+                                    </TableCell>
+
+                                    <TableCell className="text-center hidden sm:table-cell">
+                                        {value.videoLink ? (
+                                            <a
+                                                href={value.videoLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex justify-center items-center p-2 rounded-lg bg-gray-200 dark:bg-gray-700 
+            hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300"
+                                            >
+                                                <FaYoutube size={18} className="text-red-500" />
+                                            </a>
+                                        ) : (
+                                            <span className="text-gray-400">—</span>
+                                        )}
+                                    </TableCell>
+
+
+                                    {/* Actions */}
+                                    <TableCell className="flex items-center gap-1 ">
+                                        {/* Desktop: Full Actions */}
+                                        <div className="hidden sm:flex gap-2 space-x-6">
+                                            {/* Edit Button */}
+                                            <Drawer>
+                                                <DrawerTrigger asChild>
+                                                    <button
+                                                        aria-label="Edit question"
+                                                        className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                                                    >
+                                                        <FaEdit size={20} className="text-gray-600 dark:text-gray-300" />
+                                                    </button>
+                                                </DrawerTrigger>
+                                                <DrawerContent className="flex justify-center items-center dark:bg-transparent bg-transparent">
+                                                    <DrawerHeader>
+                                                        <DrawerTitle>Edit Question</DrawerTitle>
+                                                    </DrawerHeader>
+                                                    <UpdateQuestion question={value} onQuestionUpdate={handleQuestionUpdate} />
+                                                </DrawerContent>
+                                            </Drawer>
+                                        </div>
+
+                                        {/* Mobile: Only Edit Button */}
+                                        <div className="sm:hidden">
+                                            <Drawer>
+                                                <DrawerTrigger asChild>
+                                                    <button
+                                                        aria-label="Edit question"
+                                                        className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                                                    >
+                                                        <FaEdit size={20} className="text-gray-600 dark:text-gray-300" />
+                                                    </button>
+                                                </DrawerTrigger>
+                                                <DrawerContent className="flex justify-center items-center dark:bg-transparent bg-transparent">
+                                                    <DrawerHeader>
+                                                        <DrawerTitle>Edit Question</DrawerTitle>
+                                                    </DrawerHeader>
+                                                    <UpdateQuestion question={value} onQuestionUpdate={handleQuestionUpdate} />
+                                                </DrawerContent>
+                                            </Drawer>
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
                 ) : (
                     <p className="text-gray-500 dark:text-gray-400 text-center py-2">
                         No questions available.
@@ -151,7 +239,9 @@ const QuestionBySubtopicId = ({ selectSubtopic }) => {
                 )}
             </div>
         </div>
+
     );
 };
+
 
 export default QuestionBySubtopicId;

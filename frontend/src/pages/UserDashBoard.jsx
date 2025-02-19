@@ -66,9 +66,14 @@ const UserDashBoard = () => {
   };
 
   // Reusable Card Component
-  const FeatureCard = ({ imageUrl, title, description, buttonText }) => {
+  const FeatureCard = ({ imageUrl, title, description, buttonText , navigateTo}) => {
+    const navigate  = useNavigate();
+    
+    const handleClick = () => {
+      navigate(navigateTo);
+    }
     return (
-      <Card className="hover:shadow-lg transition-shadow duration-300">
+      <Card className="hover:shadow-lg transition-shadow duration-300" onClick={handleClick}>
         <CardHeader>
           <img
             src={imageUrl}
@@ -146,6 +151,7 @@ const UserDashBoard = () => {
           title="Crack DSA Interviews"
           description="Master Data Structures and Algorithms with top coding questions asked by FAANG companies."
           buttonText="Start Learning"
+          navigateTo={"/top-interview-questions-dsa"}
         />
 
         <FeatureCard
@@ -153,6 +159,7 @@ const UserDashBoard = () => {
           title="Object-Oriented Design"
           description="Understand OOP principles, design patterns, and best practices for scalable applications."
           buttonText="Explore OOP"
+          navigateTo={"/oops"}
         />
 
         <FeatureCard
@@ -160,6 +167,7 @@ const UserDashBoard = () => {
           title="Networking Essentials"
           description="Get a solid grasp on networking concepts like OSI model, TCP/IP, and cloud computing."
           buttonText="Learn More"
+          navigateTo={"/networking"}
         />
 
         <FeatureCard
@@ -167,6 +175,7 @@ const UserDashBoard = () => {
           title="Database Management"
           description="Learn SQL queries, normalization, transactions, indexing, and more to ace DBMS interviews."
           buttonText="Start Practicing"
+          navigateTo={"/dbms"}
         />
 
         <FeatureCard
@@ -174,6 +183,7 @@ const UserDashBoard = () => {
           title="Operating Systems"
           description="Understand memory management, concurrency, process scheduling, and OS internals."
           buttonText="Explore Topics"
+          navigateTo={"/os"}
         />
 
         <FeatureCard
@@ -181,6 +191,7 @@ const UserDashBoard = () => {
           title="Aptitude & Problem Solving"
           description="Sharpen your problem-solving skills with quantitative and logical reasoning challenges."
           buttonText="Solve Now"
+          navigateTo={"/aptitude"}
         />
 
         <FeatureCard
@@ -188,6 +199,7 @@ const UserDashBoard = () => {
           title="Logical Reasoning"
           description="Enhance your analytical thinking with logical puzzles, pattern recognition, and riddles."
           buttonText="Challenge Yourself"
+          navigateTo={"/logical-reasoning"}
         />
 
       </main>

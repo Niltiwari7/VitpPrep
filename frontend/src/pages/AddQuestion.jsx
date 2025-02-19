@@ -282,6 +282,19 @@ const AddContentPage = () => {
         const data = await response.json();
         if (data.success) {
             toast.success(data.message);
+            setQuestionDetails({
+                title: "",
+                description: "",
+                difficulty: "easy",
+                tags: [],
+                miscellaneous: false,
+                url: "",
+                examples: [{ input: "", output: "" }],
+                constraints: [],
+                hints: [],
+                topicId: "",
+                subtopicId: "",
+            })
         } else {
             toast.error(data.message);
             setQuestionError(data.message);
@@ -295,7 +308,7 @@ const AddContentPage = () => {
 
   
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+    <div className="flex flex-col md:flex-row h-full bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 overflow-hidden" >
       <aside className="w-full md:w-64 bg-white dark:bg-gray-800 shadow-md">
         <Sidebar />
       </aside>

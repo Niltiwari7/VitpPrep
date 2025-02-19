@@ -21,6 +21,7 @@ import AddQuestion from "./pages/AddQuestion";
 import Topic from "./components/Topic";
 import Quesion from "./pages/Quesion";
 import UpdateQuestion from "./components/UpdateQuestion";
+import Dsa150Question from "./pages/Dsa150Question";
 
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
         <Route path = "/admin/topic/:adminId" element = {<Topic/>}/>
         <Route path = '/admin/questions' element = {<Quesion/>}/>
         <Route path ='/admin/edit-question/:questionId' element = {<UpdateQuestion/>}/>
+        <Route path = '//top-interview-questions-dsa' element = {<Dsa150Question/>}/>
 
       </Routes>
     </>
