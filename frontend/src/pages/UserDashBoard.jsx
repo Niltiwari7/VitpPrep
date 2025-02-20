@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { useNavigate } from "react-router-dom";  // ✅ Corrected
+import { useNavigate } from "react-router-dom";  
 import { Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { logout } from "../utils/slices/user.slice.js";

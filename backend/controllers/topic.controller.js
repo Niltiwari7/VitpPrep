@@ -152,3 +152,34 @@ export const deleteTopic = async (req, res) => {
     }
 };
 
+// Get question by topicId
+
+export const getQuestionByTopicId = async (req,res)=>{
+    try{
+        const {id} = req.params;
+        
+        const question = await Topic.findById(id).populate('subtopics');
+        
+        if(!question){
+            console.log("question apna hai",question);
+            return res.status(404).json({
+                message:"Topic not found",
+                statusCode:404,
+                success:false
+            })
+        }
+
+        return res.status(200).json({
+            message:"Question fetched successfully",
+            statusCode:200,
+            success:true,
+            question:question
+        })
+    }catch(error){
+        return res.status(500).json({
+            message: "Internal server error",
+            statusCode:500,
+            success:false
+        })
+    }
+}
