@@ -1,6 +1,7 @@
 import Question from "../models/question.model.js";
 import Subtopic from "../models/subtopic.model.js";
 import Topic from "../models/topic.model.js";
+import User from "../models/user.model.js";
 
 
 // Create a new Question
@@ -123,7 +124,7 @@ export const getQuestionById = async (req, res) => {
         res.status(400).json({
             message: error.message,
             statusCode: 400,
-            success: fasle
+            success: false
         });
     }
 };
@@ -211,3 +212,60 @@ export const Questions = async (req, res) => {
         })
     }
 }
+
+// get Question with progress
+
+export const getQuestionWithProgress = async (req, res) => {
+    try {
+        const { subtopicId, userId } = req.query;
+
+      
+        if (!mongoose.Types.ObjectId.isValid(subtopicId) || !mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({
+                message: "Invalid subtopicId or userId",
+                statusCode: 400,
+                success: false,
+            });
+        }
+
+    
+        const questions = await Question.find({ subtopicId });
+
+        if (!questions.length) {
+            return res.status(404).json({
+                message: "No questions found",
+                success: false,
+                statusCode: 404,
+            });
+        }
+
+  
+        const user = await User.findById(userId).select("CompleteQuestions");
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+                statusCode: 404,
+                success: false,
+            });
+        }
+
+     
+        const completedQuestions = new Set(user.CompleteQuestions.map((q) => q.toString()));
+
+      
+        const questionWithProgress = questions.map((question) => ({
+            ...question.toObject(),
+            completed: completedQuestions.has(question._id.toString()),
+        }));
+
+        return res.status(200).json(questionWithProgress);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "Internal Server Error",
+            error: error.message,
+            success: false,
+        });
+    }
+};

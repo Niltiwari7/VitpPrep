@@ -157,7 +157,7 @@ export const deleteTopic = async (req, res) => {
 export const getQuestionByTopicId = async (req,res)=>{
     try{
         const {id} = req.params;
-        
+            
         const question = await Topic.findById(id).populate('subtopics');
         
         if(!question){

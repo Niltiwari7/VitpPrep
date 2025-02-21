@@ -65,6 +65,17 @@ const userSchema = new mongoose.Schema({
             },
         ],
     },
+    status:{
+        type:Boolean,
+        default:false
+    },
+    CompleteQuestions: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Question',
+        }
+    ]
+    
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);

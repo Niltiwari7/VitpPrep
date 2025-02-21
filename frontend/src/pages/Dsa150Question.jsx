@@ -19,18 +19,13 @@ const Dsa150Question = () => {
     const [subtopic, setSubtopic] = useState([]);
     const [selectedTopic, setSelectedTopic] = useState("");
     const [expandedTopic, setExpandedTopic] = useState(null);
-    const [subtopicError, setSubtopicError] = useState("");
     const [expandedSubtopic, setExpandedSubtopic] = useState(null);
     const [selectSubtopic, setSelectSubtopic] = useState("67b2a8d21a2e1e5c151277c6");
 
     const [loading, setloading] = useState(false);
     const isUser = true;
-
-    // Set a default subtopic on mount
-    useEffect(() => {
-        setSelectSubtopic("67b2a8d21a2e1e5c151277c6");
-    }, []);
-
+    const [error,setError] = useState("");
+    
 
 
     const toggleTheme = () => {
@@ -43,7 +38,7 @@ const Dsa150Question = () => {
             const fetchSubtopicsById = async () => {
                 try {
                     setloading(true);
-                    setSubtopicError(''); // Reset error message
+                    setError("")
                     const response = await fetch(`${API_URL}/topics/subtopic/${selectSubtopic}`, {
                         method: 'GET',
                         credentials: 'include',
@@ -55,12 +50,10 @@ const Dsa150Question = () => {
                     // Check if 'question' and 'subtopics' exist
                     if (data.success && data.question && Array.isArray(data.question.subtopics)) {
                         setSubtopic(data.question.subtopics);
-                        setSubtopicError("")
-                    } else {
-                        setSubtopicError(data.message || 'Failed to fetch subtopics or subtopics not found');
-                    }
+    
+                    } 
                 } catch (error) {
-                    setSubtopicError(error.message || 'An unexpected error occurred');
+                    setError(error.message || 'An unexpected error occurred');
                 } finally {
                     setloading(false);
                 }
@@ -132,7 +125,7 @@ const Dsa150Question = () => {
         </div>
     ), [subtopic, expandedSubtopic]);
 
-   console.log(subtopicError);
+   
    
     return (
         <div className="flex flex-col md:flex-row h-full bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
@@ -180,7 +173,7 @@ const Dsa150Question = () => {
                             )}
                         </div>
 
-                        {subtopicError && <p className="text-red-500 text-sm mt-2">{subtopicError}</p>}
+                        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
                     </div>
                 </div>
             </div>
