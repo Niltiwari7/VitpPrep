@@ -71,7 +71,8 @@ export const getAllSubtopics = async (req, res) => {
 export const getSubtopicsByTopic = async (req, res) => {
     try {
         const { topicId } = req.params;
-
+        console.log(topicId);
+        
         // Check if topic exists
         const topic = await Topic.findById(topicId);
         if (!topic) {

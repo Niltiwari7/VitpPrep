@@ -149,7 +149,7 @@ export const updateQuestion = async (req, res) => {
             message:'Question Updated successfully'
         });
     } catch (error) {
-        console.error('Error updating question:', error);  // Log the error
+        
 
         res.status(400).json({
             message: error.message,
@@ -213,22 +213,67 @@ export const Questions = async (req, res) => {
     }
 }
 
+// update question progress
+
+export const updateQuestionWithProgress = async (req, res) => {
+    try {
+        const { userId, questionId } = req.body;
+
+        if (!userId || !questionId) {
+            return res.status(400).json({
+                message: "User ID and Question ID are required",
+                success: false,
+                statusCode: 400,
+            });
+        }
+
+        // Find the user first
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+                success: false,
+                statusCode: 404,
+            });
+        }
+
+        // Check if the question is already marked as completed
+        const isCompleted = user.CompleteQuestions.includes(questionId);
+
+        // Update action based on completion status
+        const updateAction = isCompleted
+            ? { $pull: { CompleteQuestions: questionId } } // Remove if completed
+            : { $addToSet: { CompleteQuestions: questionId } }; // Add if not completed
+
+        // Perform update
+        const updatedUser = await User.findByIdAndUpdate(userId, updateAction, { new: true });
+
+        return res.status(200).json({
+            message: `Question progress updated successfully, status: ${isCompleted ? "Incomplete" : "Completed"}`,
+            success: true,
+            statusCode: 200,
+            completed: !isCompleted, // Return the new status
+            updatedUser
+        });
+
+    } catch (error) {
+       
+        return res.status(500).json({
+            message: "Internal Server Error",
+            error: error.message,
+            success: false,
+        });
+    }
+};
+
 // get Question with progress
 
 export const getQuestionWithProgress = async (req, res) => {
     try {
-        const { subtopicId, userId } = req.query;
-
-      
-        if (!mongoose.Types.ObjectId.isValid(subtopicId) || !mongoose.Types.ObjectId.isValid(userId)) {
-            return res.status(400).json({
-                message: "Invalid subtopicId or userId",
-                statusCode: 400,
-                success: false,
-            });
-        }
-
-    
+        const { subtopicId, userId } = req.body;
+        
+        
         const questions = await Question.find({ subtopicId });
 
         if (!questions.length) {
@@ -259,13 +304,70 @@ export const getQuestionWithProgress = async (req, res) => {
             completed: completedQuestions.has(question._id.toString()),
         }));
 
-        return res.status(200).json(questionWithProgress);
+        return res.status(200).json({
+            message:"Question fetched successfully",
+            success:true,
+            statusCode:200,
+            questions:questionWithProgress
+        });
     } catch (error) {
-        console.log(error);
+      
         return res.status(500).json({
             message: "Internal Server Error",
             error: error.message,
             success: false,
         });
+    }
+};
+
+// Toggle like on a question
+
+export const toggleLikeQuestion = async (req, res) => {
+    try {
+        const { userId, questionId } = req.body;
+
+        if (!userId || !questionId) {
+            return res.status(400).json({ message: "User ID and Question ID are required.", success: false });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found.", success: false });
+        }
+
+        const question = await Question.findById(questionId);
+        if (!question) {
+            return res.status(404).json({ message: "Question not found.", success: false });
+        }
+
+        const isLiked = question.likedBy.includes(userId);
+
+        let updateUserQuery, updateQuestionQuery;
+        if (isLiked) {
+            updateUserQuery = { $pull: { "favorites.questions": questionId } };
+            updateQuestionQuery = { 
+                $pull: { likedBy: userId }, 
+                $inc: { likesCount: -1 } 
+            };
+        } else {
+            updateUserQuery = { $addToSet: { "favorites.questions": questionId } };
+            updateQuestionQuery = { 
+                $addToSet: { likedBy: userId }, 
+                $inc: { likesCount: 1 } 
+            };
+        }
+
+        await User.findByIdAndUpdate(userId, updateUserQuery, { new: true });
+        const updatedQuestion = await Question.findByIdAndUpdate(questionId, updateQuestionQuery, { new: true });
+
+        return res.status(200).json({
+            message: isLiked ? "Question unliked." : "Question liked.",
+            success: true,
+            likesCount: updatedQuestion.likesCount,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Internal Server Error", error: error.message, success: false });
     }
 };

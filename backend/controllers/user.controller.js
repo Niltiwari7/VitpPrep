@@ -140,50 +140,17 @@ export const getProfile = async (req, res) => {
   }
 };
 
-export const updateProfile = async (req, res) => {
-  try {
-    const user = await User.findById(req.user._id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    const { fullName, email, password } = req.body;
-    if (fullName) {
-      user.fullName = fullName;
-    }
-    if (email) {
-      user.email = email;
-    }
-    if (password) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      user.password = hashedPassword;
-    }
-
-    await user.save();
-    res.status(200).json({ message: 'User updated successfully' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
-
-// get all User Count 
 export const countUser = async (req, res) => {
   try {
-    // Get the total number of users directly
-    const userCount = await User.countDocuments();
-
-    return res.status(200).json({
-      message: "User count fetched successfully",
-      statusCode: 200,
-      success: true,
-      count: userCount
+    const user = await User.countDocuments();
+    res.status(200).json({
+      message: 'Total number of users',
+      data: user
     });
-
   } catch (error) {
-    return res.status(500).json({
-      message: "Internal Server Error",
-      statusCode: 500,
-      success: false,
-      error: error.message
-    });
+    return res.status(500).json({ message: error.message });
   }
 };
+
+
+

@@ -50,10 +50,20 @@
         constraints:{
             type:Array,
         },
-        like:{
-            type:Boolean,
-            default:false
+        likeCount:{
+            type:Number,
+            default:0
         },
+        dislikeCount:{
+            type:Number,
+            default:0
+        },
+        likedBy:[
+            {
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'User'
+            }
+        ],
         videoLink:{
             type:String
         }

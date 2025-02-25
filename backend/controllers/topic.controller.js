@@ -161,7 +161,7 @@ export const getQuestionByTopicId = async (req,res)=>{
         const question = await Topic.findById(id).populate('subtopics');
         
         if(!question){
-            console.log("question apna hai",question);
+         
             return res.status(404).json({
                 message:"Topic not found",
                 statusCode:404,
