@@ -23,6 +23,7 @@ import Quesion from "./pages/Quesion";
 import UpdateQuestion from "./components/UpdateQuestion";
 import Dsa150Question from "./pages/Dsa150Question";
 import OOPS from "./pages/OOPS";
+import ComputerNetwork from "./pages/ComputerNetwork";
 
 
 function App() {
@@ -76,6 +77,7 @@ function App() {
         <Route path ='/admin/edit-question/:questionId' element = {<UpdateQuestion/>}/>
         <Route path = '/top-interview-questions-dsa' element = {<Dsa150Question/>}/>
         <Route path = '/oops' element = {<OOPS/>}/>
+        <Route path = '/computer-network' element = {<ComputerNetwork/>}/>
 
       </Routes>
     </>

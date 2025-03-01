@@ -167,7 +167,7 @@ const UserDashBoard = () => {
           title="Networking Essentials"
           description="Get a solid grasp on networking concepts like OSI model, TCP/IP, and cloud computing."
           buttonText="Learn More"
-          navigateTo={"/networking"}
+          navigateTo={"/computer-network"}
         />
 
         <FeatureCard

@@ -1,0 +1,658 @@
+import React, { useState } from 'react';
+import { AiOutlineArrowLeft, AiOutlineBars } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDarkMode } from '../utils/slices/theme.slice';
+import { FaBars, FaMoon, FaSun, FaYoutube } from 'react-icons/fa';
+import { Card, CardContent } from "@/components/ui/card";
+import { Link } from 'react-router-dom';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableFooter,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table"
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+
+
+const ComputerNetwork = () => {
+    const dispatch = useDispatch();
+    const darkMode = useSelector((state) => state.theme.darkMode);
+    const user = useSelector((state) => state.user.userInfo);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [step, setStep] = useState(1);
+
+    const nextStep = () => {
+      if (step < 3) setStep(step + 1);
+    };
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    }
+
+    const toggleTheme = () => {
+        dispatch(setDarkMode(!darkMode));
+    }
+
+
+    return (
+        <div className='gap-5'>
+            <header className="w-full flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 shadow-md fixed top-0 left-0 right-0 z-10">
+                <Link to="/dashboard" className="flex items-center text-blue-600 dark:text-yellow-500 hover:underline">
+                    <AiOutlineArrowLeft size={20} />
+                    <span className="ml-2">Back To Profile</span>
+                </Link>
+                <div className="flex items-center gap-4">
+                    <button
+                        aria-label="Toggle theme"
+                        onClick={toggleTheme}
+                        className="p-2 bg-blue-600 dark:bg-yellow-500 text-white rounded-full shadow hover:scale-105 transition"
+                    >
+                        {darkMode ? <FaMoon size={18} /> : <FaSun size={18} />}
+                    </button>
+                    {user?.imageUrl && (
+                        <img className="w-10 h-10 rounded-full object-cover shadow-md" src={user.imageUrl} alt="Profile" />
+                    )}
+                </div>
+            </header>
+            <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+
+
+                <div className={`bg-white dark:bg-gray-900 mt-[60px] p-6 w-[60%] sm:w-[20%] fixed min-h-screen shadow-lg rounded-lg 
+                             dark:text-white text-black transition-all duration-300 ease-in-out 
+                             ${isSidebarOpen ? "block" : "hidden sm:block"}`}>
+                    <h3 className="text-center text-lg font-semibold pb-4 border-b border-gray-300 dark:border-gray-700">Content</h3>
+
+                    <div className="flex flex-col gap-2 mt-4">
+                        <a href="#oops_desc" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white transition duration-300">OOPS Introduction</a>
+                        <a href="#Constructor" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-red-500 hover:text-white transition duration-300">Constructor</a>
+                        <a href="#Destructor" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-green-500 hover:text-white transition duration-300">Destructor</a>
+                        <a href="#Four Pillars of OOPS" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-yellow-500 hover:text-black transition duration-300">Four Pillars of OOPS</a>
+                        <a href="#Abstraction" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-purple-500 hover:text-white transition duration-300">Abstraction</a>
+                        <a href="#Polymorphism" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-pink-500 hover:text-white transition duration-300">Polymorphism</a>
+                        <a href="#Inheritance" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-orange-500 hover:text-white transition duration-300">Inheritance</a>
+                        <a href="#Encapsulation" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-teal-500 hover:text-white transition duration-300">Encapsulation</a>
+                        <a href="#Friend Function and Friend Class" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-indigo-500 hover:text-white transition duration-300">Friend Function and Friend Class</a>
+                        <a href="#Access Modifier" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-500 hover:text-white transition duration-300">Access Modifier</a>
+                    </div>
+                </div>
+
+                {/* Toggle Sidebar Button for Mobile */}
+                <button
+                    onClick={toggleSidebar}
+                    className="sm:hidden fixed top-16 right-4 bg-blue-600 dark:bg-yellow-500 text-white p-2 rounded-full shadow-md z-20">
+                    <AiOutlineBars size={24} />
+                </button>
+
+
+                <main className="sm:w-4/5 w-full ml-auto p-6 mt-20">
+
+
+                    <div id='computer_network_introduction' className="w-full sm:w-4/5 mx-auto">
+                        <div className="max-w-4xl mx-auto px-4 md:px-6 py-6">
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+
+                                {/* Title */}
+                                <h1 className="text-center text-3xl font-bold text-blue-600 dark:text-yellow-500">
+                                    Computer Network
+                                </h1>
+
+                                <p className="mt-2 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+
+                                    A computer network is a set of interconnected devices (nodes) that communicate with each other to share resources and information using a defined set of protocols over a communication medium.
+
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='Constructor'>
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                                    Topology
+                                </h2>
+
+                                <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
+                                    Network topology refers to the arrangement of devices (nodes) and how they are connected in a network.
+                                </p>
+
+                                <h2 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                    Types of Network Topologies:
+                                </h2>
+                                <ul className="list-decimal ml-6 mt-2 space-y-2 text-gray-700 dark:text-gray-300">
+                                    <li><strong>Bus Topology:</strong> All devices are connected to a single central cable (bus). If the main cable fails, the entire network is affected.</li>
+                                    <li><strong>Star Topology:</strong> All devices are connected to a central hub or switch. If the hub fails, the network stops working.</li>
+                                    <li><strong>Ring Topology:</strong> Devices are connected in a circular loop. If one device fails, the entire network may be affected.</li>
+                                    <li><strong>Mesh Topology:</strong> Each node is connected to every other node. Provides high reliability but is expensive to set up.</li>
+                                    <li><strong>Tree Topology:</strong> A combination of star and bus topology, suitable for large networks.</li>
+                                    <li><strong>Hybrid Topology:</strong> A mix of different topologies, offering flexibility and efficiency.</li>
+                                </ul>
+
+                                <h2 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                    Advantages and Disadvantages:
+                                </h2>
+                                <ul className="list-disc ml-6 mt-2 space-y-2 text-gray-700 dark:text-gray-300">
+                                    <li><strong>Bus Topology:</strong> Simple and cost-effective but has a single point of failure.</li>
+                                    <li><strong>Star Topology:</strong> Easy to manage, but the central hub is a vulnerability.</li>
+                                    <li><strong>Ring Topology:</strong> Efficient in small networks, but failure of one node can disrupt the network.</li>
+                                    <li><strong>Mesh Topology:</strong> Highly reliable, but expensive due to multiple connections.</li>
+                                    <li><strong>Tree Topology:</strong> Scalable, but failure at higher levels affects the entire network.</li>
+                                    <li><strong>Hybrid Topology:</strong> Flexible, but complex to configure.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div className="max-w-4xl mx-auto px-4 py-6">
+                            <div className="mb-2">
+                                <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+
+                                    {/* LAN Definition */}
+                                    <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">LAN (Local Area Network)</h2>
+                                    <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
+                                        A <strong>Local Area Network (LAN)</strong> is a network that connects computers and devices within a
+                                        limited area, such as a home, office, or school. It enables high-speed communication through
+                                        wired (Ethernet) or wireless (Wi-Fi) connections.
+                                    </p>
+
+                                    {/* WAN Definition */}
+                                    <h2 className="mt-5 text-2xl font-semibold text-gray-800 dark:text-gray-100">WAN (Wide Area Network)</h2>
+                                    <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
+                                        A <strong>Wide Area Network (WAN)</strong> spans a large geographical area, often connecting multiple LANs
+                                        across cities, countries, or even worldwide. It uses fiber optics, leased lines, and satellites for
+                                        long-distance communication.
+                                    </p>
+
+                                    {/* Difference Table using ShadCN */}
+                                    <h2 className="mt-5 text-2xl font-semibold text-gray-800 dark:text-gray-100">Key Differences Between LAN and WAN</h2>
+                                    <Table className="mt-4">
+                                        <TableHeader>
+                                            <TableRow>
+                                                <TableHead>Feature</TableHead>
+                                                <TableHead>LAN (Local Area Network)</TableHead>
+                                                <TableHead>WAN (Wide Area Network)</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                            <TableRow>
+                                                <TableCell><strong>Scope</strong></TableCell>
+                                                <TableCell>Limited to a small area (e.g., home, office, campus)</TableCell>
+                                                <TableCell>Covers large areas (e.g., cities, countries, globally)</TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell><strong>Speed</strong></TableCell>
+                                                <TableCell>High-speed (up to 1 Gbps or more)</TableCell>
+                                                <TableCell>Slower due to long-distance transmission</TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell><strong>Connectivity</strong></TableCell>
+                                                <TableCell>Uses Ethernet cables, Wi-Fi, and switches</TableCell>
+                                                <TableCell>Uses fiber optics, leased lines, and satellites</TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell><strong>Ownership</strong></TableCell>
+                                                <TableCell>Owned and managed by a single organization</TableCell>
+                                                <TableCell>Often managed by multiple providers (ISPs)</TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell><strong>Security</strong></TableCell>
+                                                <TableCell>More secure as it is private</TableCell>
+                                                <TableCell>Less secure, requires encryption & firewalls</TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell><strong>Cost</strong></TableCell>
+                                                <TableCell>Low setup cost</TableCell>
+                                                <TableCell>Expensive due to long-distance infrastructure</TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell><strong>Example</strong></TableCell>
+                                                <TableCell>Office network, school Wi-Fi</TableCell>
+                                                <TableCell>Internet, corporate global networks</TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="max-w-4xl mx-auto px-4 py-6">
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+
+                                {/* Firewall Title */}
+                                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                                    Firewall 🔥
+                                </h2>
+
+                                {/* Firewall Definition */}
+                                <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
+                                    A <strong>firewall</strong> is a <strong>network security system</strong> that monitors,
+                                    filters, and controls incoming and outgoing network traffic based on
+                                    predetermined security rules. It acts as a <strong>barrier</strong> between a trusted
+                                    internal network (such as a <strong>LAN</strong>) and untrusted external networks
+                                    (such as the <strong>internet</strong>), preventing unauthorized access and cyber threats.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="max-w-4xl mx-auto px-4 py-6">
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                                    DHCP (Dynamic Host Configuration Protocol)
+                                </h2>
+                                <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
+                                    DHCP (Dynamic Host Configuration Protocol) is a network protocol that
+                                    automatically assigns IP addresses and other network configurations
+                                    (such as subnet mask, gateway, and DNS server) to devices on a network.
+                                    It eliminates the need for manual IP configuration, making network
+                                    management more efficient.
+                                </p>
+
+                                <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                    Key Features:
+                                </h3>
+                                <ul className="list-disc ml-6 mt-2 space-y-2 text-gray-700 dark:text-gray-300">
+                                    <li><strong>Automatic IP Assignment:</strong> Reduces manual configuration.</li>
+                                    <li><strong>Prevents IP Conflicts:</strong> Ensures each device gets a unique IP.</li>
+                                    <li><strong>Leases IP Addresses:</strong> Assigns temporary IPs that can be reassigned.</li>
+                                    <li><strong>Centralized Network Management:</strong> Managed by a DHCP server.</li>
+                                </ul>
+
+                                <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                    Example:
+                                </h3>
+                                <p className="mt-2 text-gray-700 dark:text-gray-300">
+                                    When you connect to a Wi-Fi network, the router (acting as a DHCP server)
+                                    assigns your device an IP address dynamically.
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div className="max-w-4xl mx-auto px-4 py-6">
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+
+                                {/* Firewall Title */}
+                                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                                    HTTP vs HTTPS 🌐🔒
+                                </h2>
+
+                                <p className="mt-3 text-gray-700 dark:text-gray-300">
+                                    <strong>HTTP</strong> (HyperText Transfer Protocol) is an <strong>insecure</strong> communication protocol used for transferring data on the web.
+                                    <br />
+                                    <strong>HTTPS</strong> (HyperText Transfer Protocol Secure) adds <strong>SSL/TLS encryption</strong> to secure data transmission.
+                                </p>
+                                <h2 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                    Key Differences 📊
+                                </h2>
+                                <Table className="mt-3">
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead>Feature</TableHead>
+                                            <TableHead>HTTP 🌍</TableHead>
+                                            <TableHead>HTTPS 🔒</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell><strong>Security</strong></TableCell>
+                                            <TableCell>Insecure, data can be intercepted</TableCell>
+                                            <TableCell>Secure, uses SSL/TLS encryption</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>Data Encryption</strong></TableCell>
+                                            <TableCell>No encryption, plain text</TableCell>
+                                            <TableCell>Encrypts data for secure transmission</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>Port Number</strong></TableCell>
+                                            <TableCell>Port 80</TableCell>
+                                            <TableCell>Port 443</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>SSL/TLS Certificate</strong></TableCell>
+                                            <TableCell>Not required</TableCell>
+                                            <TableCell>Required for security</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>Speed</strong></TableCell>
+                                            <TableCell>Faster (no encryption overhead)</TableCell>
+                                            <TableCell>Slightly slower (due to encryption)</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>SEO Ranking</strong></TableCell>
+                                            <TableCell>Not preferred</TableCell>
+                                            <TableCell>Boosts SEO ranking</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>Use Cases</strong></TableCell>
+                                            <TableCell>For non-sensitive data (blogs, general sites)</TableCell>
+                                            <TableCell>For secure transactions (banking, e-commerce)</TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </div>
+                        </div>
+
+                        <div className="max-w-4xl mx-auto px-4 py-6">
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+
+                                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                                    IPv4 vs IPv6 🌍🔢
+                                </h2>
+
+                                {/* Firewall Definition */}
+                                <p className="mt-3 text-gray-700 dark:text-gray-300">
+                                    <strong>IPv4</strong> is the fourth version of the Internet Protocol, using a 32-bit address system.
+                                    <br />
+                                    <strong>IPv6</strong> is the successor to IPv4, using a 128-bit address system to accommodate more devices.
+                                </p>
+                                <h2 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                    Key Differences 📊
+                                </h2>
+
+                                <Table className="mt-3">
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead>Feature</TableHead>
+                                            <TableHead>IPv4 🌍</TableHead>
+                                            <TableHead>IPv6 🔢</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell><strong>Address Length</strong></TableCell>
+                                            <TableCell>32-bit</TableCell>
+                                            <TableCell>128-bit</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>Address Format</strong></TableCell>
+                                            <TableCell>Decimal (e.g., 192.168.1.1)</TableCell>
+                                            <TableCell>Hexadecimal (e.g., 2001:0db8::8a2e:0370:7334)</TableCell>
+                                        </TableRow>
+
+                                        <TableRow>
+                                            <TableCell><strong>Security</strong></TableCell>
+                                            <TableCell>Less secure (IPSec optional)</TableCell>
+                                            <TableCell>More secure (IPSec built-in)</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>Header Size</strong></TableCell>
+                                            <TableCell>20 bytes</TableCell>
+                                            <TableCell>40 bytes</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>Fragmentation</strong></TableCell>
+                                            <TableCell>Done by routers</TableCell>
+                                            <TableCell>Done by the source device</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>Broadcast Support</strong></TableCell>
+                                            <TableCell>Supports broadcasting</TableCell>
+                                            <TableCell>Uses multicast instead</TableCell>
+                                        </TableRow>
+
+                                        <TableRow>
+                                            <TableCell><strong>Compatibility</strong></TableCell>
+                                            <TableCell>Widely supported</TableCell>
+                                            <TableCell>Not fully compatible with IPv4</TableCell>
+                                        </TableRow>
+
+                                    </TableBody>
+                                </Table>
+
+                            </div>
+                        </div>
+
+                        <div className="max-w-4xl mx-auto px-4 py-6">
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+
+                                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                                    OSI (Open Systems Interconnection) Model
+                                </h2>
+
+
+                                <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
+                                    The OSI Model is a conceptual framework that standardizes network
+                                    communication into seven layers. Each layer has a specific role in
+                                    ensuring smooth data transmission across a network.
+                                </p>
+
+                                <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                    🔹 OSI Model Layers & Responsibilities:
+                                </h3>
+
+
+                                <Table className="mt-3">
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead>Layer</TableHead>
+                                            <TableHead>Responsibility</TableHead>
+                                            <TableHead>Example Protocols</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell><strong>Application (Layer 7)</strong></TableCell>
+                                            <TableCell>32-bit</TableCell>
+                                            <TableCell>128-bit</TableCell>
+                                        </TableRow>
+
+
+                                        <TableRow>
+                                            <TableCell><strong>Presentation (Layer 6)</strong></TableCell>
+                                            <TableCell>Data encryption, compression, translation</TableCell>
+                                            <TableCell>SSL, TLS</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>Session (Layer 5)</strong></TableCell>
+                                            <TableCell>Manages sessions and communication</TableCell>
+                                            <TableCell>RPC, NetBIOS</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>Transport (Layer 4)</strong></TableCell>
+                                            <TableCell>Reliable delivery, error detection</TableCell>
+                                            <TableCell>TCP, UDP</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>Network (Layer 3)</strong></TableCell>
+                                            <TableCell>IP addressing, routing</TableCell>
+                                            <TableCell>ICMP</TableCell>
+                                        </TableRow>
+
+                                        <TableRow>
+                                            <TableCell><strong>Data Link (Layer 2)</strong></TableCell>
+                                            <TableCell>MAC addressing, error detection</TableCell>
+                                            <TableCell>Ethernet, Wi-Fi</TableCell>
+                                        </TableRow>
+
+                                        <TableRow>
+                                            <TableCell><strong>Physical (Layer 1)</strong></TableCell>
+                                            <TableCell>Hardware, cables, signals</TableCell>
+                                            <TableCell>Fiber, Ethernet cables</TableCell>
+                                        </TableRow>
+
+                                    </TableBody>
+                                </Table>
+                                <div className="mt-6 flex items-center space-x-3">
+                                    <h3>To understand this topic</h3>
+                                    <a
+                                        href="https://www.youtube.com/watch?v=vv4y_uOneC0"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center text-red-600 hover:text-red-700 transition-all"
+                                    >
+                                        <FaYoutube className="w-6 h-6" />
+                                        <span className="ml-2 font-semibold">Watch on YouTube</span>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div className="max-w-4xl mx-auto px-4 py-6">
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+
+                                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                                    TCP/IP Model
+                                </h2>
+
+
+                                <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
+                                    The TCP/IP model (Transmission Control Protocol/Internet Protocol) is a conceptual framework that defines how data is transmitted over the internet. It consists of four layers (compared to the OSI model’s seven layers).
+                                </p>
+
+                                <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                    🛠 Layers of TCP/IP Model & Their Responsibilities:
+                                </h3>
+
+
+                                <Table className="mt-3">
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead>Layer</TableHead>
+                                            <TableHead>Description</TableHead>
+                                            <TableHead>Example Protocols</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell><strong>Application Layer	</strong></TableCell>
+                                            <TableCell>Handles end-user interactions & application services</TableCell>
+                                            <TableCell>HTTP, FTP, SMTP, DNS</TableCell>
+                                        </TableRow>
+
+
+                                        <TableRow>
+                                            <TableCell><strong>Transport Layer</strong></TableCell>
+                                            <TableCell>Ensures reliable/unreliable data transmission</TableCell>
+                                            <TableCell>TCP, UDP</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>Internet Layer</strong></TableCell>
+                                            <TableCell>Handles routing, addressing, and packet forwarding</TableCell>
+                                            <TableCell>IP, ICMP, ARP</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell><strong>Network Access Layer</strong></TableCell>
+                                            <TableCell>Defines physical transmission (hardware & data link)</TableCell>
+                                            <TableCell>Ethernet, Wi-Fi
+                                            </TableCell>
+                                        </TableRow>
+
+                                    </TableBody>
+                                </Table>
+                                <div className="mt-6 flex items-center space-x-3">
+                                    <h3>To understand this topic</h3>
+                                    <a
+                                        href="https://www.youtube.com/watch?v=2QGgEk20RXM&pp=ygUMdGNwIGlwIG1vZGVs"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center text-red-600 hover:text-red-700 transition-all"
+                                    >
+                                        <FaYoutube className="w-6 h-6" />
+                                        <span className="ml-2 font-semibold">Watch on YouTube</span>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div className="max-w-4xl mx-auto px-6 py-8">
+                            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+                                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                                    TCP Three-Way Handshake 🚀
+                                </h2>
+                                <p className="text-gray-600 dark:text-gray-300 mt-2">
+                                    This process establishes a reliable connection between a client and a server.
+                                </p>
+
+                                <div className="mt-6">
+                                    {step === 1 && (
+                                        <div className="p-4 bg-blue-100 dark:bg-blue-800 rounded-lg">
+                                            <h3 className="text-lg font-semibold text-blue-700 dark:text-blue-200">
+                                                1️⃣ SYN (Client → Server)
+                                            </h3>
+                                            <p className="text-gray-700 dark:text-gray-300 mt-2">
+                                                The client sends a SYN(Synchronize Sequence Number)  packet to the server, requesting a connection.
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {step === 2 && (
+                                        <div className="p-4 bg-green-100 dark:bg-green-800 rounded-lg">
+                                            <h3 className="text-lg font-semibold text-green-700 dark:text-green-200">
+                                                2️⃣ SYN-ACK (Server → Client)
+                                            </h3>
+                                            <p className="text-gray-700 dark:text-gray-300 mt-2">
+                                                The server responds with a SYN-ACK, acknowledging the request.
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {step === 3 && (
+                                        <div className="p-4 bg-yellow-100 dark:bg-yellow-800 rounded-lg">
+                                            <h3 className="text-lg font-semibold text-yellow-700 dark:text-yellow-200">
+                                                3️⃣ ACK (Client → Server)
+                                            </h3>
+                                            <p className="text-gray-700 dark:text-gray-300 mt-2">
+                                                The client sends an ACK, confirming the connection is established.
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {step < 3 && (
+                                    <button
+                                        onClick={nextStep}
+                                        className="mt-6 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700"
+                                    >
+                                        Next Step →
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="max-w-4xl mx-auto px-4 py-6">
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+
+                                {/* Title */}
+                                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                                    What Happens When You Enter a URL in a Browser? 🌐
+                                </h2>
+
+                                {/* Explanation */}
+                                <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
+                                    When you type a URL (e.g., <strong>https://www.example.com</strong>) in your browser and hit enter,
+                                    the following steps occur:
+                                </p>
+
+                                {/* Steps */}
+                                <ul className="list-disc ml-6 mt-3 space-y-2 text-gray-700 dark:text-gray-300">
+                                    <li><strong>DNS Lookup:</strong> The browser finds the IP address of the domain.</li>
+                                    <li><strong>TCP Connection:</strong> A connection is established with the web server.</li>
+                                    <li><strong>HTTPS Handshake:</strong> If secure (HTTPS), SSL/TLS encryption starts.</li>
+                                    <li><strong>HTTP Request:</strong> The browser sends a request for the webpage.</li>
+                                    <li><strong>Server Response:</strong> The server processes and sends back the webpage.</li>
+                                    <li><strong>Rendering:</strong> The browser interprets and displays the page.</li>
+                                    <li><strong>Additional Requests:</strong> The browser loads images, CSS, and JavaScript.</li>
+                                </ul>
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </main>
+            </div>
+
+        </div>
+    )
+}
+
+export default ComputerNetwork
