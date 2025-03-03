@@ -29,7 +29,7 @@ const ComputerNetwork = () => {
     const [step, setStep] = useState(1);
 
     const nextStep = () => {
-      if (step < 3) setStep(step + 1);
+        if (step < 3) setStep(step + 1);
     };
 
     const toggleSidebar = () => {
@@ -65,21 +65,24 @@ const ComputerNetwork = () => {
 
 
                 <div className={`bg-white dark:bg-gray-900 mt-[60px] p-6 w-[60%] sm:w-[20%] fixed min-h-screen shadow-lg rounded-lg 
-                             dark:text-white text-black transition-all duration-300 ease-in-out 
-                             ${isSidebarOpen ? "block" : "hidden sm:block"}`}>
+                 dark:text-white text-black transition-all duration-300 ease-in-out 
+                 ${isSidebarOpen ? "block" : "hidden sm:block"} 
+                 max-h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600`}>
+
                     <h3 className="text-center text-lg font-semibold pb-4 border-b border-gray-300 dark:border-gray-700">Content</h3>
 
                     <div className="flex flex-col gap-2 mt-4">
-                        <a href="#oops_desc" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white transition duration-300">OOPS Introduction</a>
-                        <a href="#Constructor" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-red-500 hover:text-white transition duration-300">Constructor</a>
-                        <a href="#Destructor" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-green-500 hover:text-white transition duration-300">Destructor</a>
-                        <a href="#Four Pillars of OOPS" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-yellow-500 hover:text-black transition duration-300">Four Pillars of OOPS</a>
-                        <a href="#Abstraction" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-purple-500 hover:text-white transition duration-300">Abstraction</a>
-                        <a href="#Polymorphism" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-pink-500 hover:text-white transition duration-300">Polymorphism</a>
-                        <a href="#Inheritance" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-orange-500 hover:text-white transition duration-300">Inheritance</a>
-                        <a href="#Encapsulation" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-teal-500 hover:text-white transition duration-300">Encapsulation</a>
-                        <a href="#Friend Function and Friend Class" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-indigo-500 hover:text-white transition duration-300">Friend Function and Friend Class</a>
-                        <a href="#Access Modifier" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-500 hover:text-white transition duration-300">Access Modifier</a>
+                        <a href="#cn_desc" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white transition duration-300">Introduction</a>
+                        <a href="#topology" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-red-500 hover:text-white transition duration-300">Topology</a>
+                        <a href="#lan_van" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-green-500 hover:text-white transition duration-300">LAN and WAN</a>
+                        <a href="#firewall" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-yellow-500 hover:text-black transition duration-300">Firewall</a>
+                        <a href="#dhcp" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-purple-500 hover:text-white transition duration-300">DHCP (Dynamic Host Configuration Protocol)</a>
+                        <a href="#httpvshttps" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-pink-500 hover:text-white transition duration-300">HTTP vs HTTPS</a>
+                        <a href="#ipv4vsipv6" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-orange-500 hover:text-white transition duration-300">IPv4 vs IPv6</a>
+                        <a href="#osi" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-teal-500 hover:text-white transition duration-300">OSI (Open Systems Interconnection) Model</a>
+                        <a href="#tcp/ip" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-indigo-500 hover:text-white transition duration-300">TCP/IP Model</a>
+                        <a href="#handshake" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-500 hover:text-white transition duration-300">TCP Three-Way Handshake</a>
+                        <a href="#browser" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-rose-500 hover:text-white transition duration-300">What Happens When You Enter a URL in a Browser?</a>
                     </div>
                 </div>
 
@@ -94,7 +97,7 @@ const ComputerNetwork = () => {
                 <main className="sm:w-4/5 w-full ml-auto p-6 mt-20">
 
 
-                    <div id='computer_network_introduction' className="w-full sm:w-4/5 mx-auto">
+                    <div id='cn_desc' className="w-full sm:w-4/5 mx-auto">
                         <div className="max-w-4xl mx-auto px-4 md:px-6 py-6">
                             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
 
@@ -111,7 +114,7 @@ const ComputerNetwork = () => {
                             </div>
                         </div>
 
-                        <div className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='Constructor'>
+                        <div className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='topology'>
                             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
                                 <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
                                     Topology
@@ -147,7 +150,7 @@ const ComputerNetwork = () => {
                             </div>
                         </div>
 
-                        <div className="max-w-4xl mx-auto px-4 py-6">
+                        <div className="max-w-4xl mx-auto px-4 py-6" id='lan_van'>
                             <div className="mb-2">
                                 <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
 
@@ -220,7 +223,7 @@ const ComputerNetwork = () => {
                             </div>
                         </div>
 
-                        <div className="max-w-4xl mx-auto px-4 py-6">
+                        <div className="max-w-4xl mx-auto px-4 py-6" id='firewall'>
                             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
 
                                 {/* Firewall Title */}
@@ -239,7 +242,7 @@ const ComputerNetwork = () => {
                             </div>
                         </div>
 
-                        <div className="max-w-4xl mx-auto px-4 py-6">
+                        <div className="max-w-4xl mx-auto px-4 py-6" id='dhcp'>
                             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
                                 <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
                                     DHCP (Dynamic Host Configuration Protocol)
@@ -273,7 +276,7 @@ const ComputerNetwork = () => {
                         </div>
 
 
-                        <div className="max-w-4xl mx-auto px-4 py-6">
+                        <div className="max-w-4xl mx-auto px-4 py-6" id='httpvshttps'>
                             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
 
                                 {/* Firewall Title */}
@@ -338,7 +341,7 @@ const ComputerNetwork = () => {
                             </div>
                         </div>
 
-                        <div className="max-w-4xl mx-auto px-4 py-6">
+                        <div className="max-w-4xl mx-auto px-4 py-6" id='ipv4vsipv6'>
                             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
 
                                 <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
@@ -408,7 +411,7 @@ const ComputerNetwork = () => {
                             </div>
                         </div>
 
-                        <div className="max-w-4xl mx-auto px-4 py-6">
+                        <div className="max-w-4xl mx-auto px-4 py-6" id='osi'>
                             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
 
                                 <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
@@ -494,7 +497,7 @@ const ComputerNetwork = () => {
                             </div>
                         </div>
 
-                        <div className="max-w-4xl mx-auto px-4 py-6">
+                        <div className="max-w-4xl mx-auto px-4 py-6" id='tcp/ip'>
                             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
 
                                 <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
@@ -562,7 +565,7 @@ const ComputerNetwork = () => {
                             </div>
                         </div>
 
-                        <div className="max-w-4xl mx-auto px-6 py-8">
+                        <div className="max-w-4xl mx-auto px-6 py-8" id='handshake'>
                             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg text-center">
                                 <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
                                     TCP Three-Way Handshake 🚀
@@ -617,7 +620,7 @@ const ComputerNetwork = () => {
                             </div>
                         </div>
 
-                        <div className="max-w-4xl mx-auto px-4 py-6">
+                        <div className="max-w-4xl mx-auto px-4 py-6" id='browser'>
                             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
 
                                 {/* Title */}

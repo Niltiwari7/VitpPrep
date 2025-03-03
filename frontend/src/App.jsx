@@ -24,6 +24,7 @@ import UpdateQuestion from "./components/UpdateQuestion";
 import Dsa150Question from "./pages/Dsa150Question";
 import OOPS from "./pages/OOPS";
 import ComputerNetwork from "./pages/ComputerNetwork";
+import DBMS from "./pages/DBMS";
 
 
 function App() {
@@ -71,13 +72,14 @@ function App() {
         <Route path="/dashboard" element={<UserDashBoard />} />
         <Route path="/admin/profile/:adminId" element={<AdminProfile />} />
         <Route path="/admin/edit/:adminId" element={<AdminEdit />} />
-        <Route path = "/admin/addQuestion" element = {<AddQuestion/>}/>
-        <Route path = "/admin/topic/:adminId" element = {<Topic/>}/>
-        <Route path = '/admin/questions' element = {<Quesion/>}/>
-        <Route path ='/admin/edit-question/:questionId' element = {<UpdateQuestion/>}/>
-        <Route path = '/top-interview-questions-dsa' element = {<Dsa150Question/>}/>
-        <Route path = '/oops' element = {<OOPS/>}/>
-        <Route path = '/computer-network' element = {<ComputerNetwork/>}/>
+        <Route path="/admin/addQuestion" element={<AddQuestion />} />
+        <Route path="/admin/topic/:adminId" element={<Topic />} />
+        <Route path='/admin/questions' element={<Quesion />} />
+        <Route path='/admin/edit-question/:questionId' element={<UpdateQuestion />} />
+        <Route path='/top-interview-questions-dsa' element={<Dsa150Question />} />
+        <Route path='/oops' element={<OOPS />} />
+        <Route path='/computer-network' element={<ComputerNetwork />} />
+        <Route path='/dbms' element={<DBMS />} />
 
       </Routes>
     </>
