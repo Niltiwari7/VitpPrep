@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setDarkMode } from '../utils/slices/theme.slice';
 import { Link } from 'react-router-dom';
 import { AiOutlineArrowLeft, AiOutlineBars } from 'react-icons/ai';
-import { FaMoon } from 'react-icons/fa';
+import { FaMoon, FaSun } from 'react-icons/fa';
 import {
     Table,
     TableBody,
@@ -328,6 +328,399 @@ const DBMS = () => {
                         </div>
                     </div>
 
+                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                        <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
+
+                            {/* Section Title */}
+                            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Normalization</h2>
+
+                            {/* Section Description */}
+                            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                Normalization is the process of organizing data in a database to reduce redundancy and
+                                improve data integrity by dividing large tables into smaller related tables.
+                            </p>
+
+                            {/* 1NF Explanation */}
+                            <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">1️⃣ First Normal Form (1NF)</h3>
+                                <p className="text-gray-600 dark:text-gray-300 mt-2">
+                                    Ensures that all columns contain **atomic (indivisible) values** and removes duplicate & multivalued attributes.
+                                </p>
+                            </div>
+
+                            {/* Before 1NF Table */}
+                            <div className="mt-4">
+                                <h4 className="text-md font-medium text-gray-700 dark:text-gray-200">🚫 Before 1NF (Multivalued Attribute)</h4>
+                                <Table className="mt-2 border border-gray-300 dark:border-gray-600">
+                                    <TableHeader className="bg-gray-200 dark:bg-gray-700">
+                                        <TableRow>
+                                            <TableHead>Student_ID</TableHead>
+                                            <TableHead>Name</TableHead>
+                                            <TableHead>Subjects</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        <TableRow className="border-b dark:border-gray-600">
+                                            <TableCell>1</TableCell>
+                                            <TableCell>John Doe</TableCell>
+                                            <TableCell>Maths, Science, English</TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </div>
+
+                            {/* After 1NF Table */}
+                            <div className="mt-6">
+                                <h4 className="text-md font-medium text-gray-700 dark:text-gray-200">✅ After 1NF (Atomic Data)</h4>
+                                <Table className="mt-2 border border-gray-300 dark:border-gray-600">
+                                    <TableHeader className="bg-gray-200 dark:bg-gray-700">
+                                        <TableRow>
+                                            <TableHead>Student_ID</TableHead>
+                                            <TableHead>Name</TableHead>
+                                            <TableHead>Subjects</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        <TableRow className="border-b dark:border-gray-600">
+                                            <TableCell>1</TableCell>
+                                            <TableCell>John Doe</TableCell>
+                                            <TableCell>Maths</TableCell>
+                                        </TableRow>
+                                        <TableRow className="border-b dark:border-gray-600">
+                                            <TableCell>1</TableCell>
+                                            <TableCell>John Doe</TableCell>
+                                            <TableCell>Science</TableCell>
+                                        </TableRow>
+                                        <TableRow className="border-b dark:border-gray-600">
+                                            <TableCell>1</TableCell>
+                                            <TableCell>John Doe</TableCell>
+                                            <TableCell>English</TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </div>
+                            <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                                <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
+
+                                    {/* Section Title */}
+                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">2️⃣ Second Normal Form (2NF)</h2>
+
+                                    {/* Explanation Box */}
+                                    <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Understanding 2NF</h3>
+                                        <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-1">
+                                            <li>Table should be in **First Normal Form (1NF)**.</li>
+                                            <li>Remove **partial dependency** (i.e., non-key attributes should be fully dependent on the **entire** primary key).</li>
+                                        </ul>
+                                    </div>
+
+                                    {/* Before 2NF Table */}
+                                    <div className="mt-6">
+                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200">🚫 Before 2NF (Partial Dependency Exists)</h4>
+                                        <p className="text-gray-600 dark:text-gray-300 mb-2">
+                                            **Issue**: *Student_Name* depends **only** on *Student_ID*, not on *Course_ID*.
+                                        </p>
+                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
+                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
+                                                <TableRow>
+                                                    <TableHead>Student_ID</TableHead>
+                                                    <TableHead>Course_ID</TableHead>
+                                                    <TableHead>Student_Name</TableHead>
+                                                    <TableHead>Course_Name</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>1</TableCell>
+                                                    <TableCell>101</TableCell>
+                                                    <TableCell>John Doe</TableCell>
+                                                    <TableCell>Mathematics</TableCell>
+                                                </TableRow>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>2</TableCell>
+                                                    <TableCell>102</TableCell>
+                                                    <TableCell>Jane Smith</TableCell>
+                                                    <TableCell>Physics</TableCell>
+                                                </TableRow>
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+
+                                    {/* Solution - After 2NF */}
+                                    <div className="mt-8">
+                                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">✅ After 2NF – Splitting into Three Tables</h3>
+                                        <p className="text-gray-600 dark:text-gray-300 mb-4">
+                                            We break the table into **Student, Course, and Enrollment tables** to remove partial dependency.
+                                        </p>
+
+                                        {/* Student Table */}
+                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mt-4">📌 Student Table</h4>
+                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
+                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
+                                                <TableRow>
+                                                    <TableHead>Student_ID</TableHead>
+                                                    <TableHead>Student_Name</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>1</TableCell>
+                                                    <TableCell>John Doe</TableCell>
+                                                </TableRow>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>2</TableCell>
+                                                    <TableCell>Jane Smith</TableCell>
+                                                </TableRow>
+                                            </TableBody>
+                                        </Table>
+
+                                        {/* Course Table */}
+                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mt-6">📌 Course Table</h4>
+                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
+                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
+                                                <TableRow>
+                                                    <TableHead>Course_ID</TableHead>
+                                                    <TableHead>Course_Name</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>101</TableCell>
+                                                    <TableCell>Mathematics</TableCell>
+                                                </TableRow>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>102</TableCell>
+                                                    <TableCell>Physics</TableCell>
+                                                </TableRow>
+                                            </TableBody>
+                                        </Table>
+
+                                        {/* Enrollment Table */}
+                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mt-6">📌 Enrollment Table</h4>
+                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
+                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
+                                                <TableRow>
+                                                    <TableHead>Student_ID</TableHead>
+                                                    <TableHead>Course_ID</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>1</TableCell>
+                                                    <TableCell>101</TableCell>
+                                                </TableRow>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>2</TableCell>
+                                                    <TableCell>102</TableCell>
+                                                </TableRow>
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                                <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
+
+                                    {/* Section Title */}
+                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">3️⃣ Third Normal Form (3NF)</h2>
+
+                                    {/* Explanation Box */}
+                                    <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Understanding 3NF</h3>
+                                        <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-1">
+                                            <li>Table should be in **Second Normal Form (2NF)**.</li>
+                                            <li>Remove **transitive dependency** (i.e., non-key attributes should depend **only** on the primary key).</li>
+                                        </ul>
+                                    </div>
+
+                                    {/* Before 3NF Table */}
+                                    <div className="mt-6">
+                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200">🚫 Before 3NF (Transitive Dependency Exists)</h4>
+                                        <p className="text-gray-600 dark:text-gray-300 mb-2">
+                                            **Issue**: *Dept_Name* depends **indirectly** on *Student_ID* via *Dept_ID*.
+                                        </p>
+                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
+                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
+                                                <TableRow>
+                                                    <TableHead>Student_ID</TableHead>
+                                                    <TableHead>Name</TableHead>
+                                                    <TableHead>Dept_ID</TableHead>
+                                                    <TableHead>Dept_Name</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>1</TableCell>
+                                                    <TableCell>John Doe</TableCell>
+                                                    <TableCell>101</TableCell>
+                                                    <TableCell>Computer Science</TableCell>
+                                                </TableRow>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>2</TableCell>
+                                                    <TableCell>Jane Smith</TableCell>
+                                                    <TableCell>102</TableCell>
+                                                    <TableCell>Electrical Engineering</TableCell>
+                                                </TableRow>
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+
+                                    {/* Solution - After 3NF */}
+                                    <div className="mt-8">
+                                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">✅ After 3NF – Splitting into Two Tables</h3>
+                                        <p className="text-gray-600 dark:text-gray-300 mb-4">
+                                            We separate **Department details** into a new table to remove transitive dependency.
+                                        </p>
+
+                                        {/* Student Table */}
+                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mt-4">📌 Student Table</h4>
+                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
+                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
+                                                <TableRow>
+                                                    <TableHead>Student_ID</TableHead>
+                                                    <TableHead>Name</TableHead>
+                                                    <TableHead>Dept_ID</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>1</TableCell>
+                                                    <TableCell>John Doe</TableCell>
+                                                    <TableCell>101</TableCell>
+                                                </TableRow>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>2</TableCell>
+                                                    <TableCell>Jane Smith</TableCell>
+                                                    <TableCell>102</TableCell>
+                                                </TableRow>
+                                            </TableBody>
+                                        </Table>
+
+                                        {/* Department Table */}
+                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mt-6">📌 Department Table</h4>
+                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
+                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
+                                                <TableRow>
+                                                    <TableHead>Dept_ID</TableHead>
+                                                    <TableHead>Dept_Name</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>101</TableCell>
+                                                    <TableCell>Computer Science</TableCell>
+                                                </TableRow>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>102</TableCell>
+                                                    <TableCell>Electrical Engineering</TableCell>
+                                                </TableRow>
+                                            </TableBody>
+                                        </Table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                                <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
+
+                                    {/* Section Title */}
+                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">4️⃣ Boyce-Codd Normal Form (BCNF)</h2>
+
+                                    {/* Explanation Box */}
+                                    <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Understanding BCNF</h3>
+                                        <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-1">
+                                            <li>Table should be in **Third Normal Form (3NF)**.</li>
+                                            <li>Every **functional dependency** must have a **super key**.</li>
+                                            <li>Used when **3NF does not handle anomalies properly**.</li>
+                                        </ul>
+                                    </div>
+
+                                    {/* Before BCNF Table */}
+                                    <div className="mt-6">
+                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200">🚫 Before BCNF (Violation of Super Key Rule)</h4>
+                                        <p className="text-gray-600 dark:text-gray-300 mb-2">
+                                            **Issue**: Professor_Name depends only on **Subject**, not on the full primary key *(Professor_ID, Subject)*.
+                                        </p>
+                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
+                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
+                                                <TableRow>
+                                                    <TableHead>Professor_ID</TableHead>
+                                                    <TableHead>Professor_Name</TableHead>
+                                                    <TableHead>Subject</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>101</TableCell>
+                                                    <TableCell>Dr. Smith</TableCell>
+                                                    <TableCell>Database Systems</TableCell>
+                                                </TableRow>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>102</TableCell>
+                                                    <TableCell>Dr. Johnson</TableCell>
+                                                    <TableCell>Operating Systems</TableCell>
+                                                </TableRow>
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+
+                                    {/* Solution - After BCNF */}
+                                    <div className="mt-8">
+                                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">✅ After BCNF – Splitting into Two Tables</h3>
+                                        <p className="text-gray-600 dark:text-gray-300 mb-4">
+                                            We create separate **Professor and Subject tables** to eliminate the **partial dependency**.
+                                        </p>
+
+                                        {/* Professor Table */}
+                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mt-4">📌 Professor Table</h4>
+                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
+                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
+                                                <TableRow>
+                                                    <TableHead>Professor_ID</TableHead>
+                                                    <TableHead>Professor_Name</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>101</TableCell>
+                                                    <TableCell>Dr. Smith</TableCell>
+                                                </TableRow>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>102</TableCell>
+                                                    <TableCell>Dr. Johnson</TableCell>
+                                                </TableRow>
+                                            </TableBody>
+                                        </Table>
+
+                                        {/* Subject Table */}
+                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mt-6">📌 Subject Table</h4>
+                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
+                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
+                                                <TableRow>
+                                                    <TableHead>Subject</TableHead>
+                                                    <TableHead>Professor_ID</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>Database Systems</TableCell>
+                                                    <TableCell>101</TableCell>
+                                                </TableRow>
+                                                <TableRow className="border-b dark:border-gray-600">
+                                                    <TableCell>Operating Systems</TableCell>
+                                                    <TableCell>102</TableCell>
+                                                </TableRow>
+                                            </TableBody>
+                                        </Table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </main>
 
