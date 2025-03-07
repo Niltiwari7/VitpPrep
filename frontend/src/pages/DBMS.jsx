@@ -14,6 +14,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { dracula } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 const DBMS = () => {
     const dispatch = useDispatch();
@@ -328,299 +330,318 @@ const DBMS = () => {
                         </div>
                     </div>
 
-                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
-                        <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
-
+                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8 ">
+                        < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
                             {/* Section Title */}
-                            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Normalization</h2>
+                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                Normalisation
+                            </h2>
+
 
                             {/* Section Description */}
-                            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                            <p className="text-lg text-gray-600 dark:text-gray-300 leading-7">
                                 Normalization is the process of organizing data in a database to reduce redundancy and
                                 improve data integrity by dividing large tables into smaller related tables.
                             </p>
 
-                            {/* 1NF Explanation */}
-                            <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">1️⃣ First Normal Form (1NF)</h3>
-                                <p className="text-gray-600 dark:text-gray-300 mt-2">
-                                    Ensures that all columns contain **atomic (indivisible) values** and removes duplicate & multivalued attributes.
+                            <div className='space-y-6'>
+                                <div className='space-y-6'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>1. First Normal Form (1NF)</h3>
+                                    <p className='text-gray-600 dark:text-gray-400 text-base'>
+                                        Ensures that all columns contain <strong>atomic (indivisible) values</strong> and removes duplicate & multivalued attributes.
+                                    </p>
+                                </div>
+
+
+                                {/* example section  */}
+
+                                <div className='space-y-8'>
+                                    <div className='grid md:grid-cols-2 gap-6'>
+
+                                        {/* Before 1NF */}
+                                        <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm'>
+                                            <div className='p-4 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t-xl'>
+                                                <h4 className='font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-2'>
+                                                    Before 1NF
+                                                </h4>
+                                            </div>
+                                            <Table className="w-full">
+                                                <TableHeader>
+                                                    <TableRow className="bg-gray-50 dark:bg-gray-900">
+                                                        <TableHead className="w-[100px]">ID</TableHead>
+                                                        <TableHead>Student_ID</TableHead>
+                                                        <TableHead>Name</TableHead>
+                                                        <TableHead>Subjects</TableHead>
+                                                    </TableRow>
+                                                </TableHeader>
+
+                                                <TableBody>
+                                                    {[
+                                                        [1, '101', 'John Doe', 'Maths, Science, English']
+                                                    ].map(([id, studentId, name, subName]) => (
+                                                        <TableRow key={id} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+                                                            <TableCell>{id}</TableCell>
+                                                            <TableCell>{studentId}</TableCell>
+                                                            <TableCell>{name}</TableCell>
+                                                            <TableCell>{subName}</TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </div>
+
+                                        {/* After 1NF */}
+                                        <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm'>
+                                            <div className='p-4 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t-xl'>
+                                                <h4 className='font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-2'>
+                                                    After 1NF
+                                                </h4>
+                                            </div>
+                                            <Table className='w-full'>
+                                                <TableHeader>
+                                                    <TableRow className='bg-gray-50 dark:bg-gray-900'>
+                                                        <TableHead className='w-[100px]'>Student_ID</TableHead>
+                                                        <TableHead>Name</TableHead>
+                                                        <TableHead>Subject</TableHead>
+                                                    </TableRow>
+                                                </TableHeader>
+
+                                                <TableBody>
+                                                    {[
+                                                        [101, 'John Doe', 'Math'],
+                                                        [101, 'John Doe', 'Science'],
+                                                        [101, 'John Doe', 'English']
+                                                    ].map(([studentId, name, subject]) => (
+                                                        <TableRow key={`${studentId}-${subject}`} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+                                                            <TableCell>{studentId}</TableCell>
+                                                            <TableCell>{name}</TableCell>
+                                                            <TableCell>{subject}</TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className='space-y-6 pt-5'>
+                                {/* Heading */}
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+                                        2. Second Normal Form (2NF)
+                                    </h3>
+                                </div>
+
+                                {/* Explanation */}
+                                <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                                    <li>Table should be in <strong>First Normal Form (1NF)</strong>.</li>
+                                    <li>Remove <strong>partial dependency</strong> (i.e., non-key attributes should be fully dependent on the <strong>entire</strong> primary key).</li>
+                                </ul>
+
+                                {/* Before Normalization */}
+                                <p className='text-lg font-semibold text-gray-700 dark:text-gray-200 mt-4'>
+                                    Before 2NF Normalization
                                 </p>
-                            </div>
 
-                            {/* Before 1NF Table */}
-                            <div className="mt-4">
-                                <h4 className="text-md font-medium text-gray-700 dark:text-gray-200">🚫 Before 1NF (Multivalued Attribute)</h4>
-                                <Table className="mt-2 border border-gray-300 dark:border-gray-600">
-                                    <TableHeader className="bg-gray-200 dark:bg-gray-700">
-                                        <TableRow>
-                                            <TableHead>Student_ID</TableHead>
-                                            <TableHead>Name</TableHead>
-                                            <TableHead>Subjects</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        <TableRow className="border-b dark:border-gray-600">
-                                            <TableCell>1</TableCell>
-                                            <TableCell>John Doe</TableCell>
-                                            <TableCell>Maths, Science, English</TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
-                            </div>
-
-                            {/* After 1NF Table */}
-                            <div className="mt-6">
-                                <h4 className="text-md font-medium text-gray-700 dark:text-gray-200">✅ After 1NF (Atomic Data)</h4>
-                                <Table className="mt-2 border border-gray-300 dark:border-gray-600">
-                                    <TableHeader className="bg-gray-200 dark:bg-gray-700">
-                                        <TableRow>
-                                            <TableHead>Student_ID</TableHead>
-                                            <TableHead>Name</TableHead>
-                                            <TableHead>Subjects</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        <TableRow className="border-b dark:border-gray-600">
-                                            <TableCell>1</TableCell>
-                                            <TableCell>John Doe</TableCell>
-                                            <TableCell>Maths</TableCell>
-                                        </TableRow>
-                                        <TableRow className="border-b dark:border-gray-600">
-                                            <TableCell>1</TableCell>
-                                            <TableCell>John Doe</TableCell>
-                                            <TableCell>Science</TableCell>
-                                        </TableRow>
-                                        <TableRow className="border-b dark:border-gray-600">
-                                            <TableCell>1</TableCell>
-                                            <TableCell>John Doe</TableCell>
-                                            <TableCell>English</TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
-                            </div>
-                            <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
-                                <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
-
-                                    {/* Section Title */}
-                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">2️⃣ Second Normal Form (2NF)</h2>
-
-                                    {/* Explanation Box */}
-                                    <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Understanding 2NF</h3>
-                                        <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-1">
-                                            <li>Table should be in **First Normal Form (1NF)**.</li>
-                                            <li>Remove **partial dependency** (i.e., non-key attributes should be fully dependent on the **entire** primary key).</li>
-                                        </ul>
-                                    </div>
-
-                                    {/* Before 2NF Table */}
-                                    <div className="mt-6">
-                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200">🚫 Before 2NF (Partial Dependency Exists)</h4>
-                                        <p className="text-gray-600 dark:text-gray-300 mb-2">
-                                            **Issue**: *Student_Name* depends **only** on *Student_ID*, not on *Course_ID*.
-                                        </p>
-                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
-                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
-                                                <TableRow>
-                                                    <TableHead>Student_ID</TableHead>
-                                                    <TableHead>Course_ID</TableHead>
-                                                    <TableHead>Student_Name</TableHead>
-                                                    <TableHead>Course_Name</TableHead>
+                                <div className='overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm'>
+                                    <Table className='w-full'>
+                                        <TableHeader>
+                                            <TableRow className="bg-gray-100 dark:bg-gray-800">
+                                                <TableHead>Student_Id</TableHead>
+                                                <TableHead>Course_Id</TableHead>
+                                                <TableHead>Student_Name</TableHead>
+                                                <TableHead>Course_Name</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {[
+                                                [1, 101, 'John Doe', 'Mathematics'],
+                                                [2, 102, 'Shyam', 'Physics']
+                                            ].map(([s_id, c_id, s_name, c_name]) => (
+                                                <TableRow key={`${s_id}-${c_id}`} className='hover:bg-gray-50 dark:hover:bg-gray-900/50'>
+                                                    <TableCell>{s_id}</TableCell>
+                                                    <TableCell>{c_id}</TableCell>
+                                                    <TableCell>{s_name}</TableCell>
+                                                    <TableCell>{c_name}</TableCell>
                                                 </TableRow>
-                                            </TableHeader>
-                                            <TableBody>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>1</TableCell>
-                                                    <TableCell>101</TableCell>
-                                                    <TableCell>John Doe</TableCell>
-                                                    <TableCell>Mathematics</TableCell>
-                                                </TableRow>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>2</TableCell>
-                                                    <TableCell>102</TableCell>
-                                                    <TableCell>Jane Smith</TableCell>
-                                                    <TableCell>Physics</TableCell>
-                                                </TableRow>
-                                            </TableBody>
-                                        </Table>
-                                    </div>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </div>
 
-                                    {/* Solution - After 2NF */}
-                                    <div className="mt-8">
-                                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">✅ After 2NF – Splitting into Three Tables</h3>
-                                        <p className="text-gray-600 dark:text-gray-300 mb-4">
-                                            We break the table into **Student, Course, and Enrollment tables** to remove partial dependency.
-                                        </p>
+                                {/* After Normalization */}
+                                <p className='text-lg font-semibold text-gray-700 dark:text-gray-200 mt-6'>
+                                    After 2NF Normalization
+                                </p>
 
-                                        {/* Student Table */}
-                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mt-4">📌 Student Table</h4>
-                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
-                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
-                                                <TableRow>
-                                                    <TableHead>Student_ID</TableHead>
+                                <div className='grid md:grid-cols-2 gap-6'>
+                                    {/* Student Table */}
+                                    <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden'>
+                                        <div className='p-4 bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700'>
+                                            <h4 className='font-semibold text-gray-800 dark:text-gray-200'>Student</h4>
+                                        </div>
+                                        <Table className='w-full'>
+                                            <TableHeader>
+                                                <TableRow className='bg-gray-50 dark:bg-gray-900'>
+                                                    <TableHead>Student_Id</TableHead>
                                                     <TableHead>Student_Name</TableHead>
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>1</TableCell>
-                                                    <TableCell>John Doe</TableCell>
-                                                </TableRow>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>2</TableCell>
-                                                    <TableCell>Jane Smith</TableCell>
-                                                </TableRow>
-                                            </TableBody>
-                                        </Table>
-
-                                        {/* Course Table */}
-                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mt-6">📌 Course Table</h4>
-                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
-                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
-                                                <TableRow>
-                                                    <TableHead>Course_ID</TableHead>
-                                                    <TableHead>Course_Name</TableHead>
-                                                </TableRow>
-                                            </TableHeader>
-                                            <TableBody>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>101</TableCell>
-                                                    <TableCell>Mathematics</TableCell>
-                                                </TableRow>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>102</TableCell>
-                                                    <TableCell>Physics</TableCell>
-                                                </TableRow>
-                                            </TableBody>
-                                        </Table>
-
-                                        {/* Enrollment Table */}
-                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mt-6">📌 Enrollment Table</h4>
-                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
-                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
-                                                <TableRow>
-                                                    <TableHead>Student_ID</TableHead>
-                                                    <TableHead>Course_ID</TableHead>
-                                                </TableRow>
-                                            </TableHeader>
-                                            <TableBody>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>1</TableCell>
-                                                    <TableCell>101</TableCell>
-                                                </TableRow>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>2</TableCell>
-                                                    <TableCell>102</TableCell>
-                                                </TableRow>
+                                                {[
+                                                    [1, 'John Doe'],
+                                                    [2, 'Shyam']
+                                                ].map(([id, name]) => (
+                                                    <TableRow key={id} className='hover:bg-gray-50 dark:hover:bg-gray-900/50'>
+                                                        <TableCell>{id}</TableCell>
+                                                        <TableCell>{name}</TableCell>
+                                                    </TableRow>
+                                                ))}
                                             </TableBody>
                                         </Table>
                                     </div>
 
+                                    {/* Courses Table */}
+                                    <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden'>
+                                        <div className='p-4 bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700'>
+                                            <h4 className='font-semibold text-gray-800 dark:text-gray-200'>Courses</h4>
+                                        </div>
+                                        <Table className='w-full'>
+                                            <TableHeader>
+                                                <TableRow className='bg-gray-50 dark:bg-gray-900'>
+                                                    <TableHead className='w-[100px]'>Course_Id</TableHead>
+                                                    <TableHead>Course Name</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {[
+                                                    [101, 'Mathematics'],
+                                                    [102, 'Physics']
+                                                ].map(([id, c_name]) => (
+                                                    <TableRow key={id} className='hover:bg-gray-50 dark:hover:bg-gray-900/50'>
+                                                        <TableCell>{id}</TableCell>
+                                                        <TableCell>{c_name}</TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
-                                <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
 
-                                    {/* Section Title */}
-                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">3️⃣ Third Normal Form (3NF)</h2>
+                            <div className='space-y-6 pt-5'>
+                                {/* Heading */}
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+                                        3. Third Normal Form (3NF)
+                                    </h3>
+                                </div>
 
-                                    {/* Explanation Box */}
-                                    <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Understanding 3NF</h3>
-                                        <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-1">
-                                            <li>Table should be in **Second Normal Form (2NF)**.</li>
-                                            <li>Remove **transitive dependency** (i.e., non-key attributes should depend **only** on the primary key).</li>
-                                        </ul>
-                                    </div>
+                                {/* Explanation */}
+                                <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                                    <li>Table should be in <strong>Second Normal Form (2NF)</strong>.</li>
+                                    <li>Remove <strong>transitive dependency</strong> (i.e., non-key attributes should depend <strong>only</strong> on the primary key).</li>
+                                </ul>
 
-                                    {/* Before 3NF Table */}
-                                    <div className="mt-6">
-                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200">🚫 Before 3NF (Transitive Dependency Exists)</h4>
-                                        <p className="text-gray-600 dark:text-gray-300 mb-2">
-                                            **Issue**: *Dept_Name* depends **indirectly** on *Student_ID* via *Dept_ID*.
-                                        </p>
-                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
-                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
-                                                <TableRow>
-                                                    <TableHead>Student_ID</TableHead>
-                                                    <TableHead>Name</TableHead>
-                                                    <TableHead>Dept_ID</TableHead>
-                                                    <TableHead>Dept_Name</TableHead>
+                                {/* Before Normalization */}
+                                <p className='text-lg font-semibold text-gray-700 dark:text-gray-200 mt-4'>
+                                    Before 3NF Normalization
+                                </p>
+
+                                <div className='overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm'>
+                                    <Table className='w-full'>
+                                        <TableHeader>
+                                            <TableRow className="bg-gray-100 dark:bg-gray-800">
+                                                <TableHead>Student_Id</TableHead>
+                                                <TableHead>Course_Id</TableHead>
+                                                <TableHead>Dept_ID</TableHead>
+                                                <TableHead>Dept_Name</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {[
+                                                [1, 101, 'John Doe', 'Computer Sciene'],
+                                                [2, 102, 'Shyam', 'Electrical Engineering']
+                                            ].map(([s_id, c_id, s_name, c_name]) => (
+                                                <TableRow key={`${s_id}-${c_id}`} className='hover:bg-gray-50 dark:hover:bg-gray-900/50'>
+                                                    <TableCell>{s_id}</TableCell>
+                                                    <TableCell>{c_id}</TableCell>
+                                                    <TableCell>{s_name}</TableCell>
+                                                    <TableCell>{c_name}</TableCell>
                                                 </TableRow>
-                                            </TableHeader>
-                                            <TableBody>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>1</TableCell>
-                                                    <TableCell>John Doe</TableCell>
-                                                    <TableCell>101</TableCell>
-                                                    <TableCell>Computer Science</TableCell>
-                                                </TableRow>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>2</TableCell>
-                                                    <TableCell>Jane Smith</TableCell>
-                                                    <TableCell>102</TableCell>
-                                                    <TableCell>Electrical Engineering</TableCell>
-                                                </TableRow>
-                                            </TableBody>
-                                        </Table>
-                                    </div>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </div>
 
-                                    {/* Solution - After 3NF */}
-                                    <div className="mt-8">
-                                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">✅ After 3NF – Splitting into Two Tables</h3>
-                                        <p className="text-gray-600 dark:text-gray-300 mb-4">
-                                            We separate **Department details** into a new table to remove transitive dependency.
-                                        </p>
+                                {/* After Normalization */}
+                                <p className='text-lg font-semibold text-gray-700 dark:text-gray-200 mt-6'>
+                                    After 2NF Normalization
+                                </p>
 
-                                        {/* Student Table */}
-                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mt-4">📌 Student Table</h4>
-                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
-                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
-                                                <TableRow>
+                                <div className='grid md:grid-cols-2 gap-6'>
+                                    {/* Student Table */}
+                                    <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden'>
+                                        <div className='p-4 bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700'>
+                                            <h4 className='font-semibold text-gray-800 dark:text-gray-200'>Student</h4>
+                                        </div>
+                                        <Table className='w-full'>
+                                            <TableHeader>
+                                                <TableRow className='bg-gray-50 dark:bg-gray-900'>
                                                     <TableHead>Student_ID</TableHead>
                                                     <TableHead>Name</TableHead>
                                                     <TableHead>Dept_ID</TableHead>
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>1</TableCell>
-                                                    <TableCell>John Doe</TableCell>
-                                                    <TableCell>101</TableCell>
-                                                </TableRow>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>2</TableCell>
-                                                    <TableCell>Jane Smith</TableCell>
-                                                    <TableCell>102</TableCell>
-                                                </TableRow>
+                                                {[
+                                                    [1, 'John Doe', 101],
+                                                    [2, 'Shyam', 102]
+                                                ].map(([id, name, dept_id]) => (
+                                                    <TableRow key={id} className='hover:bg-gray-50 dark:hover:bg-gray-900/50'>
+                                                        <TableCell>{id}</TableCell>
+                                                        <TableCell>{name}</TableCell>
+                                                        <TableCell>{dept_id}</TableCell>
+                                                    </TableRow>
+                                                ))}
                                             </TableBody>
                                         </Table>
+                                    </div>
 
-                                        {/* Department Table */}
-                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mt-6">📌 Department Table</h4>
-                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
-                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
-                                                <TableRow>
-                                                    <TableHead>Dept_ID</TableHead>
+                                    {/* Courses Table */}
+                                    <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden'>
+                                        <div className='p-4 bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700'>
+                                            <h4 className='font-semibold text-gray-800 dark:text-gray-200'>Department</h4>
+                                        </div>
+                                        <Table className='w-full'>
+                                            <TableHeader>
+                                                <TableRow className='bg-gray-50 dark:bg-gray-900'>
+                                                    <TableHead className='w-[100px]'>Dept_ID</TableHead>
                                                     <TableHead>Dept_Name</TableHead>
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>101</TableCell>
-                                                    <TableCell>Computer Science</TableCell>
-                                                </TableRow>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>102</TableCell>
-                                                    <TableCell>Electrical Engineering</TableCell>
-                                                </TableRow>
+                                                {[
+                                                    [101, 'Computer Science'],
+                                                    [102, 'Electrical Engineering']
+                                                ].map(([id, c_name]) => (
+                                                    <TableRow key={id} className='hover:bg-gray-50 dark:hover:bg-gray-900/50'>
+                                                        <TableCell>{id}</TableCell>
+                                                        <TableCell>{c_name}</TableCell>
+                                                    </TableRow>
+                                                ))}
                                             </TableBody>
                                         </Table>
-
                                     </div>
                                 </div>
                             </div>
+
 
                             <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
                                 <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
@@ -721,12 +742,172 @@ const DBMS = () => {
                             </div>
                         </div>
                     </div>
+                    <div className='max-w-4xl mx-auto px-6 md:px-8 py-8 space-y-8'>
+                        {/* Header Section */}
+                        <div className='bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700'>
+                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                SQL Joins
+                            </h2>
+                            <p className='text-lg text-gray-600 dark:text-gray-300 leading-7'>
+                                A <span className='font-semibold text-blue-600 dark:text-blue-400'>JOIN</span> clause combines records from two or more tables using a related column. Essential for working with normalized databases.
+                            </p>
 
+
+                            {/* Inner Join Section */}
+                            <div className='space-y-6'>
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>1. Inner Join</h3>
+                                    <p className='text-gray-600 dark:text-gray-400 text-base'>
+                                        Returns only matching records from both tables. Non-matching rows are excluded.
+                                    </p>
+                                </div>
+
+                                {/* Code Snippet */}
+                                <div className='relative group'>
+                                    <div className='absolute inset-0 bg-blue-500/5 rounded-xl transition'></div>
+                                    <SyntaxHighlighter
+                                        language='sql'
+                                        style={dracula}
+                                        className='rounded-xl p-6 text-sm border border-gray-200 dark:border-gray-700 hover:border-blue-300 transition-all'
+                                    >
+                                        {`SELECT students.*, courses.name
+FROM students
+INNER JOIN courses 
+  ON students.course_id = courses.id;`}
+                                    </SyntaxHighlighter>
+                                </div>
+
+                                {/* Example Section */}
+                                <div className='space-y-8'>
+                                    {/* Tables Grid */}
+                                    <div className='grid md:grid-cols-2 gap-6'>
+                                        {/* Students Table */}
+                                        <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm'>
+                                            <div className='p-4 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t-xl'>
+                                                <h4 className='font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-2'>
+                                                    <svg className="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                                                    </svg>
+                                                    Students
+                                                </h4>
+                                            </div>
+                                            <Table className="w-full">
+                                                <TableHeader>
+                                                    <TableRow className="bg-gray-50 dark:bg-gray-900">
+                                                        <TableHead className="w-[100px]">ID</TableHead>
+                                                        <TableHead>Name</TableHead>
+                                                        <TableHead>Course ID</TableHead>
+                                                    </TableRow>
+                                                </TableHeader>
+                                                <TableBody>
+                                                    {[
+                                                        [101, 'John', 1],
+                                                        [102, 'Alice', 2],
+                                                        [103, 'Bob', null]
+                                                    ].map(([id, name, course]) => (
+                                                        <TableRow key={id} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+                                                            <TableCell>{id}</TableCell>
+                                                            <TableCell>{name}</TableCell>
+                                                            <TableCell>
+                                                                {course || <span className="text-red-500 dark:text-red-400">NULL</span>}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </div>
+
+                                        {/* Courses Table */}
+                                        <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm'>
+                                            <div className='p-4 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t-xl'>
+                                                <h4 className='font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-2'>
+                                                    <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                                                    </svg>
+                                                    Courses
+                                                </h4>
+                                            </div>
+                                            <Table className="w-full">
+                                                <TableHeader>
+                                                    <TableRow className="bg-gray-50 dark:bg-gray-900">
+                                                        <TableHead className="w-[100px]">ID</TableHead>
+                                                        <TableHead>Course Name</TableHead>
+                                                    </TableRow>
+                                                </TableHeader>
+                                                <TableBody>
+                                                    {[
+                                                        [1, 'Database Systems'],
+                                                        [2, 'Operating Systems']
+                                                    ].map(([id, name]) => (
+                                                        <TableRow key={id} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+                                                            <TableCell>{id}</TableCell>
+                                                            <TableCell>{name}</TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </div>
+                                    </div>
+
+                                    {/* Join Result */}
+                                    <div className='relative'>
+                                        <div className='absolute inset-0 flex items-center justify-center'>
+                                            <div className='w-full border-t border-dashed border-gray-300 dark:border-gray-600'></div>
+                                        </div>
+                                        <div className='relative flex justify-center py-4'>
+                                            <span className='px-4 bg-white dark:bg-gray-800 text-sm text-blue-500 font-medium'>
+                                                INNER JOIN RESULT
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* Result Table */}
+                                    <div className='bg-white dark:bg-gray-800 rounded-xl border-2 border-blue-100 dark:border-blue-900 shadow-lg'>
+                                        <div className='p-4 border-b border-blue-50 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 rounded-t-xl'>
+                                            <h4 className='font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-2'>
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                </svg>
+                                                Combined Results
+                                            </h4>
+                                        </div>
+                                        <Table className="w-full">
+                                            <TableHeader>
+                                                <TableRow className="bg-blue-50 dark:bg-blue-900/20">
+                                                    <TableHead>Student ID</TableHead>
+                                                    <TableHead>Name</TableHead>
+                                                    <TableHead>Course ID</TableHead>
+                                                    <TableHead>Course Name</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {[
+                                                    [101, 'John', 1, 'Database Systems'],
+                                                    [102, 'Alice', 2, 'Operating Systems']
+                                                ].map(([id, name, cid, course]) => (
+                                                    <TableRow key={id} className="hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                                                        <TableCell>{id}</TableCell>
+                                                        <TableCell>{name}</TableCell>
+                                                        <TableCell>{cid}</TableCell>
+                                                        <TableCell>{course}</TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </main>
 
-            </div>
+            </div >
 
-        </div>
+        </div >
     )
 }
 

@@ -75,12 +75,13 @@ body{
 }
 
 
+@layer utilities {
+  .title-text {
+    @apply text-center text-3xl font-bold text-blue-600 dark:text-yellow-500
+  }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-    }
-  body {
-    @apply bg-background text-foreground;
-    }
+  .title-description {
+    @apply mt-2 text-lg text-gray-700 dark:text-gray-300 leading-relaxed
+  }  
+  
 }

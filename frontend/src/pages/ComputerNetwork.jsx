@@ -102,11 +102,11 @@ const ComputerNetwork = () => {
                             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
 
                                 {/* Title */}
-                                <h1 className="text-center text-3xl font-bold text-blue-600 dark:text-yellow-500">
+                                <h1 className="title-text">
                                     Computer Network
                                 </h1>
 
-                                <p className="mt-2 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                                <p className="title-description">
 
                                     A computer network is a set of interconnected devices (nodes) that communicate with each other to share resources and information using a defined set of protocols over a communication medium.
 
