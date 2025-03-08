@@ -93,118 +93,128 @@ const DBMS = () => {
                 </button>
 
                 <main className='sm:w-4/5 w-full ml-auto p-6 mt-20'>
-                    <div id='cn_desc' className="w-full sm:w-4/5 mx-auto">
-                        <div className="max-w-4xl mx-auto px-4 md:px-6 py-6">
-                            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
 
-                                {/* Title */}
-                                <h1 className="text-center text-2xl font-bold text-blue-600 dark:text-yellow-500">
-                                    Database Management System
-                                </h1>
+                    <div className="max-w-4xl mx-auto px-4 md:px-6 py-6">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
 
-                                <p className="mt-2 text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+                            {/* Title */}
+                            <h1 className="text-center text-2xl font-bold text-blue-600 dark:text-yellow-500">
+                                Database Management System
+                            </h1>
+                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                Introduction
+                            </h2>
+                            <p className="mt-2 text-base text-gray-700 dark:text-gray-300 leading-relaxed">
 
-                                    A Database Management System (DBMS) is software that allows users to create, manage, and manipulate databases efficiently. It ensures data consistency, security, and integrity while supporting multiple users simultaneously. Examples: MySQL, PostgreSQL, MongoDB, Oracle, etc.
+                                A Database Management System (DBMS) is software that allows users to create, manage, and manipulate databases efficiently. It ensures data consistency, security, and integrity while supporting multiple users simultaneously. Examples: MySQL, PostgreSQL, MongoDB, Oracle, etc.
 
-                                </p>
-
-
-                                <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
-                                    Difference Between File System and DBMS:
-                                </h3>
-
-
-                                <Table className="mt-3 text-base">
-                                    <TableHeader>
-                                        <TableRow>
-                                            <TableHead>Feature</TableHead>
-                                            <TableHead>File System 📂</TableHead>
-                                            <TableHead>DBMS 🗃️</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableCell><strong>Data Storage	</strong></TableCell>
-                                            <TableCell>Data is stored in separate files.</TableCell>
-                                            <TableCell>Data is stored in structured databases.</TableCell>
-                                        </TableRow>
+                            </p>
 
 
-                                        <TableRow>
-                                            <TableCell><strong>Data Redundancy</strong></TableCell>
-                                            <TableCell>High (same data may be stored multiple times).</TableCell>
-                                            <TableCell>Low (data is normalized and managed efficiently).</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell><strong>Data Integrity</strong></TableCell>
-                                            <TableCell>Difficult to maintain.</TableCell>
-                                            <TableCell>Ensures integrity via constraints (Primary Key, Foreign Key).</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell><strong>Security</strong></TableCell>
-                                            <TableCell>Basic security, difficult to control access.</TableCell>
-                                            <TableCell>High security with authentication and role-based access.
-                                            </TableCell>
-                                        </TableRow>
+                            <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                Difference Between File System and DBMS:
+                            </h3>
 
-                                        <TableRow>
-                                            <TableCell><strong>Concurrency</strong></TableCell>
-                                            <TableCell>No proper support for multiple users.</TableCell>
-                                            <TableCell>Multiple users can access data simultaneously with proper locking mechanisms.
-                                            </TableCell>
-                                        </TableRow>
 
-                                        <TableRow>
-                                            <TableCell><strong>Data Access Speed</strong></TableCell>
-                                            <TableCell>Slower due to sequential searching.</TableCell>
-                                            <TableCell>Faster due to indexing and optimized queries.
-                                            </TableCell>
-                                        </TableRow>
+                            <Table className="mt-3 text-base">
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>Feature</TableHead>
+                                        <TableHead>File System 📂</TableHead>
+                                        <TableHead>DBMS 🗃️</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell><strong>Data Storage	</strong></TableCell>
+                                        <TableCell>Data is stored in separate files.</TableCell>
+                                        <TableCell>Data is stored in structured databases.</TableCell>
+                                    </TableRow>
 
-                                        <TableRow>
-                                            <TableCell><strong>Backup & Recovery</strong></TableCell>
-                                            <TableCell>Manual and less reliable.</TableCell>
-                                            <TableCell>Automated backups with recovery mechanisms.
-                                            </TableCell>
-                                        </TableRow>
 
-                                        <TableRow>
-                                            <TableCell><strong>Example</strong></TableCell>
-                                            <TableCell>Text files, Excel sheets.</TableCell>
-                                            <TableCell>MySQL, PostgreSQL, Oracle, MongoDB.
-                                            </TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
-                            </div>
+                                    <TableRow>
+                                        <TableCell><strong>Data Redundancy</strong></TableCell>
+                                        <TableCell>High (same data may be stored multiple times).</TableCell>
+                                        <TableCell>Low (data is normalized and managed efficiently).</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell><strong>Data Integrity</strong></TableCell>
+                                        <TableCell>Difficult to maintain.</TableCell>
+                                        <TableCell>Ensures integrity via constraints (Primary Key, Foreign Key).</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell><strong>Security</strong></TableCell>
+                                        <TableCell>Basic security, difficult to control access.</TableCell>
+                                        <TableCell>High security with authentication and role-based access.
+                                        </TableCell>
+                                    </TableRow>
+
+                                    <TableRow>
+                                        <TableCell><strong>Concurrency</strong></TableCell>
+                                        <TableCell>No proper support for multiple users.</TableCell>
+                                        <TableCell>Multiple users can access data simultaneously with proper locking mechanisms.
+                                        </TableCell>
+                                    </TableRow>
+
+                                    <TableRow>
+                                        <TableCell><strong>Data Access Speed</strong></TableCell>
+                                        <TableCell>Slower due to sequential searching.</TableCell>
+                                        <TableCell>Faster due to indexing and optimized queries.
+                                        </TableCell>
+                                    </TableRow>
+
+                                    <TableRow>
+                                        <TableCell><strong>Backup & Recovery</strong></TableCell>
+                                        <TableCell>Manual and less reliable.</TableCell>
+                                        <TableCell>Automated backups with recovery mechanisms.
+                                        </TableCell>
+                                    </TableRow>
+
+                                    <TableRow>
+                                        <TableCell><strong>Example</strong></TableCell>
+                                        <TableCell>Text files, Excel sheets.</TableCell>
+                                        <TableCell>MySQL, PostgreSQL, Oracle, MongoDB.
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
                         </div>
                     </div>
 
 
-                    <div id="cn_desc" className="w-full sm:w-4/5 mx-auto">
-                        <div className="max-w-4xl mx-auto px-4 md:px-6 py-6">
-                            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
 
-                                {/* Title */}
-                                <h1 className="text-center text-2xl font-bold text-blue-600 dark:text-yellow-500">
-                                    Types of Keys in DBMS 🔑
-                                </h1>
 
-                                <p className="mt-2 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                                    Keys in DBMS help identify unique records in a table and establish relationships between tables.
-                                </p>
 
-                                {/* Table */}
-                                <Table className="mt-3">
+                    <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
+
+
+                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                Types of Keys in DBMS
+                            </h2>
+
+
+                            <p className="mt-2 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                                Keys in DBMS help identify unique records in a table and establish relationships between tables.
+                            </p>
+
+                            {/* Table */}
+                            <div className="overflow-x-auto mt-6">
+                                <Table className="w-full">
                                     <TableHeader>
-                                        <TableRow>
+                                        <TableRow className="bg-gray-100 dark:bg-gray-700">
                                             <TableHead>Key Type</TableHead>
                                             <TableHead>Definition</TableHead>
                                             <TableHead>Example</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-
                                         <TableRow>
                                             <TableCell><strong>Primary Key</strong></TableCell>
                                             <TableCell>A unique identifier for a record in a table. It cannot have NULL values.</TableCell>
@@ -258,77 +268,89 @@ const DBMS = () => {
                             </div>
                         </div>
                     </div>
-                    <div id="cn_desc" className="w-full sm:w-4/5 mx-auto">
-                        <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
-                            <div className="bg-gradient-to-br from-gray-50 to-gray-200 dark:from-gray-800 dark:to-gray-900 rounded-lg p-8 shadow-xl transition-all">
 
-                                {/* Title */}
-                                <h1 className="text-center text-2xl font-extrabold text-blue-600 dark:text-yellow-500 mb-6">
-                                    ER Model (Entity-Relationship Model)
-                                </h1>
 
-                                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                                    The ER Model is a high-level data model used for designing databases. It visually represents the structure of a database with entities, attributes, relationships, and constraints.
-                                </p>
+                    <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
 
-                                {/* Sections */}
-                                <div className="mt-6 space-y-6">
-                                    {/* Entities */}
-                                    <section className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                                        <h3 className="text-xl font-semibold text-blue-700 dark:text-yellow-400">1️⃣ Entities 🏛️</h3>
-                                        <p className="text-gray-700 dark:text-gray-300">An entity represents a real-world object that has distinct characteristics. (e.g., Students, Car)</p>
-                                    </section>
 
-                                    {/* Attributes */}
-                                    <section className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                                        <h3 className="text-xl font-semibold text-blue-700 dark:text-yellow-400">2️⃣ Attributes 🎯</h3>
-                                        <p className="text-gray-700 dark:text-gray-300">Attributes describe the properties of an entity.</p>
-                                        <h4 className="mt-2 font-semibold">Types of Attributes:</h4>
-                                        <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
-                                            <li><strong>Simple (Atomic)</strong> – Cannot be divided (e.g., Name, Age).</li>
-                                            <li><strong>Composite</strong> – Can be divided (e.g., Full Name: First Name, Last Name).</li>
-                                            <li><strong>Derived</strong> – Calculated (e.g., Total Marks = Marks1 + Marks2).</li>
-                                            <li><strong>Multivalued</strong> – Can have multiple values (e.g., Phone Numbers).</li>
-                                            <li><strong>Key Attribute</strong> – Uniquely identifies an entity (e.g., Student_ID).</li>
-                                        </ul>
-                                    </section>
+                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                ER Model (Entity-Relationship Model)
+                            </h2>
 
-                                    {/* Relationships */}
-                                    <section className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                                        <h3 className="text-xl font-semibold text-blue-700 dark:text-yellow-400">3️⃣ Relationships 🔗</h3>
-                                        <p className="text-gray-700 dark:text-gray-300">Relationships define associations between two or more entities.</p>
-                                        <h4 className="mt-2 font-semibold">Types of Relationships:</h4>
-                                        <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
-                                            <li><strong>One-to-One (1:1)</strong> – (e.g., Person ↔ Passport).</li>
-                                            <li><strong>One-to-Many (1:M)</strong> – (e.g., Teacher ↔ Students).</li>
-                                            <li><strong>Many-to-Many (M:N)</strong> – (e.g., Students ↔ Courses).</li>
-                                        </ul>
-                                    </section>
 
-                                    {/* Cardinality */}
-                                    <section className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                                        <h3 className="text-xl font-semibold text-blue-700 dark:text-yellow-400">4️⃣ Cardinality 🔢</h3>
-                                        <p className="text-gray-700 dark:text-gray-300">Cardinality defines the number of entity instances involved in a relationship.</p>
-                                    </section>
+
+                            <p className="text-lg text-gray-600 dark:text-gray-300 leading-7">
+
+                                The ER Model is a high-level data model used for designing databases. It visually represents the structure of a database with entities, attributes, relationships, and constraints.
+                            </p>
+
+                            {/* Sections */}
+                            <div className="space-y-6 pt-5">
+                                {/* Entities */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">1️⃣ Entities 🏛️</h3>
+                                    <p className="text-gray-700 dark:text-gray-300">An entity represents a real-world object that has distinct characteristics. (e.g., Students, Car)</p>
                                 </div>
 
-                                {/* Example Representation */}
-                                <section className="mt-8 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
-                                    <h3 className="text-xl font-bold text-gray-900 dark:text-gray-200">Example of ER Model Representation</h3>
-                                    <ul className="mt-3 list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
-                                        <li><strong>Entities:</strong> <code>Student, Teacher, Course, Exam, Result</code></li>
-                                        <li><strong>Attributes:</strong> <code>Name, Age, Email, Student_ID, Teacher_ID, Course_ID, Exam_ID, Result_ID</code></li>
-                                        <li><strong>Relationships:</strong>
-                                            <ul className="list-disc pl-6">
-                                                <li><code>Student enrolls in course.</code></li>
-                                                <li><code>Teacher teaches course.</code></li>
-                                            </ul>
-                                        </li>
+                                {/* Attributes */}
+                                <div className='space-y-2'>
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">2️⃣ Attributes 🎯</h3>
+                                    <p className="text-gray-700 dark:text-gray-300">Attributes describe the properties of an entity.</p>
+                                    <h4 className="mt-2 font-semibold">Types of Attributes:</h4>
+                                    <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+                                        <li><strong>Simple (Atomic)</strong> – Cannot be divided (e.g., Name, Age).</li>
+                                        <li><strong>Composite</strong> – Can be divided (e.g., Full Name: First Name, Last Name).</li>
+                                        <li><strong>Derived</strong> – Calculated (e.g., Total Marks = Marks1 + Marks2).</li>
+                                        <li><strong>Multivalued</strong> – Can have multiple values (e.g., Phone Numbers).</li>
+                                        <li><strong>Key Attribute</strong> – Uniquely identifies an entity (e.g., Student_ID).</li>
                                     </ul>
-                                </section>
+
+                                </div>
+
+
+                                {/* Relationships */}
+                                <div className='space-y-2'>
+
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">3️⃣ Relationships 🔗</h3>
+                                    <p className="text-gray-700 dark:text-gray-300">Relationships define associations between two or more entities.</p>
+                                    <h4 className="mt-2 font-semibold">Types of Relationships:</h4>
+                                    <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+                                        <li><strong>One-to-One (1:1)</strong> – (e.g., Person ↔ Passport).</li>
+                                        <li><strong>One-to-Many (1:M)</strong> – (e.g., Teacher ↔ Students).</li>
+                                        <li><strong>Many-to-Many (M:N)</strong> – (e.g., Students ↔ Courses).</li>
+                                    </ul>
+                                </div>
+
+
+                                {/* Cardinality */}
+                                <div className='space-y-2'>
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">4️⃣ Cardinality 🔢</h3>
+                                    <p className="text-gray-700 dark:text-gray-300">Cardinality defines the number of entity instances involved in a relationship.</p>
+                                </div>
+
+
                             </div>
+
+
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-gray-200">Example of ER Model Representation</h3>
+                            <ul className="mt-3 list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+                                <li><strong>Entities:</strong> <code>Student, Teacher, Course, Exam, Result</code></li>
+                                <li><strong>Attributes:</strong> <code>Name, Age, Email, Student_ID, Teacher_ID, Course_ID, Exam_ID, Result_ID</code></li>
+                                <li><strong>Relationships:</strong>
+                                    <ul className="list-disc pl-6">
+                                        <li><code>Student enrolls in course.</code></li>
+                                        <li><code>Teacher teaches course.</code></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
                         </div>
                     </div>
+
 
                     <div className="max-w-4xl mx-auto px-6 md:px-8 py-8 ">
                         < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
@@ -347,42 +369,38 @@ const DBMS = () => {
                                 improve data integrity by dividing large tables into smaller related tables.
                             </p>
 
-                            <div className='space-y-6'>
-                                <div className='space-y-6'>
-                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>1. First Normal Form (1NF)</h3>
-                                    <p className='text-gray-600 dark:text-gray-400 text-base'>
-                                        Ensures that all columns contain <strong>atomic (indivisible) values</strong> and removes duplicate & multivalued attributes.
-                                    </p>
+                            <div className='space-y-6 pt-5'>
+                                {/* Heading */}
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+                                        1. First Normal Form (1NF)
+                                    </h3>
                                 </div>
 
+                                {/* Explanation */}
+                                <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                                    <li>Ensures that all columns contain <strong>atomic (indivisible) values</strong> and removes duplicate & multivalued attributes.</li>
+                                </ul>
 
-                                {/* example section  */}
-
-                                <div className='space-y-8'>
-                                    <div className='grid md:grid-cols-2 gap-6'>
-
-                                        {/* Before 1NF */}
-                                        <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm'>
-                                            <div className='p-4 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t-xl'>
-                                                <h4 className='font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-2'>
-                                                    Before 1NF
-                                                </h4>
-                                            </div>
-                                            <Table className="w-full">
+                                {/* Tables (Before and After 1NF) */}
+                                <div className='grid md:grid-cols-2 gap-6'>
+                                    {/* Student Table Before 1NF */}
+                                    <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden'>
+                                        <div className='p-4 bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700'>
+                                            <h4 className='font-semibold text-gray-800 dark:text-gray-200'>Before 1NF</h4>
+                                        </div>
+                                        <div className='overflow-x-auto'> {/* Make table horizontally scrollable on small screens */}
+                                            <Table className='w-full'>
                                                 <TableHeader>
-                                                    <TableRow className="bg-gray-50 dark:bg-gray-900">
-                                                        <TableHead className="w-[100px]">ID</TableHead>
+                                                    <TableRow className='bg-gray-50 dark:bg-gray-900'>
                                                         <TableHead>Student_ID</TableHead>
                                                         <TableHead>Name</TableHead>
                                                         <TableHead>Subjects</TableHead>
                                                     </TableRow>
                                                 </TableHeader>
-
                                                 <TableBody>
-                                                    {[
-                                                        [1, '101', 'John Doe', 'Maths, Science, English']
-                                                    ].map(([id, studentId, name, subName]) => (
-                                                        <TableRow key={id} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+                                                    {[[101, 'John Doe', 'Maths,     Science, English']].map(([id, studentId, name, subName]) => (
+                                                        <TableRow key={id} className='hover:bg-gray-50 dark:hover:bg-gray-900/50'>
                                                             <TableCell>{id}</TableCell>
                                                             <TableCell>{studentId}</TableCell>
                                                             <TableCell>{name}</TableCell>
@@ -392,30 +410,29 @@ const DBMS = () => {
                                                 </TableBody>
                                             </Table>
                                         </div>
+                                    </div>
 
-                                        {/* After 1NF */}
-                                        <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm'>
-                                            <div className='p-4 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t-xl'>
-                                                <h4 className='font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-2'>
-                                                    After 1NF
-                                                </h4>
-                                            </div>
+                                    {/* Student Table After 1NF */}
+                                    <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden'>
+                                        <div className='p-4 bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700'>
+                                            <h4 className='font-semibold text-gray-800 dark:text-gray-200'>After 1NF</h4>
+                                        </div>
+                                        <div className='overflow-x-auto'> {/* Make table horizontally scrollable on small screens */}
                                             <Table className='w-full'>
                                                 <TableHeader>
-                                                    <TableRow className='bg-gray-50 dark:bg-gray-900'>
-                                                        <TableHead className='w-[100px]'>Student_ID</TableHead>
+                                                    <TableRow className='bg-gray-50 dark:bg-gray-900' >
+                                                        <TableHead>Student_ID</TableHead>
                                                         <TableHead>Name</TableHead>
                                                         <TableHead>Subject</TableHead>
                                                     </TableRow>
                                                 </TableHeader>
-
                                                 <TableBody>
                                                     {[
                                                         [101, 'John Doe', 'Math'],
                                                         [101, 'John Doe', 'Science'],
                                                         [101, 'John Doe', 'English']
                                                     ].map(([studentId, name, subject]) => (
-                                                        <TableRow key={`${studentId}-${subject}`} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+                                                        <TableRow key={studentId} className='hover:bg-gray-50 dark:hover:bg-gray-900/50'>
                                                             <TableCell>{studentId}</TableCell>
                                                             <TableCell>{name}</TableCell>
                                                             <TableCell>{subject}</TableCell>
@@ -424,7 +441,6 @@ const DBMS = () => {
                                                 </TableBody>
                                             </Table>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -582,7 +598,7 @@ const DBMS = () => {
 
                                 {/* After Normalization */}
                                 <p className='text-lg font-semibold text-gray-700 dark:text-gray-200 mt-6'>
-                                    After 2NF Normalization
+                                    After 3NF Normalization
                                 </p>
 
                                 <div className='grid md:grid-cols-2 gap-6'>
@@ -642,101 +658,114 @@ const DBMS = () => {
                                 </div>
                             </div>
 
+                            <div className="space-y-6 pt-5">
+                                {/* Heading */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+                                        4. Boyce-Codd Normal Form (BCNF)
+                                    </h3>
+                                </div>
 
-                            <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
-                                <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
+                                {/* Explanation */}
+                                <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                                    <li>Table should be in <strong>Boyce-Codd Normal Form (BCNF)</strong>.</li>
+                                    <li>Every <strong>functional dependency</strong> must have a <strong>super key</strong>.</li>
+                                </ul>
 
-                                    {/* Section Title */}
-                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">4️⃣ Boyce-Codd Normal Form (BCNF)</h2>
+                                {/* BCNF Explanation */}
+                                <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+                                    Boyce-Codd Normal Form (BCNF) is a stricter version of the Third Normal Form (3NF).
+                                    In BCNF, for every non-trivial functional dependency <strong>X → Y</strong>,
+                                    the left-hand side (X) must be a superkey. This ensures that no non-trivial
+                                    dependency exists between non-superkey attributes, thus eliminating redundancy
+                                    and ensuring better data integrity.
+                                </p>
 
-                                    {/* Explanation Box */}
-                                    <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Understanding BCNF</h3>
-                                        <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-1">
-                                            <li>Table should be in **Third Normal Form (3NF)**.</li>
-                                            <li>Every **functional dependency** must have a **super key**.</li>
-                                            <li>Used when **3NF does not handle anomalies properly**.</li>
-                                        </ul>
-                                    </div>
+                                {/* Before Normalization */}
+                                <p className="text-lg font-semibold text-gray-700 dark:text-gray-200 mt-4">
+                                    Before BCNF Normalization
+                                </p>
 
-                                    {/* Before BCNF Table */}
-                                    <div className="mt-6">
-                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200">🚫 Before BCNF (Violation of Super Key Rule)</h4>
-                                        <p className="text-gray-600 dark:text-gray-300 mb-2">
-                                            **Issue**: Professor_Name depends only on **Subject**, not on the full primary key *(Professor_ID, Subject)*.
-                                        </p>
-                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
-                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
-                                                <TableRow>
+                                <div className="overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm">
+                                    <Table className="w-full">
+                                        <TableHeader>
+                                            <TableRow className="bg-gray-100 dark:bg-gray-800">
+                                                <TableHead>Professor_ID</TableHead>
+                                                <TableHead>Professor_Name</TableHead>
+                                                <TableHead>Subject</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {[
+                                                [101, 'Dr. Smith', 'Database Systems'],
+                                                [102, 'Dr. Johnson', 'Operating Systems'],
+                                            ].map(([s_id, c_id, s_name]) => (
+                                                <TableRow key={`${s_id}-${c_id}`} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+                                                    <TableCell>{s_id}</TableCell>
+                                                    <TableCell>{c_id}</TableCell>
+                                                    <TableCell>{s_name}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </div>
+
+                                {/* After Normalization */}
+                                <p className="text-lg font-semibold text-gray-700 dark:text-gray-200 mt-6">
+                                    After BCNF – Splitting into Two Tables
+                                </p>
+
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    {/* Professor Table */}
+                                    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+                                        <div className="p-4 bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                            <h4 className="font-semibold text-gray-800 dark:text-gray-200">Professor Table</h4>
+                                        </div>
+                                        <Table className="w-full">
+                                            <TableHeader>
+                                                <TableRow className="bg-gray-50 dark:bg-gray-900">
                                                     <TableHead>Professor_ID</TableHead>
                                                     <TableHead>Professor_Name</TableHead>
-                                                    <TableHead>Subject</TableHead>
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>101</TableCell>
-                                                    <TableCell>Dr. Smith</TableCell>
-                                                    <TableCell>Database Systems</TableCell>
-                                                </TableRow>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>102</TableCell>
-                                                    <TableCell>Dr. Johnson</TableCell>
-                                                    <TableCell>Operating Systems</TableCell>
-                                                </TableRow>
+                                                {[
+                                                    [101, 'Dr. Smith'],
+                                                    [102, 'Dr. Johnson'],
+                                                ].map(([id, name]) => (
+                                                    <TableRow key={id} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+                                                        <TableCell>{id}</TableCell>
+                                                        <TableCell>{name}</TableCell>
+                                                    </TableRow>
+                                                ))}
                                             </TableBody>
                                         </Table>
                                     </div>
 
-                                    {/* Solution - After BCNF */}
-                                    <div className="mt-8">
-                                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">✅ After BCNF – Splitting into Two Tables</h3>
-                                        <p className="text-gray-600 dark:text-gray-300 mb-4">
-                                            We create separate **Professor and Subject tables** to eliminate the **partial dependency**.
-                                        </p>
-
-                                        {/* Professor Table */}
-                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mt-4">📌 Professor Table</h4>
-                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
-                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
-                                                <TableRow>
-                                                    <TableHead>Professor_ID</TableHead>
-                                                    <TableHead>Professor_Name</TableHead>
-                                                </TableRow>
-                                            </TableHeader>
-                                            <TableBody>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>101</TableCell>
-                                                    <TableCell>Dr. Smith</TableCell>
-                                                </TableRow>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>102</TableCell>
-                                                    <TableCell>Dr. Johnson</TableCell>
-                                                </TableRow>
-                                            </TableBody>
-                                        </Table>
-
-                                        {/* Subject Table */}
-                                        <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mt-6">📌 Subject Table</h4>
-                                        <Table className="mt-2 border border-gray-300 dark:border-gray-600">
-                                            <TableHeader className="bg-gray-200 dark:bg-gray-700">
-                                                <TableRow>
-                                                    <TableHead>Subject</TableHead>
+                                    {/* Subject Table */}
+                                    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+                                        <div className="p-4 bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                            <h4 className="font-semibold text-gray-800 dark:text-gray-200">Subject Table</h4>
+                                        </div>
+                                        <Table className="w-full">
+                                            <TableHeader>
+                                                <TableRow className="bg-gray-50 dark:bg-gray-900">
+                                                    <TableHead className="w-[100px]">Subject</TableHead>
                                                     <TableHead>Professor_ID</TableHead>
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>Database Systems</TableCell>
-                                                    <TableCell>101</TableCell>
-                                                </TableRow>
-                                                <TableRow className="border-b dark:border-gray-600">
-                                                    <TableCell>Operating Systems</TableCell>
-                                                    <TableCell>102</TableCell>
-                                                </TableRow>
+                                                {[
+                                                    ['Database Systems', 101],
+                                                    ['Operating Systems', 102],
+                                                ].map(([subject, professor_id]) => (
+                                                    <TableRow key={subject} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+                                                        <TableCell>{subject}</TableCell>
+                                                        <TableCell>{professor_id}</TableCell>
+                                                    </TableRow>
+                                                ))}
                                             </TableBody>
                                         </Table>
-
                                     </div>
                                 </div>
                             </div>
