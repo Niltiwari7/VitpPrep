@@ -73,17 +73,17 @@ const DBMS = () => {
                     <h3 className="text-center text-lg font-semibold pb-4 border-b border-gray-300 dark:border-gray-700">Content</h3>
 
                     <div className="flex flex-col gap-2 mt-4">
-                        <a href="#cn_desc" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white transition duration-300">Introduction</a>
-                        <a href="#topology" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-red-500 hover:text-white transition duration-300">Topology</a>
-                        <a href="#lan_van" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-green-500 hover:text-white transition duration-300">LAN and WAN</a>
-                        <a href="#firewall" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-yellow-500 hover:text-black transition duration-300">Firewall</a>
-                        <a href="#dhcp" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-purple-500 hover:text-white transition duration-300">DHCP (Dynamic Host Configuration Protocol)</a>
-                        <a href="#httpvshttps" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-pink-500 hover:text-white transition duration-300">HTTP vs HTTPS</a>
-                        <a href="#ipv4vsipv6" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-orange-500 hover:text-white transition duration-300">IPv4 vs IPv6</a>
-                        <a href="#osi" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-teal-500 hover:text-white transition duration-300">OSI (Open Systems Interconnection) Model</a>
-                        <a href="#tcp/ip" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-indigo-500 hover:text-white transition duration-300">TCP/IP Model</a>
-                        <a href="#handshake" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-500 hover:text-white transition duration-300">TCP Three-Way Handshake</a>
-                        <a href="#browser" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-rose-500 hover:text-white transition duration-300">What Happens When You Enter a URL in a Browser?</a>
+                        <a href="#introduction" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white transition duration-300">Introduction</a>
+                        <a href="#key" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-red-500 hover:text-white transition duration-300">Types of Keys in DBMS</a>
+                        <a href="#er_model" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-green-500 hover:text-white transition duration-300">ER Model (Entity-Relationship Model)ER Model (Entity-Relationship Model)</a>
+                        <a href="#normalisation" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-yellow-500 hover:text-black transition duration-300">Normalisation</a>
+                       
+                        <a href="#joins" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-pink-500 hover:text-white transition duration-300">SQL Joins</a>
+                        <a href="#view&indexing" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-orange-500 hover:text-white transition duration-300">View & Indexing</a>
+                        <a href="#stored_procedures&triggers" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-teal-500 hover:text-white transition duration-300">Stored Procedures & Triggers</a>
+                        <a href="#transaction&concurrency" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-indigo-500 hover:text-white transition duration-300">Transaction Management & Concurrency Control</a>
+                        <a href="#locks&serializability" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-500 hover:text-white transition duration-300">Locks in DBMS & Serializability</a>
+                      
                     </div>
                 </div>
                 <button
@@ -95,7 +95,7 @@ const DBMS = () => {
                 <main className='sm:w-4/5 w-full ml-auto p-6 mt-20'>
 
                     <div className="max-w-4xl mx-auto px-4 md:px-6 py-6">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700 " id='introduction'>
 
                             {/* Title */}
                             <h1 className="text-center text-2xl font-bold text-blue-600 dark:text-yellow-500">
@@ -189,7 +189,7 @@ const DBMS = () => {
 
 
                     <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='key'>
 
 
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
@@ -271,7 +271,7 @@ const DBMS = () => {
 
 
                     <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='er_model'>
 
 
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
@@ -353,7 +353,7 @@ const DBMS = () => {
 
 
                     <div className="max-w-4xl mx-auto px-6 md:px-8 py-8 ">
-                        < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
+                        < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='normalisation'>
                             {/* Section Title */}
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -773,7 +773,7 @@ const DBMS = () => {
                     </div>
                     <div className='max-w-4xl mx-auto px-6 md:px-8 py-8 space-y-8'>
                         {/* Header Section */}
-                        <div className='bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700'>
+                        <div className='bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700' id='joins'>
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
@@ -802,10 +802,10 @@ const DBMS = () => {
                                         style={dracula}
                                         className='rounded-xl p-6 text-sm border border-gray-200 dark:border-gray-700 hover:border-blue-300 transition-all'
                                     >
-                                        {`SELECT students.*, courses.name
-FROM students
-INNER JOIN courses 
-  ON students.course_id = courses.id;`}
+                                        {`SELECT Students.Student_ID, Students.Name, Courses.Course_Name 
+FROM Students 
+INNER JOIN Courses ON Students.Course_ID = Courses.Course_ID;
+`}
                                     </SyntaxHighlighter>
                                 </div>
 
@@ -826,16 +826,17 @@ INNER JOIN courses
                                             <Table className="w-full">
                                                 <TableHeader>
                                                     <TableRow className="bg-gray-50 dark:bg-gray-900">
-                                                        <TableHead className="w-[100px]">ID</TableHead>
+                                                        <TableHead className="w-[100px]">Student_ID</TableHead>
                                                         <TableHead>Name</TableHead>
                                                         <TableHead>Course ID</TableHead>
                                                     </TableRow>
                                                 </TableHeader>
                                                 <TableBody>
                                                     {[
-                                                        [101, 'John', 1],
-                                                        [102, 'Alice', 2],
-                                                        [103, 'Bob', null]
+                                                        [101, "John", 1],
+                                                        [102, "Alice", 2],
+                                                        [103, "Bob", null],
+                                                        [104, "Mike", 3]
                                                     ].map(([id, name, course]) => (
                                                         <TableRow key={id} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
                                                             <TableCell>{id}</TableCell>
@@ -862,14 +863,16 @@ INNER JOIN courses
                                             <Table className="w-full">
                                                 <TableHeader>
                                                     <TableRow className="bg-gray-50 dark:bg-gray-900">
-                                                        <TableHead className="w-[100px]">ID</TableHead>
-                                                        <TableHead>Course Name</TableHead>
+                                                        <TableHead className="w-[100px]">Course_ID</TableHead>
+                                                        <TableHead>Course_Name</TableHead>
                                                     </TableRow>
                                                 </TableHeader>
                                                 <TableBody>
                                                     {[
-                                                        [1, 'Database Systems'],
-                                                        [2, 'Operating Systems']
+                                                        [1, "Math"],
+                                                        [2, "Science"],
+                                                        [3, "Physics"],
+                                                        [4, "English"]
                                                     ].map(([id, name]) => (
                                                         <TableRow key={id} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
                                                             <TableCell>{id}</TableCell>
@@ -906,21 +909,21 @@ INNER JOIN courses
                                         <Table className="w-full">
                                             <TableHeader>
                                                 <TableRow className="bg-blue-50 dark:bg-blue-900/20">
-                                                    <TableHead>Student ID</TableHead>
+                                                    <TableHead>
+                                                        Student_ID</TableHead>
                                                     <TableHead>Name</TableHead>
-                                                    <TableHead>Course ID</TableHead>
-                                                    <TableHead>Course Name</TableHead>
+                                                    <TableHead>Course_Name</TableHead>
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
                                                 {[
-                                                    [101, 'John', 1, 'Database Systems'],
-                                                    [102, 'Alice', 2, 'Operating Systems']
-                                                ].map(([id, name, cid, course]) => (
+                                                    [101, "John", "Math"],
+                                                    [102, "Alice", "Science"],
+                                                    [104, "Mike", "Physics"]
+                                                ].map(([id, name, course]) => (
                                                     <TableRow key={id} className="hover:bg-blue-50 dark:hover:bg-blue-900/10">
                                                         <TableCell>{id}</TableCell>
                                                         <TableCell>{name}</TableCell>
-                                                        <TableCell>{cid}</TableCell>
                                                         <TableCell>{course}</TableCell>
                                                     </TableRow>
                                                 ))}
@@ -930,9 +933,668 @@ INNER JOIN courses
                                 </div>
                             </div>
 
+                            <div className='space-y-6'>
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100 pt-6'>2. LEFT JOIN (All Left Table + Matching Right Table)</h3>
+                                    <ul className='text-gray-600 dark:text-gray-400 text-base'>
+                                        <li>
+                                            Returns all rows from the left table and matching rows from the right table.
+                                        </li>
+                                        <li>If no match is found, NULL values are returned for the right table.
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                {/* Code Snippet */}
+                                <div className='relative group'>
+                                    <div className='absolute inset-0 bg-blue-500/5 rounded-xl transition'></div>
+                                    <SyntaxHighlighter
+                                        language='sql'
+                                        style={dracula}
+                                        className='rounded-xl p-6 text-sm border border-gray-200 dark:border-gray-700 hover:border-blue-300 transition-all'
+                                    >
+                                        {`SELECT Students.Student_ID, Students.Name, Courses.Course_Name 
+FROM Students 
+LEFT JOIN Courses ON Students.Course_ID = Courses.Course_ID;
+`}
+                                    </SyntaxHighlighter>
+
+
+                                    {/* Join Result for LEFT JOIN */}
+                                    <div className='relative py-8'>
+                                        <div className='absolute inset-0 flex items-center justify-center'>
+                                            <div className='w-full border-t border-dashed border-gray-300 dark:border-gray-600'></div>
+                                        </div>
+                                        <div className='relative flex justify-center'>
+                                            <span className='px-4 bg-white dark:bg-gray-800 text-sm text-blue-500 font-medium'>
+                                                LEFT JOIN RESULT
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* Corrected Result Table for LEFT JOIN */}
+                                    <div className='bg-white dark:bg-gray-800 rounded-xl border-2 border-blue-100 dark:border-blue-900 shadow-lg'>
+                                        <div className='p-4 border-b border-blue-50 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 rounded-t-xl'>
+                                            <h4 className='font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-2'>
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                </svg>
+                                                Combined Results
+                                            </h4>
+                                        </div>
+                                        <Table className="w-full">
+                                            <TableHeader>
+                                                <TableRow className="bg-blue-50 dark:bg-blue-900/20">
+                                                    <TableHead>
+                                                        Student_ID</TableHead>
+                                                    <TableHead>Name</TableHead>
+                                                    <TableHead>	Course_Name</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {[
+
+                                                    [101, "John", "Math"],
+                                                    [102, "Alice", "Science"],
+                                                    [103, "Bob", null],
+                                                    [104, "Mike", "Physics"]
+
+
+                                                ].map(([id, name, course]) => (
+                                                    <TableRow key={id} className="hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                                                        <TableCell>{id}</TableCell>
+                                                        <TableCell>{name}</TableCell>
+                                                        <TableCell>{course || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className='space-y-6'>
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100 pt-6'>3. RIGHT JOIN (All Right Table + Matching Left Table)</h3>
+                                    <ul className='text-gray-600 dark:text-gray-400 text-base'>
+                                        <li>
+                                            Returns all rows from the right table and matching rows from the left table.
+                                        </li>
+                                        <li>If no match is found, NULL values are returned for the left table.
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                {/* Code Snippet */}
+                                <div className='relative group'>
+                                    <div className='absolute inset-0 bg-blue-500/5 rounded-xl transition'></div>
+                                    <SyntaxHighlighter
+                                        language='sql'
+                                        style={dracula}
+                                        className='rounded-xl p-6 text-sm border border-gray-200 dark:border-gray-700 hover:border-blue-300 transition-all'
+                                    >
+                                        {`SELECT Students.Student_ID, Students.Name, Courses.Course_Name 
+FROM Students 
+RIGHT JOIN Courses ON Students.Course_ID = Courses.Course_ID;`}
+                                    </SyntaxHighlighter>
+
+
+                                    {/* Join Result for RIGHT JOIN */}
+                                    <div className='relative py-8'>
+                                        <div className='absolute inset-0 flex items-center justify-center'>
+                                            <div className='w-full border-t border-dashed border-gray-300 dark:border-gray-600'></div>
+                                        </div>
+                                        <div className='relative flex justify-center'>
+                                            <span className='px-4 bg-white dark:bg-gray-800 text-sm text-blue-500 font-medium'>
+                                                RIGHT JOIN RESULT
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* Corrected Result Table for LEFT JOIN */}
+                                    <div className='bg-white dark:bg-gray-800 rounded-xl border-2 border-blue-100 dark:border-blue-900 shadow-lg'>
+                                        <div className='p-4 border-b border-blue-50 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 rounded-t-xl'>
+                                            <h4 className='font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-2'>
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                </svg>
+                                                Combined Results
+                                            </h4>
+                                        </div>
+                                        <Table className="w-full">
+                                            <TableHeader>
+                                                <TableRow className="bg-blue-50 dark:bg-blue-900/20">
+                                                    <TableHead>Student_ID</TableHead>
+                                                    <TableHead>Name</TableHead>
+                                                    <TableHead>	Course_Name</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {[
+                                                    [101, "John", "Math"],
+                                                    [102, "Alice", "Science"],
+                                                    [104, "Mike", "Physics"],
+                                                    [null, null, "English"]
+                                                ].map(([id, name, course]) => (
+                                                    <TableRow key={id} className="hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                                                        <TableCell>{id || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+                                                        <TableCell>{name || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+                                                        <TableCell>{course || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='space-y-6'>
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100 pt-6'>4.FULL OUTER JOIN (All Data from Both Tables)</h3>
+                                    <ul className='text-gray-600 dark:text-gray-400 text-base'>
+                                        <li>
+                                            Returns all rows from both tables.
+                                        </li>
+                                        <li>If there is no match, NULL is placed in missing columns.
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                {/* Code Snippet */}
+                                <div className='relative group'>
+                                    <div className='absolute inset-0 bg-blue-500/5 rounded-xl transition'></div>
+                                    <SyntaxHighlighter
+                                        language='sql'
+                                        style={dracula}
+                                        className='rounded-xl p-6 text-sm border border-gray-200 dark:border-gray-700 hover:border-blue-300 transition-all'
+                                    >
+                                        {`SELECT Students.Student_ID, Students.Name, Courses.Course_Name 
+FROM Students 
+FULL OUTER JOIN Courses ON Students.Course_ID = Courses.Course_ID;
+`}
+                                    </SyntaxHighlighter>
+
+
+                                    {/* Join Result forFULL OUTER JOIN */}
+                                    <div className='relative py-8'>
+                                        <div className='absolute inset-0 flex items-center justify-center'>
+                                            <div className='w-full border-t border-dashed border-gray-300 dark:border-gray-600'></div>
+                                        </div>
+                                        <div className='relative flex justify-center'>
+                                            <span className='px-4 bg-white dark:bg-gray-800 text-sm text-blue-500 font-medium'>
+                                                FULL OUTER JOIN RESULT
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* Corrected Result Table for LEFT JOIN */}
+                                    <div className='bg-white dark:bg-gray-800 rounded-xl border-2 border-blue-100 dark:border-blue-900 shadow-lg'>
+                                        <div className='p-4 border-b border-blue-50 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 rounded-t-xl'>
+                                            <h4 className='font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-2'>
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                </svg>
+                                                Combined Results
+                                            </h4>
+                                        </div>
+                                        <Table className="w-full">
+                                            <TableHeader>
+                                                <TableRow className="bg-blue-50 dark:bg-blue-900/20">
+                                                    <TableHead>
+                                                        Student_ID</TableHead>
+                                                    <TableHead>Name</TableHead>
+                                                    <TableHead>Course_Name</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {[
+                                                    [101, "John", "Math"],
+                                                    [102, "Alice", "Science"],
+                                                    [103, "Bob", null],
+                                                    [104, "Mike", "Physics"],
+                                                    [null, null, "English"]
+                                                ].map(([id, name, course]) => (
+                                                    <TableRow key={id} className="hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                                                        <TableCell>{id || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+                                                        <TableCell>{name || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+
+                                                        <TableCell>{course || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='space-y-6'>
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100 pt-6'>5. SELF JOIN (Joining a Table to Itself)</h3>
+                                    <ul className='text-gray-600 dark:text-gray-400 text-base'>
+                                        <li>
+                                            A table is joined with itself to compare rows within the same table.
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                                {/* Code Snippet */}
+                                <div className='relative group'>
+                                    <div className='absolute inset-0 bg-blue-500/5 rounded-xl transition'></div>
+                                    <SyntaxHighlighter
+                                        language='sql'
+                                        style={dracula}
+                                        className='rounded-xl p-6 text-sm border border-gray-200 dark:border-gray-700 hover:border-blue-300 transition-all'
+                                    >
+                                        {`SELECT A.Name AS Student1, B.Name AS Student2, A.Course_ID 
+FROM Students A 
+JOIN Students B ON A.Course_ID = B.Course_ID 
+AND A.Student_ID <> B.Student_ID;
+`}
+                                    </SyntaxHighlighter>
+
+
+                                    {/* Join Result forFULL OUTER JOIN */}
+                                    <div className='relative py-8'>
+                                        <div className='absolute inset-0 flex items-center justify-center'>
+                                            <div className='w-full border-t border-dashed border-gray-300 dark:border-gray-600'></div>
+                                        </div>
+                                        <div className='relative flex justify-center'>
+                                            <span className='px-4 bg-white dark:bg-gray-800 text-sm text-blue-500 font-medium'>
+                                                SELF JOIN (Joining a Table to Itself)
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* Corrected Result Table for LEFT JOIN */}
+                                    <div className='bg-white dark:bg-gray-800 rounded-xl border-2 border-blue-100 dark:border-blue-900 shadow-lg'>
+                                        <div className='p-4 border-b border-blue-50 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 rounded-t-xl'>
+                                            <h4 className='font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-2'>
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                </svg>
+                                                Combined Results
+                                            </h4>
+                                        </div>
+                                        <Table className="w-full">
+                                            <TableHeader>
+                                                <TableRow className="bg-blue-50 dark:bg-blue-900/20">
+                                                    <TableHead>
+                                                        Student1</TableHead>
+                                                    <TableHead>Student2</TableHead>
+
+                                                    <TableHead>Course_ID</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {[
+                                                    ["John", "Alice", 1],
+                                                    ["Alice", "John", 1]
+                                                ].map(([name1, name2, course_id]) => (
+                                                    <TableRow key={course_id} className="hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                                                        <TableCell>{name1 || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+                                                        <TableCell>{name2 || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+                                                        <TableCell>{course_id || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='space-y-6'>
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100 pt-6'>6.  CROSS JOIN (Cartesian Product)</h3>
+                                    <ul className='text-gray-600 dark:text-gray-400 text-base'>
+                                        <li>
+                                            Returns all possible combinations of rows from both tables.
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                                {/* Code Snippet */}
+                                <div className='relative group'>
+                                    <div className='absolute inset-0 bg-blue-500/5 rounded-xl transition'></div>
+                                    <SyntaxHighlighter
+                                        language='sql'
+                                        style={dracula}
+                                        className='rounded-xl p-6 text-sm border border-gray-200 dark:border-gray-700 hover:border-blue-300 transition-all'
+                                    >
+                                        {`SELECT Students.Name, Courses.Course_Name 
+FROM Students 
+CROSS JOIN Courses;
+`}
+                                    </SyntaxHighlighter>
+
+
+                                    {/* Join Result forFULL OUTER JOIN */}
+                                    <div className='relative py-8'>
+                                        <div className='absolute inset-0 flex items-center justify-center'>
+                                            <div className='w-full border-t border-dashed border-gray-300 dark:border-gray-600'></div>
+                                        </div>
+                                        <div className='relative flex justify-center'>
+                                            <span className='px-4 bg-white dark:bg-gray-800 text-sm text-blue-500 font-medium'>
+                                                CROSS JOIN (Cartesian Product)
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* Corrected Result Table for LEFT JOIN */}
+                                    <div className='bg-white dark:bg-gray-800 rounded-xl border-2 border-blue-100 dark:border-blue-900 shadow-lg'>
+                                        <div className='p-4 border-b border-blue-50 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 rounded-t-xl'>
+                                            <h4 className='font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-2'>
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                </svg>
+                                                Combined Results
+                                            </h4>
+                                        </div>
+                                        <Table className="w-full">
+                                            <TableHeader>
+                                                <TableRow className="bg-blue-50 dark:bg-blue-900/20">
+                                                    <TableHead>Name</TableHead>
+
+                                                    <TableHead>Course Name</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {[
+                                                    ["John", "Math"],
+                                                    ["John", "Science"],
+                                                    ["John", "Physics"],
+                                                    ["John", "English"],
+                                                    ["Alice", "Math"],
+                                                    ["Alice", "Science"],
+                                                    ["Alice", "Physics"],
+                                                    ["Alice", "English"],
+                                                    ["Bob", "Math"],
+                                                    ["Bob", "Science"],
+                                                    ["Bob", "Physics"],
+                                                    ["Bob", "English"],
+                                                    ["Mike", "Math"],
+                                                    ["Mike", "Science"],
+                                                    ["Mike", "Physics"],
+                                                    ["Mike", "English"]
+                                                ].map(([name, course], index) => (
+                                                    <TableRow key={index} className="hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                                                        <TableCell>{name || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+                                                        <TableCell>{course || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </main>
+
+                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8 ">
+                        < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='view&indexing'>
+                            {/* Section Title */}
+                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                View & Indexing
+                            </h2>
+
+                            <div className='space-y-6 pt-5'>
+                                {/* Heading */}
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+                                        View
+                                    </h3>
+                                    <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                                        <li>A <strong>view</strong> is a virtual table based on the result of an SQL query.</li>
+                                        <li>Used for security, abstraction, and simplifying complex queries.</li>
+                                    </ul>
+                                    <div className='relative group'>
+                                        <div className='absolute inset-0 bg-blue-500/5 rounded-xl transition'></div>
+                                        <SyntaxHighlighter
+                                            language='sql'
+                                            style={dracula}
+                                            className='rounded-xl p-6 text-sm border border-gray-200 dark:border-gray-700 hover:border-blue-300 transition-all'
+                                        >
+                                            {`CREATE VIEW StudentView AS
+SELECT Name, Course_ID FROM Students;`}
+                                        </SyntaxHighlighter>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='space-y-6 pt-5'>
+                                {/* Heading */}
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+                                        Indexing
+                                    </h3>
+                                    <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                                        <li>Helps find data faster by organizing it better.</li>
+
+                                    </ul>
+                                    <div className='bg-white dark:bg-gray-800 rounded-xl border-2 border-blue-100 dark:border-blue-900 shadow-lg'>
+                                        <div className='p-4 border-b border-blue-50 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 rounded-t-xl'>
+                                            <h4 className='font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-2'>
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                </svg>
+                                                Types of Indexing:
+                                            </h4>
+                                        </div>
+                                        <Table className="w-full">
+                                            <TableHeader>
+                                                <TableRow className="bg-blue-50 dark:bg-blue-900/20">
+                                                    <TableHead>Index Type</TableHead>
+                                                    <TableHead>Description</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {[
+                                                    ["Clustered Index", "Data is stored physically in sorted order. Only one per table."],
+                                                    ["Non-Clustered Index", "Stores a separate index table with pointers to actual data. Multiple indexes are allowed."]
+                                                ].map(([data1, data2], index) => (
+                                                    <TableRow key={index} className="hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                                                        <TableCell><strong>{data1 || <span className="text-red-500 dark:text-red-400">NULL</span>}</strong></TableCell>
+                                                        <TableCell>{data2 || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8 ">
+                        < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='stored_procedures&triggers'>
+                            {/* Section Title */}
+                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                Stored Procedures & Triggers
+                            </h2>
+
+                            <div className='space-y-6 pt-5'>
+                                {/* Heading */}
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+                                        Stored Procedure
+                                    </h3>
+                                    <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                                        <li>A precompiled SQL script stored in the database to perform operations.</li>
+                                        <li>Improves performance by reducing repeated query execution.</li>
+                                    </ul>
+                                </div>
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+                                        Triggers
+                                    </h3>
+                                    <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                                        <li>A trigger is an automatic action executed before/after an INSERT, UPDATE, or DELETE.</li>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+
+                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='transaction&concurrency'>
+                            {/* Section Title */}
+                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                Transaction Management & Concurrency Control
+                            </h2>
+
+                            <div className='space-y-6 pt-5'>
+                                {/* Heading */}
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+                                        Transaction:
+                                    </h3>
+                                    <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                                        <li>A sequence of SQL operations that must be <strong>atomic, consistent, isolated, and durable (ACID).</strong></li>
+                                    </ul>
+                                    <div className="space-y-2 mt-4">
+                                        <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">ACID Properties:</h4>
+                                        <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                                            <li><strong>Atomicity:</strong>Atomicity ensures that a transaction is either fully completed or not executed at all. </li>
+                                            <li><strong>Consistency:</strong>  consistency means that data in a database is always correct and follows the rules that have been set for it.</li>
+                                            <li><strong>Isolation:</strong> Ensures that the operations of one transaction are isolated from others. Even if multiple transactions are running simultaneously, they do not interfere with each other.</li>
+                                            <li><strong>Durability:</strong> Ensures that once a transaction is committed, it is permanently saved to the database, even if there is a system crash.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+                                        Concurrency Control
+                                    </h3>
+                                    <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                                        <li>It ensures multiple transactions execute correctly.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='locks&serializability'>
+                            {/* Section Title */}
+                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                Locks in DBMS & Serializability
+                            </h2>
+
+                            <div className='space-y-6 pt-5'>
+                                {/* Heading */}
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+                                        Locks in DBMS
+                                    </h3>
+                                    <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                                        <li>Locks are mechanisms used in a Database Management System (DBMS) to manage access to data in a way that ensures data consistency and concurrency control. </li>
+                                    </ul>
+
+                                </div>
+                                <div className='bg-white dark:bg-gray-800 rounded-xl border-2 border-blue-100 dark:border-blue-900 shadow-lg'>
+                                    <div className='p-4 border-b border-blue-50 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 rounded-t-xl'>
+                                        <h4 className='font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-2'>
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                            </svg>
+                                            Types of Locks in DBMS:
+                                        </h4>
+                                    </div>
+                                    <Table className="w-full">
+                                        <TableHeader>
+                                            <TableRow className="bg-blue-50 dark:bg-blue-900/20">
+                                                <TableHead>
+                                                Lock Type</TableHead>
+                                                <TableHead>Description</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {[
+                                                ["Shared (S-Lock)", "Multiple transactions can read but not write."],
+                                                ["Exclusive (X-Lock)", "Only one transaction can read/write."],
+                                                ["Two-Phase Locking (2PL)","Ensures serializability by following a growing and shrinking phase."]
+                                            ].map(([data1, data2], index) => (
+                                                <TableRow key={index} className="hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                                                    <TableCell><strong>{data1 || <span className="text-red-500 dark:text-red-400">NULL</span>}</strong></TableCell>
+                                                    <TableCell>{data2 || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </div>
+
+                            </div>
+
+                            <div className='space-y-6 pt-5'>
+                                {/* Heading */}
+                                <div className='space-y-2'>
+                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+                                    Serializability
+                                    </h3>
+                                    <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                                        <li>Ensures that parallel transactions produce the same result as a serial execution.</li>
+                                    </ul>
+
+                                </div>
+                                <div className='bg-white dark:bg-gray-800 rounded-xl border-2 border-blue-100 dark:border-blue-900 shadow-lg'>
+                                    <div className='p-4 border-b border-blue-50 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 rounded-t-xl'>
+                                        <h4 className='font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-2'>
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                            </svg>
+                                            Types of Serializability:
+                                        </h4>
+                                    </div>
+                                    <Table className="w-full">
+                                        <TableHeader>
+                                            <TableRow className="bg-blue-50 dark:bg-blue-900/20">
+                                                <TableHead>
+                                                Lock Type</TableHead>
+                                                <TableHead>Description</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {[
+                                                ["Conflict Serializability", "Transactions do not swap conflicting operations."],
+                                                ["View Serializability", "Transactions produce the same final result as a serial schedule."]
+                                            ].map(([data1, data2], index) => (
+                                                <TableRow key={index} className="hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                                                    <TableCell><strong>{data1 || <span className="text-red-500 dark:text-red-400">NULL</span>}</strong></TableCell>
+                                                    <TableCell>{data2 || <span className="text-red-500 dark:text-red-400">NULL</span>}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </main >
 
             </div >
 
