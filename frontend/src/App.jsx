@@ -25,6 +25,7 @@ import Dsa150Question from "./pages/Dsa150Question";
 import OOPS from "./pages/OOPS";
 import ComputerNetwork from "./pages/ComputerNetwork";
 import DBMS from "./pages/DBMS";
+import OS from "./pages/OS";
 
 
 function App() {
@@ -80,7 +81,7 @@ function App() {
         <Route path='/oops' element={<OOPS />} />
         <Route path='/computer-network' element={<ComputerNetwork />} />
         <Route path='/dbms' element={<DBMS />} />
-
+        <Route path = '/os' element = {<OS/>}/>
       </Routes>
     </>
   );
