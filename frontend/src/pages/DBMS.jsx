@@ -77,13 +77,13 @@ const DBMS = () => {
                         <a href="#key" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-red-500 hover:text-white transition duration-300">Types of Keys in DBMS</a>
                         <a href="#er_model" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-green-500 hover:text-white transition duration-300">ER Model (Entity-Relationship Model)ER Model (Entity-Relationship Model)</a>
                         <a href="#normalisation" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-yellow-500 hover:text-black transition duration-300">Normalisation</a>
-                       
+
                         <a href="#joins" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-pink-500 hover:text-white transition duration-300">SQL Joins</a>
                         <a href="#view&indexing" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-orange-500 hover:text-white transition duration-300">View & Indexing</a>
                         <a href="#stored_procedures&triggers" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-teal-500 hover:text-white transition duration-300">Stored Procedures & Triggers</a>
                         <a href="#transaction&concurrency" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-indigo-500 hover:text-white transition duration-300">Transaction Management & Concurrency Control</a>
                         <a href="#locks&serializability" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-500 hover:text-white transition duration-300">Locks in DBMS & Serializability</a>
-                      
+
                     </div>
                 </div>
                 <button
@@ -1528,7 +1528,7 @@ SELECT Name, Course_ID FROM Students;`}
                                         <TableHeader>
                                             <TableRow className="bg-blue-50 dark:bg-blue-900/20">
                                                 <TableHead>
-                                                Lock Type</TableHead>
+                                                    Lock Type</TableHead>
                                                 <TableHead>Description</TableHead>
                                             </TableRow>
                                         </TableHeader>
@@ -1536,7 +1536,7 @@ SELECT Name, Course_ID FROM Students;`}
                                             {[
                                                 ["Shared (S-Lock)", "Multiple transactions can read but not write."],
                                                 ["Exclusive (X-Lock)", "Only one transaction can read/write."],
-                                                ["Two-Phase Locking (2PL)","Ensures serializability by following a growing and shrinking phase."]
+                                                ["Two-Phase Locking (2PL)", "Ensures serializability by following a growing and shrinking phase."]
                                             ].map(([data1, data2], index) => (
                                                 <TableRow key={index} className="hover:bg-blue-50 dark:hover:bg-blue-900/10">
                                                     <TableCell><strong>{data1 || <span className="text-red-500 dark:text-red-400">NULL</span>}</strong></TableCell>
@@ -1553,7 +1553,7 @@ SELECT Name, Course_ID FROM Students;`}
                                 {/* Heading */}
                                 <div className='space-y-2'>
                                     <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
-                                    Serializability
+                                        Serializability
                                     </h3>
                                     <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
                                         <li>Ensures that parallel transactions produce the same result as a serial execution.</li>
@@ -1573,7 +1573,7 @@ SELECT Name, Course_ID FROM Students;`}
                                         <TableHeader>
                                             <TableRow className="bg-blue-50 dark:bg-blue-900/20">
                                                 <TableHead>
-                                                Lock Type</TableHead>
+                                                    Lock Type</TableHead>
                                                 <TableHead>Description</TableHead>
                                             </TableRow>
                                         </TableHeader>
@@ -1594,6 +1594,7 @@ SELECT Name, Course_ID FROM Students;`}
                             </div>
                         </div>
                     </div>
+
                 </main >
 
             </div >

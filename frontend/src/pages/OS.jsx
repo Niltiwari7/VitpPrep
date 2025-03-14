@@ -470,6 +470,239 @@ const OS = () => {
                             </div>
                         </div>
                     </div>
+
+                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id="normalisation">
+                            {/* Section Title */}
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                Memory Management
+                            </h2>
+
+                            <div className="space-y-6 pt-5">
+                                {/* Paging vs Segmentation */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+                                        Paging vs. Segmentation
+                                    </h3>
+                                    <p><strong>Paging</strong>: Memory is divided into fixed-size blocks called pages. These pages are mapped into physical memory, which prevents fragmentation and simplifies memory management.</p>
+                                    <p><strong>Segmentation</strong>: Memory is divided into variable-sized segments, like functions or data structures. It allows logical grouping of memory but can lead to external fragmentation.</p>
+                                </div>
+
+                                {/* Internal & External Fragmentation */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+                                        Internal & External Fragmentation
+                                    </h3>
+                                    <p><strong>Internal Fragmentation</strong>: Occurs when memory blocks are allocated but not fully used, leading to wasted space inside a block (common in paging).</p>
+                                    <p><strong>External Fragmentation</strong>: Happens when free memory is scattered in small blocks, preventing large contiguous memory allocations (common in segmentation).</p>
+                                </div>
+
+                                {/* Virtual Memory & Page Replacement */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+                                        Virtual Memory & Page Replacement
+                                    </h3>
+                                    <p><strong>Virtual Memory</strong>: A memory management technique that simulates a larger memory space using disk storage. It allows programs to run as though they have more memory than physically available.</p>
+                                    <p><strong>Demand Paging</strong>: Pages are loaded into memory only when they are needed, saving memory by loading only required pages.</p>
+                                    <p><strong>Thrashing</strong>: Occurs when the system spends most of its time swapping data between RAM and disk due to excessive page faults, significantly reducing performance.</p>
+
+                                    {/* Page Replacement Algorithms */}
+                                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Page Replacement Algorithms</h4>
+                                    <ul className="list-disc list-inside">
+                                        <li><strong>FIFO (First In, First Out)</strong>: The oldest page in memory is replaced when a new page needs to be loaded.</li>
+                                        <li><strong>LRU (Least Recently Used)</strong>: The page that has not been used for the longest time is replaced.</li>
+                                        <li><strong>Optimal</strong>: The page that will not be used for the longest time in the future is replaced (theoretical and not practical to implement).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id="file-disk-management">
+                            {/* Section Title */}
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                File System & Disk Scheduling
+                            </h2>
+
+                            <div className="space-y-6 pt-5">
+                                {/* File System Management */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+                                        File System Management
+                                    </h3>
+
+                                    {/* File Structure & Directory Structures */}
+                                    <p><strong>File Structure</strong>: The way in which data is organized and stored in files. Common structures include simple text files, binary files, and database files, which define how data is stored and retrieved.</p>
+                                    <p><strong>Directory Structures</strong>: Methods for organizing files in a hierarchical manner. Common structures include:
+                                        <ul className="list-disc list-inside">
+                                            <li><strong>Single-level Directory</strong>: All files are stored in one directory.</li>
+                                            <li><strong>Two-level Directory</strong>: Files are stored in user directories, each with its own subdirectory.</li>
+                                            <li><strong>Hierarchical Directory</strong>: A tree-like structure with multiple levels of directories and subdirectories.</li>
+                                        </ul>
+                                    </p>
+
+                                    {/* File Allocation Methods */}
+                                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">File Allocation Methods</h4>
+                                    <ul className="list-disc list-inside">
+                                        <li><strong>Contiguous Allocation</strong>: Files are stored in contiguous blocks of memory, making access faster but causing issues with fragmentation.</li>
+                                        <li><strong>Linked Allocation</strong>: Each file block points to the next block, making it flexible and eliminating fragmentation, but access time is slower due to pointer following.</li>
+                                        <li><strong>Indexed Allocation</strong>: Each file has an index block that contains pointers to its data blocks, allowing direct access but using more memory for storing index blocks.</li>
+                                    </ul>
+                                </div>
+
+                                {/* Disk Scheduling Algorithms */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+                                        Disk Scheduling Algorithms
+                                    </h3>
+                                    <p>Disk scheduling algorithms are used to decide the order in which disk I/O requests are processed. Common algorithms include:</p>
+                                    <ul className="list-disc list-inside">
+                                        <li><strong>FCFS (First-Come, First-Served)</strong>: Requests are processed in the order they arrive, which can lead to inefficient disk utilization.</li>
+                                        <li><strong>SSTF (Shortest Seek Time First)</strong>: The request closest to the current head position is processed next, reducing seek time but potentially causing starvation for distant requests.</li>
+                                        <li><strong>SCAN</strong>: The disk arm moves in one direction servicing requests until it reaches the end, then reverses direction to service the requests on the other side.</li>
+                                        <li><strong>C-SCAN (Circular SCAN)</strong>: Similar to SCAN, but instead of reversing direction, the disk arm jumps to the other end and continues servicing requests in the same direction.</li>
+                                        <li><strong>LOOK</strong>: The disk arm moves in one direction until it reaches the last request, then reverses direction without going all the way to the end of the disk, making it more efficient than SCAN.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id="synchronization-concurrency">
+                            {/* Section Title */}
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                Synchronization & Concurrency Control
+                            </h2>
+
+                            <div className="space-y-6 pt-5">
+                                {/* Critical Section Problem */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+                                        Critical Section Problem
+                                    </h3>
+                                    <p>The Critical Section Problem arises in concurrent programming when multiple processes or threads try to access shared resources (such as data or files) simultaneously, leading to data inconsistencies or errors. The goal is to design a mechanism that allows only one process to enter the critical section at a time, ensuring mutual exclusion and preventing race conditions.</p>
+                                    <p>To solve this, we need to ensure the following properties:</p>
+                                    <ul className="list-disc list-inside">
+                                        <li><strong>Mutual Exclusion:</strong> Only one process can be in the critical section at a time.</li>
+                                        <li><strong>Progress:</strong> If no process is in the critical section, the next process should be able to enter.</li>
+                                        <li><strong>Bounded Waiting:</strong> There must be a limit on the number of times other processes can enter the critical section before the waiting process gets its turn.</li>
+                                    </ul>
+                                </div>
+
+                                {/* Synchronization Mechanisms */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+                                        Synchronization Mechanisms
+                                    </h3>
+                                    <p>Synchronization mechanisms are used to coordinate the access of multiple processes or threads to shared resources, ensuring that data integrity is maintained and preventing conflicts. Two common synchronization mechanisms are:</p>
+
+                                    {/* Semaphores */}
+                                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Semaphores</h4>
+                                    <p>A <strong>semaphore</strong> is a synchronization primitive that controls access to shared resources by using a counter. It has two main operations:</p>
+                                    <ul className="list-disc list-inside">
+                                        <li><strong>Wait (P):</strong> Decreases the semaphore's value. If the value is negative, the process is blocked.</li>
+                                        <li><strong>Signal (V):</strong> Increases the semaphore's value, potentially unblocking a waiting process.</li>
+                                    </ul>
+                                    <p>Semaphores are typically used to manage access to a finite number of resources, such as a pool of database connections or printers.</p>
+
+                                    {/* Mutex */}
+                                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Mutex</h4>
+                                    <p>A <strong>mutex</strong> (short for mutual exclusion) is a locking mechanism used to enforce mutual exclusion, ensuring that only one thread or process can access a shared resource at any time. It works by locking a resource when a process enters the critical section and unlocking it when the process exits. Unlike semaphores, which can be used by multiple processes, a mutex is typically used by a single process or thread.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id="kernel-comparison">
+                            {/* Section Title */}
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                Microkernel vs. Monolithic Kernel
+                            </h2>
+
+                            <div className="space-y-6 pt-5">
+                                {/* Microkernel vs. Monolithic Kernel */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+                                        Microkernel vs. Monolithic Kernel
+                                    </h3>
+
+                                    <p><strong>Microkernel</strong>: A microkernel is a kernel architecture that only includes the basic functionalities of the operating system such as communication, process management, and memory management. Other services, such as device drivers, file systems, and networking, run in user space as separate processes.</p>
+
+                                    <p><strong>Monolithic Kernel</strong>: A monolithic kernel is an operating system architecture where the entire operating system, including device drivers, file systems, and system services, runs in kernel space, forming a single large program.</p>
+
+                                    {/* Differences */}
+                                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Differences</h4>
+                                    <table className="min-w-full text-left table-auto">
+                                        <thead>
+                                            <tr>
+                                                <th className="px-4 py-2 border">Feature</th>
+                                                <th className="px-4 py-2 border">Microkernel</th>
+                                                <th className="px-4 py-2 border">Monolithic Kernel</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td className="px-4 py-2 border">Architecture</td>
+                                                <td className="px-4 py-2 border">Minimal, only essential services in kernel space</td>
+                                                <td className="px-4 py-2 border">All services (drivers, file systems) in kernel space</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="px-4 py-2 border">Performance</td>
+                                                <td className="px-4 py-2 border">Slower due to communication overhead between user and kernel space</td>
+                                                <td className="px-4 py-2 border">Faster as everything is in kernel space</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="px-4 py-2 border">Fault Isolation</td>
+                                                <td className="px-4 py-2 border">Better fault tolerance, as services run in user space</td>
+                                                <td className="px-4 py-2 border">Less fault tolerance, as crashes in the kernel affect the whole system</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="px-4 py-2 border">Modularity</td>
+                                                <td className="px-4 py-2 border">Highly modular, easier to add/remove services</td>
+                                                <td className="px-4 py-2 border">Less modular, all services tightly integrated</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    {/* Advantages */}
+                                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Advantages</h4>
+                                    <h5 className="text-md font-semibold text-gray-800 dark:text-gray-100">Microkernel</h5>
+                                    <ul className="list-disc list-inside">
+                                        <li>Better fault isolation and system stability.</li>
+                                        <li>More flexible, with easier updates and modifications since services run in user space.</li>
+                                        <li>Improved security, as fewer parts run with high privileges in kernel space.</li>
+                                    </ul>
+
+                                    <h5 className="text-md font-semibold text-gray-800 dark:text-gray-100">Monolithic Kernel</h5>
+                                    <ul className="list-disc list-inside">
+                                        <li>Faster performance, since services run directly in kernel space.</li>
+                                        <li>More efficient communication between services, as no need for message passing between user and kernel space.</li>
+                                        <li>Simpler to implement for smaller systems that don't require heavy modularity.</li>
+                                    </ul>
+
+                                    {/* Examples */}
+                                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Examples</h4>
+                                    <p><strong>Microkernel:</strong> Examples of microkernel-based operating systems include **MINIX** and **QNX**.</p>
+                                    <p><strong>Monolithic Kernel:</strong> Examples of monolithic kernels include **Linux**, **Unix**, and **MS-DOS**.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </main>
 
             </div >
