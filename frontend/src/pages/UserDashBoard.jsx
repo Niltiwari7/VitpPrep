@@ -186,22 +186,7 @@ const UserDashBoard = () => {
           navigateTo={"/os"}
         />
 
-        <FeatureCard
-          imageUrl="src/assets/public/aptitude.png"
-          title="Aptitude & Problem Solving"
-          description="Sharpen your problem-solving skills with quantitative and logical reasoning challenges."
-          buttonText="Solve Now"
-          navigateTo={"/aptitude"}
-        />
-
-        <FeatureCard
-          imageUrl="src/assets/public/lr.png"
-          title="Logical Reasoning"
-          description="Enhance your analytical thinking with logical puzzles, pattern recognition, and riddles."
-          buttonText="Challenge Yourself"
-          navigateTo={"/logical-reasoning"}
-        />
-
+       
       </main>
       <Footer/>
     </div>

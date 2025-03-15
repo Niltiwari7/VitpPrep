@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setDarkMode } from '../utils/slices/theme.slice';
 import { Link } from 'react-router-dom';
-import { AiOutlineArrowLeft, AiOutlineBars } from 'react-icons/ai';
+import { AiOutlineArrowLeft, AiOutlineBars, AiOutlineClose } from 'react-icons/ai';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import {
     Table,
@@ -31,6 +31,73 @@ const DBMS = () => {
     const toggleTheme = () => {
         dispatch(setDarkMode(!darkMode));
     }
+   
+
+    const links = [
+        {
+          id: '#introduction',
+          text: 'Introduction',
+          color: 'blue'
+        },
+        {
+          id: '#key',
+          text: 'Types of Keys in DBMS',
+          color: 'red'
+        },
+        {
+          id: '#er_model',
+          text: 'ER Model (Entity-Relationship Model)',
+          color: 'green'
+        },
+        {
+          id: '#normalisation',
+          text: 'Normalisation',
+          color: 'yellow'
+        },
+        {
+          id: '#joins',
+          text: 'SQL Joins',
+          color: 'pink'
+        },
+        {
+          id: '#view_indexing',
+          text: 'View & Indexing',
+          color: 'orange'
+        },
+        {
+          id: '#stored_procedures_triggers',
+          text: 'Stored Procedures & Triggers',
+          color: 'teal'
+        },
+        {
+          id: '#transaction_concurrency',
+          text: 'Transaction Management & Concurrency Control',
+          color: 'indigo'
+        },
+        {
+          id: '#locks_serializability',
+          text: 'Locks in DBMS & Serializability',
+          color: 'gray'
+        }
+      ];
+
+      const [currentSection, setCurrentSection] = useState('#oops_desc');
+
+      const handleLinkClick = (sectionId) => {
+        setCurrentSection(sectionId);
+
+        toggleSidebar();
+
+        setTimeout(() => {
+            const section = document.querySelector(sectionId);
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }, 100);
+    };
 
 
     return (
@@ -65,36 +132,52 @@ const DBMS = () => {
                 className='flex min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100'
             >
 
-                <div className={`bg-white dark:bg-gray-900 mt-[60px] p-6 w-[60%] sm:w-[20%] fixed min-h-screen shadow-lg rounded-lg 
-                 dark:text-white text-black transition-all duration-300 ease-in-out 
-                 ${isSidebarOpen ? "block" : "hidden sm:block"} 
-                 max-h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600`}>
-
-                    <h3 className="text-center text-lg font-semibold pb-4 border-b border-gray-300 dark:border-gray-700">Content</h3>
-
-                    <div className="flex flex-col gap-2 mt-4">
-                        <a href="#introduction" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white transition duration-300">Introduction</a>
-                        <a href="#key" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-red-500 hover:text-white transition duration-300">Types of Keys in DBMS</a>
-                        <a href="#er_model" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-green-500 hover:text-white transition duration-300">ER Model (Entity-Relationship Model)ER Model (Entity-Relationship Model)</a>
-                        <a href="#normalisation" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-yellow-500 hover:text-black transition duration-300">Normalisation</a>
-
-                        <a href="#joins" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-pink-500 hover:text-white transition duration-300">SQL Joins</a>
-                        <a href="#view&indexing" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-orange-500 hover:text-white transition duration-300">View & Indexing</a>
-                        <a href="#stored_procedures&triggers" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-teal-500 hover:text-white transition duration-300">Stored Procedures & Triggers</a>
-                        <a href="#transaction&concurrency" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-indigo-500 hover:text-white transition duration-300">Transaction Management & Concurrency Control</a>
-                        <a href="#locks&serializability" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-500 hover:text-white transition duration-300">Locks in DBMS & Serializability</a>
-
-                    </div>
-                </div>
-                <button
-                    onClick={toggleSidebar}
-                    className="sm:hidden fixed top-16 right-4 bg-blue-600 dark:bg-yellow-500 text-white p-2 rounded-full shadow-md z-20">
-                    <AiOutlineBars size={24} />
-                </button>
-
+                  <div className={`bg-white dark:bg-gray-900 mt-[60px] p-6 w-[60%] sm:w-[20%] fixed min-h-screen shadow-lg rounded-lg 
+                                dark:text-white text-black transition-all duration-300 ease-in-out transform
+                                ${isSidebarOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"} 
+                                z-30 overflow-y-auto`}
+                                    role="navigation"
+                                    aria-label="Main navigation">
+                                    <h3 className="text-center text-lg font-semibold pb-4 border-b border-gray-300 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-900">
+                                        Content
+                                    </h3>
+                
+                                    <div className="flex flex-col gap-2 mt-4">
+                                        {links.map((link) => (
+                                            <a
+                                                key={link.id}
+                                                href={link.href}
+                                                onClick={() => handleLinkClick(link.id)}
+                                                className={`block px-4 py-2 rounded-md transition-all duration-200
+                                           ${currentSection === link.id
+                                                        ? 'bg-blue-500 text-white dark:bg-blue-600'
+                                                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'}
+                                           hover:pl-6 pointer`}
+                                                aria-current={currentSection === link.id ? "page" : undefined}>
+                                                {link.text}
+                                            </a>
+                                        ))}
+                                    </div>
+                                </div>
+                
+                                {/* Backdrop for mobile */}
+                                <div className={`sm:hidden fixed inset-0 bg-black/50 z-20 transition-opacity 
+                                ${isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+                                    onClick={toggleSidebar}
+                                    aria-hidden="true" />
+                
+                                {/* Toggle Sidebar Button */}
+                                <button
+                                    onClick={toggleSidebar}
+                                    className="sm:hidden fixed top-16 right-4 bg-blue-600 dark:bg-yellow-500 text-white p-2 rounded-full shadow-lg z-30
+                             transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                    aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
+                                    aria-expanded={isSidebarOpen}>
+                                    {isSidebarOpen ? <AiOutlineClose size={24} /> : <AiOutlineBars size={24} />}
+                                </button>
                 <main className='sm:w-4/5 w-full ml-auto p-6 mt-20'>
 
-                    <div className="max-w-4xl mx-auto px-4 md:px-6 py-6">
+                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6">
                         <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700 " id='introduction'>
 
                             {/* Title */}
@@ -182,13 +265,9 @@ const DBMS = () => {
                                 </TableBody>
                             </Table>
                         </div>
-                    </div>
+                    </section>
 
-
-
-
-
-                    <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
+                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-8">
                         <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='key'>
 
 
@@ -267,10 +346,10 @@ const DBMS = () => {
                                 </Table>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
 
-                    <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
+                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-8">
                         <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='er_model'>
 
 
@@ -349,10 +428,10 @@ const DBMS = () => {
                             </ul>
 
                         </div>
-                    </div>
+                    </section>
 
 
-                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8 ">
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8 ">
                         < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='normalisation'>
                             {/* Section Title */}
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
@@ -770,8 +849,8 @@ const DBMS = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className='max-w-4xl mx-auto px-6 md:px-8 py-8 space-y-8'>
+                    </section>
+                    <section className='max-w-4xl mx-auto px-6 md:px-8 py-8 space-y-8'>
                         {/* Header Section */}
                         <div className='bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700' id='joins'>
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
@@ -1331,9 +1410,9 @@ CROSS JOIN Courses;
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
-                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8 ">
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="view_indexing">
                         < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='view&indexing'>
                             {/* Section Title */}
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
@@ -1413,9 +1492,9 @@ SELECT Name, Course_ID FROM Students;`}
 
 
                         </div>
-                    </div>
-                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8 ">
-                        < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='stored_procedures&triggers'>
+                    </section>
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="stored_procedures_triggers">
+                        < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
                             {/* Section Title */}
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -1451,10 +1530,10 @@ SELECT Name, Course_ID FROM Students;`}
 
 
                         </div>
-                    </div>
+                    </section>
 
-                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='transaction&concurrency'>
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='transaction_concurrency'>
                             {/* Section Title */}
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -1492,10 +1571,10 @@ SELECT Name, Course_ID FROM Students;`}
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
-                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='locks&serializability'>
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='locks_serializability'>
                             {/* Section Title */}
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -1593,7 +1672,7 @@ SELECT Name, Course_ID FROM Students;`}
 
                             </div>
                         </div>
-                    </div>
+                    </section>
 
                 </main >
 

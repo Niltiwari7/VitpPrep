@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode } from "../utils/slices/theme.slice";
 import { Link } from "react-router-dom";
-import { AiOutlineArrowLeft, AiOutlineBars } from "react-icons/ai";
+import { AiOutlineArrowLeft, AiOutlineBars, AiOutlineClose } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
 import {
     Table,
@@ -29,136 +29,289 @@ const OS = () => {
     const toggleTheme = () => {
         dispatch(setDarkMode(!darkMode));
     }
+
+    const links = [
+        {
+            id: '#introduction',
+            text: 'Introduction',
+            color: 'blue'
+        },
+        {
+            id: '#process_management',
+            text: 'Process Management',
+            color: 'red'
+        },
+        {
+            id: '#thread',
+            text: 'Thread',
+            color: 'green'
+        },
+        {
+            id: '#cpu_scheduling_algorithms',
+            text: 'CPU scheduling algorithms',
+            color: 'yellow',
+            textColor: 'black'
+        },
+        {
+            id: '#deadlocks',
+            text: 'Deadlock',
+            color: 'pink'
+        },
+        {
+            id: '#memory_management',
+            text: 'Memory Management',
+            color: 'orange'
+        },
+        {
+            id: '#file_system_disk_scheduling',
+            text: 'File System and Disk Scheduling',
+            color: 'teal'
+        },
+        {
+            id: '#synchronization',
+            text: 'Transaction Management & Concurrency Control',
+            color: 'indigo'
+        },
+        {
+            id: '#microkernel_monolithic',
+            text: 'Locks in DBMS & Serializability',
+            color: 'gray'
+        }
+    ];
+
+
+    const [currentSection, setCurrentSection] = useState('#introduction');
+
+    const handleLinkClick = (sectionId) => {
+        setCurrentSection(sectionId);
+        toggleSidebar();
+        setTimeout(() => {
+            const section = document.querySelector(sectionId);
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                })
+            }
+        }, 100)
+    }
+
     return (
         <div className="gap-5">
-            <header className='w-full flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 shadow-md fixed top-0 left-0 right-0 z-10'>
-                <Link to='/dashboard' className="flex items-center text-blue-600 dark:text-yellow-500 hover:underline">
-                    <AiOutlineArrowLeft size={20} />
-                    <span className="ml-2">Back To Profile</span>
+            <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-lg fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/20 dark:border-[#00E3CC]/20">
+                {/* Back Link */}
+                <Link
+                    to='/dashboard'
+                    className="flex items-center text-[#00C1B3] dark:text-[#00E3CC] hover:text-white dark:hover:text-white transition-colors duration-300 group"
+                >
+                    <AiOutlineArrowLeft
+                        size={20}
+                        className="group-hover:-translate-x-1 transition-transform"
+                    />
+                    <span className="ml-2 font-medium">Back to Dashboard</span>
                 </Link>
+
+                {/* Right Section */}
                 <div className="flex items-center gap-4">
+                    {/* Theme Toggle */}
                     <button
                         aria-label="Toggle Theme"
                         onClick={toggleTheme}
-                        className="p-2 bg-blue-600 dark:bg-yellow-500 text-white rounded-full shadow hover:scale-105 transition"
+                        className="p-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                     >
-                        {darkMode ? <FaMoon size={18} /> : <FaSun size={18} />}
+                        {darkMode ? (
+                            <FaMoon size={18} className="hover:rotate-12 transition-transform" />
+                        ) : (
+                            <FaSun size={18} className="hover:rotate-12 transition-transform" />
+                        )}
                     </button>
 
-                    {
-                        user?.imageUrl && (
-                            <img className="w-10 h-10 rounded-full object-cover "
-                                src={user.imageUrl} alt="Profile" />
-                        )
-                    }
+                    {/* Profile Image */}
+                    {user?.imageUrl && (
+                        <div className="relative group">
+                            <img
+                                className="w-10 h-10 rounded-full object-cover border-2 border-[#00C1B3] dark:border-[#00E3CC] hover:border-white cursor-pointer transition-all"
+                                src={user.imageUrl}
+                                alt="Profile"
+                            />
+                            <div className="absolute inset-0 border-2 border-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
+                    )}
                 </div>
             </header>
 
             <div
-                className='flex min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100'
+                className='flex min-h-screen 
+             bg-gradient-to-b from-[#F8F9FA] to-[#F1F3F5]
+             dark:bg-[#0D1117]
+             text-[#2A3F5F] dark:text-[#A0AEC0]
+             transition-all duration-300 ease-in-out'
             >
 
-                <div className={`bg-white dark:bg-gray-900 mt-[60px] p-6 w-[60%] sm:w-[20%] fixed min-h-screen shadow-lg rounded-lg 
-                 dark:text-white text-black transition-all duration-300 ease-in-out 
-                 ${isSidebarOpen ? "block" : "hidden sm:block"} 
-                 max-h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600`}>
-
-                    <h3 className="text-center text-lg font-semibold pb-4 border-b border-gray-300 dark:border-gray-700">Content</h3>
+                {/* Sidebar */}
+                <div className={`bg-[#2A3F5F] dark:bg-[#0D1117] mt-[60px] p-6 w-[60%] sm:w-[20%] fixed min-h-screen shadow-xl rounded-r-lg 
+                text-gray-100 transition-all duration-300 ease-in-out transform
+                ${isSidebarOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"} 
+                z-30 overflow-y-auto border-r border-[#00C1B3]/20 dark:border-[#00E3CC]/20`}
+                    role="navigation"
+                    aria-label="Main navigation">
+                    <h3 className="text-center text-lg font-semibold pb-4 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30 sticky top-0 bg-[#2A3F5F] dark:bg-[#0D1117] text-white">
+                        Content
+                    </h3>
 
                     <div className="flex flex-col gap-2 mt-4">
-                        <a href="#introduction" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white transition duration-300">Introduction</a>
-                        <a href="#key" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-red-500 hover:text-white transition duration-300">Types of Keys in DBMS</a>
-                        <a href="#er_model" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-green-500 hover:text-white transition duration-300">ER Model (Entity-Relationship Model)ER Model (Entity-Relationship Model)</a>
-                        <a href="#normalisation" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-yellow-500 hover:text-black transition duration-300">Normalisation</a>
-
-                        <a href="#joins" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-pink-500 hover:text-white transition duration-300">SQL Joins</a>
-                        <a href="#view&indexing" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-orange-500 hover:text-white transition duration-300">View & Indexing</a>
-                        <a href="#stored_procedures&triggers" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-teal-500 hover:text-white transition duration-300">Stored Procedures & Triggers</a>
-                        <a href="#transaction&concurrency" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-indigo-500 hover:text-white transition duration-300">Transaction Management & Concurrency Control</a>
-                        <a href="#locks&serializability" onClick={toggleSidebar} className="block px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-500 hover:text-white transition duration-300">Locks in DBMS & Serializability</a>
-
+                        {links.map((link) => (
+                            <a
+                                key={link.id}
+                                href={link.href}
+                                onClick={() => handleLinkClick(link.id)}
+                                className={`block px-4 py-2 rounded-md transition-all duration-300
+                           ${currentSection === link.id
+                                        ? 'bg-[#00C1B3] text-white dark:bg-[#00E3CC] dark:text-[#0D1117]'
+                                        : 'text-gray-300 dark:text-gray-400 hover:bg-[#00C1B3]/20 dark:hover:bg-[#00E3CC]/20'}
+                           hover:pl-6 font-medium`}
+                                aria-current={currentSection === link.id ? "page" : undefined}>
+                                {link.text}
+                            </a>
+                        ))}
                     </div>
                 </div>
+
+                
+                <div className={`sm:hidden fixed inset-0bg-[#00C1B3] dark:bg-[#00E3CC] z-20 transition-opacity 
+                               ${isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+                    onClick={toggleSidebar}
+                    aria-hidden="true" />
                 <button
                     onClick={toggleSidebar}
-                    className="sm:hidden fixed top-16 right-4 bg-blue-600 dark:bg-yellow-500 text-white p-2 rounded-full shadow-md z-20">
-                    <AiOutlineBars size={24} />
+                    className="sm:hidden fixed top-16 right-4 bg-[#00C1B3] dark:bg-[#00E3CC] text-white p-2 rounded-full shadow-lg z-30
+                            transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
+                    aria-expanded={isSidebarOpen}>
+                    {isSidebarOpen ? <AiOutlineClose size={24} /> : <AiOutlineBars size={24} />}
                 </button>
-
                 <main className="sm:w-4/5 w-full ml-auto p-6 mt-20">
 
-                    <div className="max-w-4xl mx-auto px-4 md:px-6 py-6">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700 " id='introduction'>
+                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='introduction'>
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
 
-                            {/* Title */}
-                            <h1 className="text-center text-2xl font-bold text-blue-600 dark:text-yellow-500">
-                                Operating System
-                            </h1>
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
-                                </svg>
-                                Introduction
-                            </h2>
-                            <p className="mt-2 text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+                            {/* Glow effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-[#00C1B3]/5 to-[#2A3F5F]/5 dark:from-[#00E3CC]/10 dark:to-[#0D1117]/10" />
 
-                                An Operating System (OS) acts as an interface between the computer hardware and user applications. It manages the hardware resources of a computer, such as the CPU, memory, and storage, and provides services for running applications.
+                            {/* Title Section */}
+                            <div className="text-center mb-8">
+                                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#2A3F5F] to-[#00C1B3] dark:from-[#00E3CC] dark:to-[#A0AEC0]">
+                                    Operating System Fundamentals
+                                </h1>
+                                <div className="mt-4 flex items-center justify-center gap-3">
+                                    <svg
+                                        className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    // ... keep your existing SVG paths
+                                    ></svg>
+                                    <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                        Core Concepts & Architecture
+                                    </h2>
+                                </div>
+                            </div>
 
+                            {/* Content */}
+                            <p className="mt-4 text-lg leading-relaxed text-[#2A3F5F] dark:text-[#A0AEC0] font-medium">
+                                An Operating System (OS) serves as the fundamental bridge between
+                                <span className="text-[#00C1B3] dark:text-[#00E3CC] font-semibold"> hardware resources </span>
+                                (CPU, memory, storage) and
+                                <span className="text-[#00C1B3] dark:text-[#00E3CC] font-semibold"> user applications</span>,
+                                providing essential services for efficient computation management.
                             </p>
 
+                            {/* Enhanced Table */}
+                            <div className="mt-8 flow-root">
+                                <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                    <div className="inline-block min-w-full align-middle">
+                                        <table className="min-w-full divide-y divide-[#00C1B3]/20 dark:divide-[#00E3CC]/20">
+                                            <thead className="bg-gradient-to-r from-[#00C1B3]/10 to-[#2A3F5F]/10 dark:from-[#00E3CC]/10 dark:to-[#0D1117]/10">
+                                                <tr>
+                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">
+                                                        OS Type
+                                                    </th>
+                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">
+                                                        Architecture
+                                                    </th>
+                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider">
+                                                        Use Cases
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-[#00C1B3]/10 dark:divide-[#00E3CC]/10 bg-white/50 dark:bg-[#1A202C]/50">
+                                                {[
+                                                    ['Single-Task', 'Sequential Processing', 'Embedded Systems, IoT'],
+                                                    ['Multi-Tasking', 'Time-Sharing Scheduler', 'Desktop Environments'],
+                                                    ['Real-Time', 'Deterministic Processing', 'Industrial Control Systems'],
+                                                    ['Distributed', 'Cluster Management', 'Cloud Computing'],
+                                                    ['Mobile', 'Power-Optimized', 'Smartphones/Tablets']
+                                                ].map(([type, arch, useCase], index) => (
+                                                    <tr
+                                                        key={index}
+                                                        className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors"
+                                                    >
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                            {type}
+                                                        </td>
+                                                        <td className="px-6 py-4 text-sm text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                            {arch}
+                                                        </td>
+                                                        <td className="px-6 py-4 text-sm text-[#00C1B3] dark:text-[#00E3CC] font-medium">
+                                                            {useCase}
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
-                                Types of OS
-                            </h3>
-
-
-                            <Table className="mt-3 text-base">
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Type of OS</TableHead>
-                                        <TableHead>Description</TableHead>
-                                        <TableHead>Example</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-
-                                {
-                                    [
-                                        ['Single-User, Single-Task OS', 'Used by a single user to perform one task at a time.', 'MS-DOS'],
-                                        ['Single-User, Multi-Tasking OS', 'Allows one user to perform multiple tasks simultaneously.', 'Windows, macOS'],
-                                        ['Multi-User OS', 'Supports multiple users simultaneously.', 'Linux, Unix, Windows Server'],
-                                        ['Real-Time OS (RTOS)', 'Designed to process data in real-time, used in embedded systems.', 'FreeRTOS, VxWorks'],
-                                        ['Distributed OS', 'Manages multiple computers as a single system.', 'Google Chrome OS, Hadoop']
-                                    ].map(([type, desc, example], index) => (
-                                        <TableBody key={index}>
-                                            <TableRow>
-                                                <TableCell><strong>{type}</strong></TableCell>
-                                                <TableCell>{desc}</TableCell>
-                                                <TableCell>{example}</TableCell>
-                                            </TableRow>
-                                        </TableBody>
-                                    ))
-                                }
-
-                            </Table>
+                            {/* Concept Visualization */}
+                            <div className="mt-8 p-6 bg-white dark:bg-[#1A202C] rounded-lg border border-[#00C1B3]/20">
+                                <h4 className="text-lg font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] mb-4">
+                                    OS Architecture Layers
+                                </h4>
+                                <div className="flex flex-col space-y-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-4 h-4 bg-[#00C1B3] rounded-full" />
+                                        <span className="text-sm text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                            User Applications → System Libraries → Kernel → Hardware
+                                        </span>
+                                    </div>
+                                    <div className="h-1 bg-gradient-to-r from-[#00C1B3] via-[#2A3F5F] to-[#00C1B3] rounded-full" />
+                                </div>
+                            </div>
                         </div>
+                    </section>
+                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id="process_management">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
 
+                            {/* Glow effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-[#00C1B3]/5 to-[#2A3F5F]/5 dark:from-[#00E3CC]/10 dark:to-[#0D1117]/10" />
 
-                    </div>
+                            {/* Title Section */}
+                            <div className="text-center mb-8">
+                                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#2A3F5F] to-[#00C1B3] dark:from-[#00E3CC] dark:to-[#A0AEC0]">
+                                    Process Management
+                                </h1>
+                                <div className="mt-4 flex items-center justify-center gap-3">
+                                    <svg
+                                        className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                    </svg>
+                                    <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                        Core Concepts & Process States
+                                    </h2>
+                                </div>
+                            </div>
 
-                    <div className="max-w-4xl mx-auto px-4 md:px-6 py-6">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700 " id='introduction'>
-
-
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
-                                </svg>
-                                Process Management
-                            </h2>
-                            <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
-                                1. Process vs Thread
-                            </h3>
-
+                            {/* Content */}
+                            <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">1. Process vs Thread</h3>
 
                             <Table className="mt-3 text-base">
                                 <TableHeader>
@@ -187,7 +340,6 @@ const OS = () => {
                                         </TableBody>
                                     ))
                                 }
-
                             </Table>
 
                             <div>
@@ -248,20 +400,32 @@ const OS = () => {
                                 </p>
                             </div>
                         </div>
+                    </section>
 
-                    </div>
-                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8 ">
-                        < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='normalisation'>
-                            {/* Section Title */}
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
-                                </svg>
-                                Thread
-                            </h2>
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="thread">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
 
+                            {/* Glow effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-[#00C1B3]/5 to-[#2A3F5F]/5 dark:from-[#00E3CC]/10 dark:to-[#0D1117]/10" />
 
-                            {/* Section Description */}
+                            {/* Title Section */}
+                            <div className="text-center mb-8">
+                                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#2A3F5F] to-[#00C1B3] dark:from-[#00E3CC] dark:to-[#A0AEC0]">
+                                    Thread
+                                </h1>
+                                <div className="mt-4 flex items-center justify-center gap-3">
+                                    <svg
+                                        className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                    </svg>
+                                    <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                        Understanding Threads
+                                    </h2>
+                                </div>
+                            </div>
+
+                            {/* Content */}
                             <p className="text-lg text-gray-600 dark:text-gray-300 leading-7">
                                 A thread is the smallest unit of execution within a process.
                             </p>
@@ -270,22 +434,20 @@ const OS = () => {
                                 {/* Heading */}
                                 <div className='space-y-2'>
                                     <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
-                                        Different between User-Level Threads and Kernel-Level Threads
+                                        Difference between User-Level Threads and Kernel-Level Threads
                                     </h3>
                                 </div>
                             </div>
 
-
+                            {/* Table */}
                             <div className='space-y-6 pt-5'>
-
                                 <div className='overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm'>
                                     <Table className='w-full'>
                                         <TableHeader>
                                             <TableRow className="bg-gray-100 dark:bg-gray-800">
                                                 <TableHead>Concept</TableHead>
                                                 <TableHead>User-Level Threads</TableHead>
-
-                                                <TableHead>	Kernel-Level Threads</TableHead>
+                                                <TableHead>Kernel-Level Threads</TableHead>
                                             </TableRow>
                                         </TableHeader>
                                         <TableBody>
@@ -308,21 +470,22 @@ const OS = () => {
                             </div>
 
                         </div>
-                    </div>
-                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='transaction&concurrency'>
+                    </section>
+
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="cpu_scheduling_algorithms">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
                             {/* Section Title */}
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
                                 CPU Scheduling Algorithms:
                             </h2>
 
-                            <div className='space-y-6 pt-5'>
-                                {/* Heading */}
-                                <div className='space-y-2'>
-                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+                            <div className="space-y-6 pt-5">
+                                {/* FCFS (First-Come, First-Served) */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
                                         1. FCFS (First-Come, First-Served):
                                     </h3>
                                     <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
@@ -330,8 +493,10 @@ const OS = () => {
                                         <li>Simple but can lead to long waiting times (convoy effect).</li>
                                     </ul>
                                 </div>
-                                <div className='space-y-2'>
-                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+
+                                {/* SJF (Shortest Job First) */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
                                         2. SJF (Shortest Job First):
                                     </h3>
                                     <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
@@ -339,8 +504,10 @@ const OS = () => {
                                         <li>Can minimize average waiting time but requires knowing process lengths in advance.</li>
                                     </ul>
                                 </div>
-                                <div className='space-y-2'>
-                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+
+                                {/* Round Robin (RR) */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
                                         3. Round Robin (RR):
                                     </h3>
                                     <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
@@ -348,8 +515,10 @@ const OS = () => {
                                         <li>Fair but can lead to high turnaround time for longer processes.</li>
                                     </ul>
                                 </div>
-                                <div className='space-y-2'>
-                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+
+                                {/* Priority Scheduling */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
                                         4. Priority Scheduling:
                                     </h3>
                                     <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
@@ -357,13 +526,14 @@ const OS = () => {
                                         <li>Can be preemptive or non-preemptive.</li>
                                     </ul>
                                 </div>
+
+                                {/* Preemptive vs Non-Preemptive Table */}
                                 <div className="space-y-2">
                                     <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Preemptive vs Non-Preemptive</h3>
                                     <Table className="w-full">
                                         <TableHeader>
                                             <TableRow className="bg-blue-50 dark:bg-blue-900/20">
-                                                <TableHead>
-                                                    Feature</TableHead>
+                                                <TableHead>Feature</TableHead>
                                                 <TableHead>Preemptive Scheduling</TableHead>
                                                 <TableHead>Non-Preemptive Scheduling</TableHead>
                                             </TableRow>
@@ -371,7 +541,7 @@ const OS = () => {
                                         <TableBody>
                                             {[
                                                 ["Definition", "The OS can interrupt a running process to switch to another.", "Once a process starts execution, it runs until completion or voluntarily yields control."],
-                                                ["Context Switching", "Frequent context switching ", "Less frequent context switching "],
+                                                ["Context Switching", "Frequent context switching", "Less frequent context switching"],
                                                 ["CPU Utilization", "Generally better CPU utilization due to rapid context switching.", "Can result in lower CPU utilization if a process is blocked or waiting for I/O."],
                                                 ["Interrupts", "Can be interrupted by the OS at any time.", "Process cannot be interrupted once it starts execution."],
                                                 ["Complexity", "More complex", "Simpler to implement"]
@@ -386,8 +556,9 @@ const OS = () => {
                                     </Table>
                                 </div>
 
-                                <div className='space-y-2'>
-                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+                                {/* Interprocess Communication (IPC) */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
                                         Interprocess Communication (IPC)
                                     </h3>
                                     <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mt-2 space-y-1">
@@ -395,13 +566,13 @@ const OS = () => {
                                     </ul>
                                 </div>
 
+                                {/* Shared Memory vs. Message Passing Table */}
                                 <div className="space-y-2">
                                     <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Shared Memory vs. Message Passing</h3>
                                     <Table className="w-full">
                                         <TableHeader>
                                             <TableRow className="bg-blue-50 dark:bg-blue-900/20">
-                                                <TableHead>
-                                                    Feature</TableHead>
+                                                <TableHead>Feature</TableHead>
                                                 <TableHead>Shared Memory</TableHead>
                                                 <TableHead>Message Passing</TableHead>
                                             </TableRow>
@@ -409,7 +580,7 @@ const OS = () => {
                                         <TableBody>
                                             {[
                                                 ["Definition", "Multiple processes can access a common region of memory.", "Processes communicate by sending messages to each other."],
-                                                ["Communication Mechanism", "Direct access to shared memory region. ", "Messages are passed via system calls or message queues."],
+                                                ["Communication Mechanism", "Direct access to shared memory region.", "Messages are passed via system calls or message queues."],
                                                 ["Speed", "Faster", "Slower"],
                                                 ["Synchronization", "Requires synchronization mechanisms", "Automatically handled by the OS or message-passing system."],
                                                 ["Ease of Use", "More complex to implement due to need for synchronization.", "Simpler and more modular but can lead to overhead."]
@@ -426,9 +597,10 @@ const OS = () => {
 
                             </div>
                         </div>
-                    </div>
-                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8 ">
-                        < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='normalisation'>
+                    </section>
+
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8 " id="deadlocks">
+                        < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" >
                             {/* Section Title */}
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -469,10 +641,10 @@ const OS = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
-                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id="normalisation">
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="memory_management">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" >
                             {/* Section Title */}
                             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -519,10 +691,10 @@ const OS = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
-                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id="file-disk-management">
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="file_system_disk_scheduling">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" >
                             {/* Section Title */}
                             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -573,8 +745,8 @@ const OS = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                    </section>
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="synchronization">
                         <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id="synchronization-concurrency">
                             {/* Section Title */}
                             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
@@ -621,9 +793,9 @@ const OS = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
-                    <div className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="microkernel_monolithic">
                         <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id="kernel-comparison">
                             {/* Section Title */}
                             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
@@ -701,7 +873,7 @@ const OS = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
                 </main>
 

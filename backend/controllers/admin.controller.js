@@ -91,7 +91,7 @@ export const logInAdmin = async (req, res) => {
         }
 
         // Find the user in the database
-        const admin = await User.findOne({ email });
+        const admin = await User.findOne({ email }).select('password role fullName email');
 
         // Check if admin exists and has the role of admin
         if (!admin || admin.role !== 'admin') {
