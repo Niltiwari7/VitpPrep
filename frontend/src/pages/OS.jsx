@@ -177,14 +177,14 @@ const OS = () => {
                     </div>
                 </div>
 
-                
+
                 <div className={`sm:hidden fixed inset-0bg-[#00C1B3] dark:bg-[#00E3CC] z-20 transition-opacity 
                                ${isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
                     onClick={toggleSidebar}
                     aria-hidden="true" />
                 <button
                     onClick={toggleSidebar}
-                    className="sm:hidden fixed top-16 right-4 bg-[#00C1B3] dark:bg-[#00E3CC] text-white p-2 rounded-full shadow-lg z-30
+                    className="sm:hidden fixed top-20 right-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white p-2 rounded-full shadow-lg z-30
                             transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300"
                     aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
                     aria-expanded={isSidebarOpen}>
@@ -192,212 +192,214 @@ const OS = () => {
                 </button>
                 <main className="sm:w-4/5 w-full ml-auto p-6 mt-20">
 
-                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='introduction'>
+                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id="introduction">
                         <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
-
-                            {/* Glow effect */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-[#00C1B3]/5 to-[#2A3F5F]/5 dark:from-[#00E3CC]/10 dark:to-[#0D1117]/10" />
-
                             {/* Title Section */}
-                            <div className="text-center mb-8">
+                            <div className="text-center mb-4">
                                 <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#2A3F5F] to-[#00C1B3] dark:from-[#00E3CC] dark:to-[#A0AEC0]">
-                                    Operating System Fundamentals
+                                    Operating System
                                 </h1>
-                                <div className="mt-4 flex items-center justify-center gap-3">
-                                    <svg
-                                        className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
-                                    // ... keep your existing SVG paths
-                                    ></svg>
-                                    <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
-                                        Core Concepts & Architecture
-                                    </h2>
-                                </div>
+
                             </div>
 
                             {/* Content */}
-                            <p className="mt-4 text-lg leading-relaxed text-[#2A3F5F] dark:text-[#A0AEC0] font-medium">
-                                An Operating System (OS) serves as the fundamental bridge between
-                                <span className="text-[#00C1B3] dark:text-[#00E3CC] font-semibold"> hardware resources </span>
-                                (CPU, memory, storage) and
-                                <span className="text-[#00C1B3] dark:text-[#00E3CC] font-semibold"> user applications</span>,
-                                providing essential services for efficient computation management.
-                            </p>
-
-                            {/* Enhanced Table */}
-                            <div className="mt-8 flow-root">
-                                <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                    <div className="inline-block min-w-full align-middle">
-                                        <table className="min-w-full divide-y divide-[#00C1B3]/20 dark:divide-[#00E3CC]/20">
-                                            <thead className="bg-gradient-to-r from-[#00C1B3]/10 to-[#2A3F5F]/10 dark:from-[#00E3CC]/10 dark:to-[#0D1117]/10">
-                                                <tr>
-                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">
-                                                        OS Type
-                                                    </th>
-                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">
-                                                        Architecture
-                                                    </th>
-                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider">
-                                                        Use Cases
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody className="divide-y divide-[#00C1B3]/10 dark:divide-[#00E3CC]/10 bg-white/50 dark:bg-[#1A202C]/50">
-                                                {[
-                                                    ['Single-Task', 'Sequential Processing', 'Embedded Systems, IoT'],
-                                                    ['Multi-Tasking', 'Time-Sharing Scheduler', 'Desktop Environments'],
-                                                    ['Real-Time', 'Deterministic Processing', 'Industrial Control Systems'],
-                                                    ['Distributed', 'Cluster Management', 'Cloud Computing'],
-                                                    ['Mobile', 'Power-Optimized', 'Smartphones/Tablets']
-                                                ].map(([type, arch, useCase], index) => (
-                                                    <tr
-                                                        key={index}
-                                                        className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors"
-                                                    >
-                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
-                                                            {type}
-                                                        </td>
-                                                        <td className="px-6 py-4 text-sm text-[#2A3F5F] dark:text-[#A0AEC0]">
-                                                            {arch}
-                                                        </td>
-                                                        <td className="px-6 py-4 text-sm text-[#00C1B3] dark:text-[#00E3CC] font-medium">
-                                                            {useCase}
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
+                            <div className="space-y-6 pt-5">
+                                <div className="space-y-2">
+                                    <div className="mt-4 flex gap-3 ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                                            <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                        </svg>
+                                        <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                            Core Concepts & Architecture
+                                        </h2>
                                     </div>
-                                </div>
-                            </div>
+                                    <p className="mt-4 text-lg leading-relaxed text-[#2A3F5F] dark:text-[#A0AEC0] font-medium">
+                                        An Operating System (OS) serves as the fundamental bridge between
+                                        <span className="text-[#00C1B3] dark:text-[#00E3CC] font-semibold"> hardware resources </span>
+                                        (CPU, memory, storage) and
+                                        <span className="text-[#00C1B3] dark:text-[#00E3CC] font-semibold"> user applications</span>,
+                                        providing essential services for efficient computation management.
+                                    </p>
 
-                            {/* Concept Visualization */}
-                            <div className="mt-8 p-6 bg-white dark:bg-[#1A202C] rounded-lg border border-[#00C1B3]/20">
-                                <h4 className="text-lg font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] mb-4">
-                                    OS Architecture Layers
-                                </h4>
-                                <div className="flex flex-col space-y-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-4 h-4 bg-[#00C1B3] rounded-full" />
-                                        <span className="text-sm text-[#2A3F5F] dark:text-[#A0AEC0]">
-                                            User Applications → System Libraries → Kernel → Hardware
-                                        </span>
+                                    <div className="space-y-6 pt-5">
+                                        <div className="overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm ">
+                                            <Table className="w-full">
+                                                <TableHeader className="bg-gradient-to-r from-[#00C1B3]/10 to-[#2A3F5F]/10 dark:from-[#00E3CC]/10 dark:to-[#0D1117]/10">
+                                                    <TableRow>
+                                                        <TableHead className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">
+                                                            OS Type
+                                                        </TableHead>
+                                                        <TableHead className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">
+                                                            Architecture
+                                                        </TableHead>
+                                                        <TableHeader className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider">
+                                                            Use Cases
+                                                        </TableHeader>
+                                                    </TableRow>
+                                                </TableHeader>
+                                                <TableBody className="divide-y divide-[#00C1B3]/10 dark:divide-[#00E3CC]/10 bg-white/50 dark:bg-[#1A202C]/50">
+                                                    {[
+                                                        ['Single-Task', 'Sequential Processing', 'Embedded Systems, IoT'],
+                                                        ['Multi-Tasking', 'Time-Sharing Scheduler', 'Desktop Environments'],
+                                                        ['Real-Time', 'Deterministic Processing', 'Industrial Control Systems'],
+                                                        ['Distributed', 'Cluster Management', 'Cloud Computing'],
+                                                        ['Mobile', 'Power-Optimized', 'Smartphones/Tablets']
+                                                    ].map(([type, arch, useCase], index) => (
+                                                        <TableRow
+                                                            key={index}
+                                                            className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors"
+                                                        >
+                                                            <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                                {type}
+                                                            </TableCell>
+                                                            <TableCell className="px-6 py-4 text-sm text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                                {arch}
+                                                            </TableCell>
+                                                            <TableCell className="px-6 py-4 text-sm text-[#00C1B3] dark:text-[#00E3CC] font-medium">
+                                                                {useCase}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+
+                                        </div>
                                     </div>
-                                    <div className="h-1 bg-gradient-to-r from-[#00C1B3] via-[#2A3F5F] to-[#00C1B3] rounded-full" />
+
+
+                                    {/* Concept Visualization */}
+                                    <div className="mt-8 p-6 bg-white dark:bg-[#1A202C] rounded-lg border border-[#00C1B3]/20">
+                                        <h4 className="text-lg font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] mb-4">
+                                            OS Architecture Layers
+                                        </h4>
+                                        <div className="flex flex-col space-y-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-4 h-4 bg-[#00C1B3] rounded-full" />
+                                                <span className="text-sm text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    User Applications → System Libraries → Kernel → Hardware
+                                                </span>
+                                            </div>
+                                            <div className="h-1 bg-gradient-to-r from-[#00C1B3] via-[#2A3F5F] to-[#00C1B3] rounded-full" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </section>
+
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id="process_management">
                         <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
 
-                            {/* Glow effect */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-[#00C1B3]/5 to-[#2A3F5F]/5 dark:from-[#00E3CC]/10 dark:to-[#0D1117]/10" />
 
                             {/* Title Section */}
-                            <div className="text-center mb-8">
-                                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#2A3F5F] to-[#00C1B3] dark:from-[#00E3CC] dark:to-[#A0AEC0]">
-                                    Process Management
-                                </h1>
-                                <div className="mt-4 flex items-center justify-center gap-3">
-                                    <svg
-                                        className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
-                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
-                                    </svg>
-                                    <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
-                                        Core Concepts & Process States
+                            <div >
+
+                                <div className="mt-4 flex gap-2">
+
+                                    <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                        <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                        </svg>
+                                        <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                            Core Concepts & Process States:
+                                        </h2>
                                     </h2>
                                 </div>
                             </div>
 
                             {/* Content */}
-                            <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">1. Process vs Thread</h3>
+                            <div className="space-y-6 pt-5">
+                                <div className="space-y-w">
+                                    <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">1. Process vs Thread</h3>
 
-                            <Table className="mt-3 text-base">
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Feature</TableHead>
-                                        <TableHead>Process</TableHead>
-                                        <TableHead>Thread</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-
-                                {
-                                    [
-                                        ['Defination', 'A process is an independent program in execution with its own memory and resources.', 'A thread is a smaller unit of execution within a process, sharing the same memory and resources.'],
-                                        ['Memory', 'Each process has its own separate memory space.', 'Threads within the same process share the same memory space.'],
-                                        ['Resource Allocation', 'Processes require separate resources (CPU, memory, etc.) for execution.', 'Threads share resources (like CPU, memory) of their parent process.'],
-                                        ['Creation Time', 'Creating a process takes more time because it requires its own resources.', 'Creating a thread is faster because it shares resources with other threads in the same process.'],
-                                        ['Execution', 'Each process executes independently.', 'Multiple threads in a process can run concurrently and share the same address space.'],
-                                        ['Fault Tolerance', 'If a process crashes, it does not affect other processes.', 'If one thread crashes, it could potentially crash the entire process, affecting all other threads.']
-                                    ].map(([type, desc, example], index) => (
-                                        <TableBody key={index}>
+                                    <Table className="mt-3 text-base">
+                                        <TableHeader>
                                             <TableRow>
-                                                <TableCell><strong>{type}</strong></TableCell>
-                                                <TableCell>{desc}</TableCell>
-                                                <TableCell>{example}</TableCell>
+                                                <TableHead>Feature</TableHead>
+                                                <TableHead>Process</TableHead>
+                                                <TableHead>Thread</TableHead>
                                             </TableRow>
-                                        </TableBody>
-                                    ))
-                                }
-                            </Table>
+                                        </TableHeader>
 
-                            <div>
-                                <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
-                                    2. Process States & Process Control Block (PCB)
-                                </h3>
+                                        {
+                                            [
+                                                ['Defination', 'A process is an independent program in execution with its own memory and resources.', 'A thread is a smaller unit of execution within a process, sharing the same memory and resources.'],
+                                                ['Memory', 'Each process has its own separate memory space.', 'Threads within the same process share the same memory space.'],
+                                                ['Resource Allocation', 'Processes require separate resources (CPU, memory, etc.) for execution.', 'Threads share resources (like CPU, memory) of their parent process.'],
+                                                ['Creation Time', 'Creating a process takes more time because it requires its own resources.', 'Creating a thread is faster because it shares resources with other threads in the same process.'],
+                                                ['Execution', 'Each process executes independently.', 'Multiple threads in a process can run concurrently and share the same address space.'],
+                                                ['Fault Tolerance', 'If a process crashes, it does not affect other processes.', 'If one thread crashes, it could potentially crash the entire process, affecting all other threads.']
+                                            ].map(([type, desc, example], index) => (
+                                                <TableBody key={index}>
+                                                    <TableRow>
+                                                        <TableCell><strong>{type}</strong></TableCell>
+                                                        <TableCell>{desc}</TableCell>
+                                                        <TableCell>{example}</TableCell>
+                                                    </TableRow>
+                                                </TableBody>
+                                            ))
+                                        }
+                                    </Table>
 
-                                <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">Process States:</h3>
-                                <p className="text-gray-700 dark:text-gray-300">
-                                    A process in an operating system can exist in various states throughout its life cycle. These states help the operating system manage and track processes efficiently. The main process states are:
-                                </p>
+                                    <div>
+                                        <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                            2. Process States & Process Control Block (PCB)
+                                        </h3>
 
-                                <ul className="list-disc ml-5 text-gray-700 dark:text-gray-300">
-                                    <li><strong>New:</strong> The process is being created.</li>
-                                    <li><strong>Ready:</strong> The process is waiting to be assigned to a processor. It is ready for execution but not currently running.</li>
-                                    <li><strong>Running:</strong> The process is currently being executed by the CPU.</li>
-                                    <li><strong>Waiting (Blocked):</strong> The process is waiting for an event or resource, like I/O completion.</li>
-                                    <li><strong>Terminated:</strong> The process has finished execution and is now in the terminated state, ready to be cleaned up by the operating system.</li>
-                                </ul>
+                                        <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">Process States:</h3>
+                                        <p className="text-gray-700 dark:text-gray-300">
+                                            A process in an operating system can exist in various states throughout its life cycle. These states help the operating system manage and track processes efficiently. The main process states are:
+                                        </p>
 
-                                <p className="text-gray-700 dark:text-gray-300 mt-4">
-                                    These states help the operating system efficiently manage multitasking and process scheduling.
-                                </p>
+                                        <ul className="list-disc ml-5 text-gray-700 dark:text-gray-300">
+                                            <li><strong>New:</strong> The process is being created.</li>
+                                            <li><strong>Ready:</strong> The process is waiting to be assigned to a processor. It is ready for execution but not currently running.</li>
+                                            <li><strong>Running:</strong> The process is currently being executed by the CPU.</li>
+                                            <li><strong>Waiting (Blocked):</strong> The process is waiting for an event or resource, like I/O completion.</li>
+                                            <li><strong>Terminated:</strong> The process has finished execution and is now in the terminated state, ready to be cleaned up by the operating system.</li>
+                                        </ul>
 
-                                <figure className="relative">
-                                    <img
-                                        src="https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/images/Chapter3/3_02_ProcessState.jpg"
-                                        alt="Process states"
-                                        className="object-cover w-full pt-5 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-                                    />
-                                    <figcaption className="absolute bottom-4 left-4 text-white bg-black bg-opacity-50 px-3 py-2 rounded-md text-lg">
-                                        States of Process
-                                    </figcaption>
-                                </figure>
+                                        <p className="text-gray-700 dark:text-gray-300 mt-4">
+                                            These states help the operating system efficiently manage multitasking and process scheduling.
+                                        </p>
 
-                                <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">3. Process Control Block (PCB):</h3>
-                                <p className="text-gray-700 dark:text-gray-300">
-                                    The Process Control Block (PCB) is a data structure used by the operating system to store all the information needed to manage a process. It contains key details about the process, allowing the OS to track its state, resources, and execution context.
-                                </p>
+                                        <figure className="relative">
+                                            <img
+                                                src="https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/images/Chapter3/3_02_ProcessState.jpg"
+                                                alt="Process states"
+                                                className="object-cover w-full pt-5 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                                            />
+                                            <figcaption className="absolute bottom-4 left-4 text-white bg-black bg-opacity-50 px-3 py-2 rounded-md text-lg">
+                                                States of Process
+                                            </figcaption>
+                                        </figure>
 
-                                <p className="text-gray-700 dark:text-gray-300 mt-4">
-                                    A PCB typically includes the following information:
-                                </p>
+                                        <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">3. Process Control Block (PCB):</h3>
+                                        <p className="text-gray-700 dark:text-gray-300">
+                                            The Process Control Block (PCB) is a data structure used by the operating system to store all the information needed to manage a process. It contains key details about the process, allowing the OS to track its state, resources, and execution context.
+                                        </p>
 
-                                <ul className="list-disc ml-5 text-gray-700 dark:text-gray-300">
-                                    <li><strong>Process ID (PID):</strong> A unique identifier for the process.</li>
-                                    <li><strong>Process State:</strong> The current state of the process (e.g., running, ready, blocked).</li>
-                                    <li><strong>Program Counter (PC):</strong> The address of the next instruction to execute.</li>
-                                    <li><strong>CPU Registers:</strong> Values of the CPU registers at the time of the last execution.</li>
-                                    <li><strong>Memory Management Info:</strong> Information about the memory allocated to the process.</li>
-                                    <li><strong>Scheduling Info:</strong> Process priority and scheduling details.</li>
-                                    <li><strong>I/O Status Info:</strong> Information about I/O operations being performed by the process.</li>
-                                    <li><strong>Accounting Info:</strong> Data like CPU time used and process creation time.</li>
-                                </ul>
+                                        <p className="text-gray-700 dark:text-gray-300 mt-4">
+                                            A PCB typically includes the following information:
+                                        </p>
 
-                                <p className="text-gray-700 dark:text-gray-300 mt-4">
-                                    The PCB is essential for process management in modern operating systems. It ensures that each process can be paused and resumed correctly during context switches, making multitasking possible.
-                                </p>
+                                        <ul className="list-disc ml-5 text-gray-700 dark:text-gray-300">
+                                            <li><strong>Process ID (PID):</strong> A unique identifier for the process.</li>
+                                            <li><strong>Process State:</strong> The current state of the process (e.g., running, ready, blocked).</li>
+                                            <li><strong>Program Counter (PC):</strong> The address of the next instruction to execute.</li>
+                                            <li><strong>CPU Registers:</strong> Values of the CPU registers at the time of the last execution.</li>
+                                            <li><strong>Memory Management Info:</strong> Information about the memory allocated to the process.</li>
+                                            <li><strong>Scheduling Info:</strong> Process priority and scheduling details.</li>
+                                            <li><strong>I/O Status Info:</strong> Information about I/O operations being performed by the process.</li>
+                                            <li><strong>Accounting Info:</strong> Data like CPU time used and process creation time.</li>
+                                        </ul>
+
+                                        <p className="text-gray-700 dark:text-gray-300 mt-4">
+                                            The PCB is essential for process management in modern operating systems. It ensures that each process can be paused and resumed correctly during context switches, making multitasking possible.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -405,81 +407,79 @@ const OS = () => {
                     <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="thread">
                         <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
 
-                            {/* Glow effect */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-[#00C1B3]/5 to-[#2A3F5F]/5 dark:from-[#00E3CC]/10 dark:to-[#0D1117]/10" />
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    Threads:
+                                </h2>
+                            </h2>
 
-                            {/* Title Section */}
-                            <div className="text-center mb-8">
-                                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#2A3F5F] to-[#00C1B3] dark:from-[#00E3CC] dark:to-[#A0AEC0]">
-                                    Thread
-                                </h1>
-                                <div className="mt-4 flex items-center justify-center gap-3">
-                                    <svg
-                                        className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
-                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
-                                    </svg>
-                                    <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
-                                        Understanding Threads
-                                    </h2>
+                            <div className="space-y-6 pt-5">
+                                {/* FCFS (First-Come, First-Served) */}
+                                <div className="space-y-2">
+
+                                    <p className="text-lg text-gray-600 dark:text-gray-300 leading-7">
+                                        A thread is the smallest unit of execution within a process.
+                                    </p>
+
+                                    <div className='space-y-6 pt-5'>
+                                        {/* Heading */}
+                                        <div className='space-y-2'>
+                                            <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
+                                                Difference between User-Level Threads and Kernel-Level Threads
+                                            </h3>
+                                        </div>
+                                    </div>
+
+                                    {/* Table */}
+                                    <div className='space-y-6 pt-5'>
+                                        <div className='overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm'>
+                                            <Table className='w-full'>
+                                                <TableHeader>
+                                                    <TableRow className="bg-gray-100 dark:bg-gray-800">
+                                                        <TableHead>Concept</TableHead>
+                                                        <TableHead>User-Level Threads</TableHead>
+                                                        <TableHead>Kernel-Level Threads</TableHead>
+                                                    </TableRow>
+                                                </TableHeader>
+                                                <TableBody>
+                                                    {[
+                                                        ['Definition', 'Threads managed by user-level libraries, without OS intervention.', 'Threads managed and scheduled by the operating system kernel.'],
+                                                        ['Performance', 'Generally faster since there is no need for kernel intervention.', 'Slower due to the overhead of kernel context switching.'],
+                                                        ['Context Switching', 'Context switching happens in user space (no kernel involvement).', 'Context switching involves the kernel and can be slower.'],
+                                                        ['Portability', 'More portable across systems because they don’t rely on OS kernel.', 'Less portable since they depend on kernel-specific support.'],
+                                                        ['Complexity', 'Easier to implement because no kernel intervention is needed.', 'More complex to implement as the kernel must manage threads.']
+                                                    ].map(([concept, user, kernel], index) => (
+                                                        <TableRow key={index} className='hover:bg-gray-50 dark:hover:bg-gray-900/50'>
+                                                            <TableCell>{concept}</TableCell>
+                                                            <TableCell>{user}</TableCell>
+                                                            <TableCell>{kernel}</TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-                            {/* Content */}
-                            <p className="text-lg text-gray-600 dark:text-gray-300 leading-7">
-                                A thread is the smallest unit of execution within a process.
-                            </p>
-
-                            <div className='space-y-6 pt-5'>
-                                {/* Heading */}
-                                <div className='space-y-2'>
-                                    <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
-                                        Difference between User-Level Threads and Kernel-Level Threads
-                                    </h3>
-                                </div>
-                            </div>
-
-                            {/* Table */}
-                            <div className='space-y-6 pt-5'>
-                                <div className='overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm'>
-                                    <Table className='w-full'>
-                                        <TableHeader>
-                                            <TableRow className="bg-gray-100 dark:bg-gray-800">
-                                                <TableHead>Concept</TableHead>
-                                                <TableHead>User-Level Threads</TableHead>
-                                                <TableHead>Kernel-Level Threads</TableHead>
-                                            </TableRow>
-                                        </TableHeader>
-                                        <TableBody>
-                                            {[
-                                                ['Definition', 'Threads managed by user-level libraries, without OS intervention.', 'Threads managed and scheduled by the operating system kernel.'],
-                                                ['Performance', 'Generally faster since there is no need for kernel intervention.', 'Slower due to the overhead of kernel context switching.'],
-                                                ['Context Switching', 'Context switching happens in user space (no kernel involvement).', 'Context switching involves the kernel and can be slower.'],
-                                                ['Portability', 'More portable across systems because they don’t rely on OS kernel.', 'Less portable since they depend on kernel-specific support.'],
-                                                ['Complexity', 'Easier to implement because no kernel intervention is needed.', 'More complex to implement as the kernel must manage threads.']
-                                            ].map(([concept, user, kernel], index) => (
-                                                <TableRow key={index} className='hover:bg-gray-50 dark:hover:bg-gray-900/50'>
-                                                    <TableCell>{concept}</TableCell>
-                                                    <TableCell>{user}</TableCell>
-                                                    <TableCell>{kernel}</TableCell>
-                                                </TableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                </div>
-                            </div>
-
                         </div>
                     </section>
 
                     <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="cpu_scheduling_algorithms">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
+
                             {/* Section Title */}
                             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
-                                CPU Scheduling Algorithms:
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    CPU Scheduling Algorithms:
+                                </h2>
                             </h2>
 
                             <div className="space-y-6 pt-5">
@@ -599,13 +599,15 @@ const OS = () => {
                         </div>
                     </section>
 
+
                     <section className="max-w-4xl mx-auto px-6 md:px-8 py-8 " id="deadlocks">
-                        < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" >
+                        < div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden0" >
                             {/* Section Title */}
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
+
                                 Deadlocks
                             </h2>
 
@@ -644,10 +646,10 @@ const OS = () => {
                     </section>
 
                     <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="memory_management">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" >
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden" >
                             {/* Section Title */}
                             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
                                 Memory Management
@@ -694,10 +696,10 @@ const OS = () => {
                     </section>
 
                     <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="file_system_disk_scheduling">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" >
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden" >
                             {/* Section Title */}
                             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
                                 File System & Disk Scheduling
@@ -747,10 +749,10 @@ const OS = () => {
                         </div>
                     </section>
                     <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="synchronization">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id="synchronization-concurrency">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden" id="synchronization-concurrency">
                             {/* Section Title */}
                             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
                                 Synchronization & Concurrency Control
@@ -796,10 +798,10 @@ const OS = () => {
                     </section>
 
                     <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="microkernel_monolithic">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id="kernel-comparison">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden" id="kernel-comparison">
                             {/* Section Title */}
                             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
                                 Microkernel vs. Monolithic Kernel
@@ -818,37 +820,37 @@ const OS = () => {
 
                                     {/* Differences */}
                                     <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Differences</h4>
-                                    <table className="min-w-full text-left table-auto">
-                                        <thead>
-                                            <tr>
-                                                <th className="px-4 py-2 border">Feature</th>
-                                                <th className="px-4 py-2 border">Microkernel</th>
-                                                <th className="px-4 py-2 border">Monolithic Kernel</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td className="px-4 py-2 border">Architecture</td>
-                                                <td className="px-4 py-2 border">Minimal, only essential services in kernel space</td>
-                                                <td className="px-4 py-2 border">All services (drivers, file systems) in kernel space</td>
-                                            </tr>
-                                            <tr>
-                                                <td className="px-4 py-2 border">Performance</td>
-                                                <td className="px-4 py-2 border">Slower due to communication overhead between user and kernel space</td>
-                                                <td className="px-4 py-2 border">Faster as everything is in kernel space</td>
-                                            </tr>
-                                            <tr>
-                                                <td className="px-4 py-2 border">Fault Isolation</td>
-                                                <td className="px-4 py-2 border">Better fault tolerance, as services run in user space</td>
-                                                <td className="px-4 py-2 border">Less fault tolerance, as crashes in the kernel affect the whole system</td>
-                                            </tr>
-                                            <tr>
-                                                <td className="px-4 py-2 border">Modularity</td>
-                                                <td className="px-4 py-2 border">Highly modular, easier to add/remove services</td>
-                                                <td className="px-4 py-2 border">Less modular, all services tightly integrated</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <Table className="min-w-full text-left table-auto">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableHead className="px-4 py-2 border">Feature</TableHead>
+                                                <TableHead className="px-4 py-2 border">Microkernel</TableHead>
+                                                <TableHead className="px-4 py-2 border">Monolithic Kernel</TableHead>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            <TableRow>
+                                                <TableCell className="px-4 py-2 border">Architecture</TableCell>
+                                                <TableCell className="px-4 py-2 border">Minimal, only essential services in kernel space</TableCell>
+                                                <TableCell className="px-4 py-2 border">All services (drivers, file systems) in kernel space</TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="px-4 py-2 border">Performance</TableCell>
+                                                <TableCell className="px-4 py-2 border">Slower due to communication overhead between user and kernel space</TableCell>
+                                                <TableCell className="px-4 py-2 border">Faster as everything is in kernel space</TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="px-4 py-2 border">Fault Isolation</TableCell>
+                                                <TableCell className="px-4 py-2 border">Better fault tolerance, as services run in user space</TableCell>
+                                                <TableCell className="px-4 py-2 border">Less fault tolerance, as crashes in the kernel affect the whole system</TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="px-4 py-2 border">Modularity</TableCell>
+                                                <TableCell className="px-4 py-2 border">Highly modular, easier to add/remove services</TableCell>
+                                                <TableCell className="px-4 py-2 border">Less modular, all services tightly integrated</TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
 
                                     {/* Advantages */}
                                     <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Advantages</h4>

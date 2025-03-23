@@ -31,59 +31,59 @@ const DBMS = () => {
     const toggleTheme = () => {
         dispatch(setDarkMode(!darkMode));
     }
-   
+
 
     const links = [
         {
-          id: '#introduction',
-          text: 'Introduction',
-          color: 'blue'
+            id: '#introduction',
+            text: 'Introduction',
+            color: 'blue'
         },
         {
-          id: '#key',
-          text: 'Types of Keys in DBMS',
-          color: 'red'
+            id: '#key',
+            text: 'Types of Keys in DBMS',
+            color: 'red'
         },
         {
-          id: '#er_model',
-          text: 'ER Model (Entity-Relationship Model)',
-          color: 'green'
+            id: '#er_model',
+            text: 'ER Model (Entity-Relationship Model)',
+            color: 'green'
         },
         {
-          id: '#normalisation',
-          text: 'Normalisation',
-          color: 'yellow'
+            id: '#normalisation',
+            text: 'Normalisation',
+            color: 'yellow'
         },
         {
-          id: '#joins',
-          text: 'SQL Joins',
-          color: 'pink'
+            id: '#joins',
+            text: 'SQL Joins',
+            color: 'pink'
         },
         {
-          id: '#view_indexing',
-          text: 'View & Indexing',
-          color: 'orange'
+            id: '#view_indexing',
+            text: 'View & Indexing',
+            color: 'orange'
         },
         {
-          id: '#stored_procedures_triggers',
-          text: 'Stored Procedures & Triggers',
-          color: 'teal'
+            id: '#stored_procedures_triggers',
+            text: 'Stored Procedures & Triggers',
+            color: 'teal'
         },
         {
-          id: '#transaction_concurrency',
-          text: 'Transaction Management & Concurrency Control',
-          color: 'indigo'
+            id: '#transaction_concurrency',
+            text: 'Transaction Management & Concurrency Control',
+            color: 'indigo'
         },
         {
-          id: '#locks_serializability',
-          text: 'Locks in DBMS & Serializability',
-          color: 'gray'
+            id: '#locks_serializability',
+            text: 'Locks in DBMS & Serializability',
+            color: 'gray'
         }
-      ];
+    ];
 
-      const [currentSection, setCurrentSection] = useState('#oops_desc');
+    const [currentSection, setCurrentSection] = useState('#oops_desc');
 
-      const handleLinkClick = (sectionId) => {
+    const handleLinkClick = (sectionId) => {
         setCurrentSection(sectionId);
 
         toggleSidebar();
@@ -102,265 +102,363 @@ const DBMS = () => {
 
     return (
         <div className='gap-5'>
-            <header className='w-full flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 shadow-md fixed top-0 left-0 right-0 z-10'>
-                <Link to='/dashboard' className='flex items-center text-blue-600 dark:text-yellow-500 hover:underline'>
-                    <AiOutlineArrowLeft size={20} />
-                    <span className='ml-2'>Back To Profile</span>
+            <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-lg fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/20 dark:border-[#00E3CC]/20">
+                {/* Back Link */}
+                <Link
+                    to='/dashboard'
+                    className="flex items-center text-[#00C1B3] dark:text-[#00E3CC] hover:text-white dark:hover:text-white transition-colors duration-300 group"
+                >
+                    <AiOutlineArrowLeft
+                        size={20}
+                        className="group-hover:-translate-x-1 transition-transform"
+                    />
+                    <span className="ml-2 font-medium">Back to Dashboard</span>
                 </Link>
 
-                <div className='flex items-center gap-4'>
+                {/* Right Section */}
+                <div className="flex items-center gap-4">
+                    {/* Theme Toggle */}
                     <button
-                        aria-label='Toggle theme'
+                        aria-label="Toggle Theme"
                         onClick={toggleTheme}
-                        className='p-2 bg-blue-600 dark:bg-yellow-500 text-white rounded-full shadow hover:scale-105 transition'
+                        className="p-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                     >
-                        {darkMode ? <FaMoon size={18} /> : <FaSun size={18} />}
+                        {darkMode ? (
+                            <FaMoon size={18} className="hover:rotate-12 transition-transform" />
+                        ) : (
+                            <FaSun size={18} className="hover:rotate-12 transition-transform" />
+                        )}
                     </button>
 
-                    {
-                        user?.imageUrl && (
-                            <img className='w-10 h-10 rounded-full object-cover shadow-md'
+                    {/* Profile Image */}
+                    {user?.imageUrl && (
+                        <div className="relative group">
+                            <img
+                                className="w-10 h-10 rounded-full object-cover border-2 border-[#00C1B3] dark:border-[#00E3CC] hover:border-white cursor-pointer transition-all"
                                 src={user.imageUrl}
-                                alt='Profile'
+                                alt="Profile"
                             />
-                        )
-                    }
+                            <div className="absolute inset-0 border-2 border-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
+                    )}
                 </div>
             </header>
 
             <div
-                className='flex min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100'
+                className='flex min-h-screen 
+               bg-gradient-to-b from-[#F8F9FA] to-[#F1F3F5]
+               dark:bg-[#0D1117]
+               text-[#2A3F5F] dark:text-[#A0AEC0]
+               transition-all duration-300 ease-in-out'
             >
 
-                  <div className={`bg-white dark:bg-gray-900 mt-[60px] p-6 w-[60%] sm:w-[20%] fixed min-h-screen shadow-lg rounded-lg 
-                                dark:text-white text-black transition-all duration-300 ease-in-out transform
-                                ${isSidebarOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"} 
-                                z-30 overflow-y-auto`}
-                                    role="navigation"
-                                    aria-label="Main navigation">
-                                    <h3 className="text-center text-lg font-semibold pb-4 border-b border-gray-300 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-900">
-                                        Content
-                                    </h3>
-                
-                                    <div className="flex flex-col gap-2 mt-4">
-                                        {links.map((link) => (
-                                            <a
-                                                key={link.id}
-                                                href={link.href}
-                                                onClick={() => handleLinkClick(link.id)}
-                                                className={`block px-4 py-2 rounded-md transition-all duration-200
-                                           ${currentSection === link.id
-                                                        ? 'bg-blue-500 text-white dark:bg-blue-600'
-                                                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'}
-                                           hover:pl-6 pointer`}
-                                                aria-current={currentSection === link.id ? "page" : undefined}>
-                                                {link.text}
-                                            </a>
-                                        ))}
-                                    </div>
-                                </div>
-                
-                                {/* Backdrop for mobile */}
-                                <div className={`sm:hidden fixed inset-0 bg-black/50 z-20 transition-opacity 
-                                ${isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-                                    onClick={toggleSidebar}
-                                    aria-hidden="true" />
-                
-                                {/* Toggle Sidebar Button */}
-                                <button
-                                    onClick={toggleSidebar}
-                                    className="sm:hidden fixed top-16 right-4 bg-blue-600 dark:bg-yellow-500 text-white p-2 rounded-full shadow-lg z-30
-                             transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                    aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
-                                    aria-expanded={isSidebarOpen}>
-                                    {isSidebarOpen ? <AiOutlineClose size={24} /> : <AiOutlineBars size={24} />}
-                                </button>
+                <div className={`bg-[#2A3F5F] dark:bg-[#0D1117] mt-[60px] p-6 w-[60%] sm:w-[20%] fixed min-h-screen shadow-xl rounded-r-lg 
+                text-gray-100 transition-all duration-300 ease-in-out transform
+                ${isSidebarOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"} 
+                z-30 overflow-y-auto border-r border-[#00C1B3]/20 dark:border-[#00E3CC]/20`}
+                    role="navigation"
+                    aria-label="Main navigation">
+                    <h3 className="text-center text-lg font-semibold pb-4 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30 sticky top-0 bg-[#2A3F5F] dark:bg-[#0D1117] text-white">
+                        Content
+                    </h3>
+
+                    <div className="flex flex-col gap-2 mt-4">
+                        {links.map((link) => (
+                            <a
+                                key={link.id}
+                                href={link.href}
+                                onClick={() => handleLinkClick(link.id)}
+                                className={`block px-4 py-2 rounded-md transition-all duration-300
+                           ${currentSection === link.id
+                                        ? 'bg-[#00C1B3] text-white dark:bg-[#00E3CC] dark:text-[#0D1117]'
+                                        : 'text-gray-300 dark:text-gray-400 hover:bg-[#00C1B3]/20 dark:hover:bg-[#00E3CC]/20'}
+                           hover:pl-6 font-medium`}
+                                aria-current={currentSection === link.id ? "page" : undefined}>
+                                {link.text}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Backdrop for mobile */}
+                <div className={`sm:hidden fixed inset-0bg-[#00C1B3] dark:bg-[#00E3CC] z-20 transition-opacity 
+                               ${isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+                    onClick={toggleSidebar}
+                    aria-hidden="true" />
+                <button
+                    onClick={toggleSidebar}
+                    className="sm:hidden fixed top-20 right-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white p-2 rounded-full shadow-lg z-30
+                            transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
+                    aria-expanded={isSidebarOpen}>
+                    {isSidebarOpen ? <AiOutlineClose size={24} /> : <AiOutlineBars size={24} />}
+                </button>
                 <main className='sm:w-4/5 w-full ml-auto p-6 mt-20'>
 
-                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700 " id='introduction'>
+                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='introduction'>
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden" >
 
                             {/* Title */}
-                            <h1 className="text-center text-2xl font-bold text-blue-600 dark:text-yellow-500">
-                                Database Management System
-                            </h1>
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
-                                </svg>
-                                Introduction
-                            </h2>
-                            <p className="mt-2 text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+                            <div className="text-center mb-4">
+                                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#2A3F5F] to-[#00C1B3] dark:from-[#00E3CC] dark:to-[#A0AEC0]">
+                                    Database Management System
+                                </h1>
 
-                                A Database Management System (DBMS) is software that allows users to create, manage, and manipulate databases efficiently. It ensures data consistency, security, and integrity while supporting multiple users simultaneously. Examples: MySQL, PostgreSQL, MongoDB, Oracle, etc.
+                            </div>
+                            <div className='space-y-6 pt-5'>
+                                <div className='space-y-2' >
 
-                            </p>
+                                    <div className="mt-4 flex gap-3 ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                                            <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                        </svg>
+                                        <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                            Introduction
+                                        </h2>
+                                    </div>
 
+                                    <p className="mt-2 text-base text-gray-700 dark:text-gray-300 leading-relaxed">
 
-                            <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
-                                Difference Between File System and DBMS:
-                            </h3>
+                                        A Database Management System (DBMS) is software that allows users to create, manage, and manipulate databases efficiently. It ensures data consistency, security, and integrity while supporting multiple users simultaneously. Examples: MySQL, PostgreSQL, MongoDB, Oracle, etc.
 
-
-                            <Table className="mt-3 text-base">
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Feature</TableHead>
-                                        <TableHead>File System 📂</TableHead>
-                                        <TableHead>DBMS 🗃️</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell><strong>Data Storage	</strong></TableCell>
-                                        <TableCell>Data is stored in separate files.</TableCell>
-                                        <TableCell>Data is stored in structured databases.</TableCell>
-                                    </TableRow>
+                                    </p>
 
 
-                                    <TableRow>
-                                        <TableCell><strong>Data Redundancy</strong></TableCell>
-                                        <TableCell>High (same data may be stored multiple times).</TableCell>
-                                        <TableCell>Low (data is normalized and managed efficiently).</TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell><strong>Data Integrity</strong></TableCell>
-                                        <TableCell>Difficult to maintain.</TableCell>
-                                        <TableCell>Ensures integrity via constraints (Primary Key, Foreign Key).</TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell><strong>Security</strong></TableCell>
-                                        <TableCell>Basic security, difficult to control access.</TableCell>
-                                        <TableCell>High security with authentication and role-based access.
-                                        </TableCell>
-                                    </TableRow>
+                                    <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                        Difference Between File System and DBMS:
+                                    </h3>
 
-                                    <TableRow>
-                                        <TableCell><strong>Concurrency</strong></TableCell>
-                                        <TableCell>No proper support for multiple users.</TableCell>
-                                        <TableCell>Multiple users can access data simultaneously with proper locking mechanisms.
-                                        </TableCell>
-                                    </TableRow>
 
-                                    <TableRow>
-                                        <TableCell><strong>Data Access Speed</strong></TableCell>
-                                        <TableCell>Slower due to sequential searching.</TableCell>
-                                        <TableCell>Faster due to indexing and optimized queries.
-                                        </TableCell>
-                                    </TableRow>
+                                    <div className="overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm">
 
-                                    <TableRow>
-                                        <TableCell><strong>Backup & Recovery</strong></TableCell>
-                                        <TableCell>Manual and less reliable.</TableCell>
-                                        <TableCell>Automated backups with recovery mechanisms.
-                                        </TableCell>
-                                    </TableRow>
+                                        <Table className='w-full'>
 
-                                    <TableRow>
-                                        <TableCell><strong>Example</strong></TableCell>
-                                        <TableCell>Text files, Excel sheets.</TableCell>
-                                        <TableCell>MySQL, PostgreSQL, Oracle, MongoDB.
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
+                                            <TableHeader className="bg-gradient-to-r from-[#00C1B3]/10 to-[#2A3F5F]/10 dark:from-[#00E3CC]/10 dark:to-[#0D1117]/10">
+                                                <TableRow>
+                                                    <TableHead className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">Feature</TableHead>
+                                                    <TableHead className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">File System 📂</TableHead>
+                                                    <TableHead className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">DBMS 🗃️</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody className="divide-y divide-[#00C1B3]/10 dark:divide-[#00E3CC]/10 bg-white/50 dark:bg-[#1A202C]/50">
+                                                <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]"><strong>Data Storage	</strong></TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">Data is stored in separate files.</TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">Data is stored in structured databases.</TableCell>
+                                                </TableRow>
+
+
+                                                <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]"><strong>Data Redundancy</strong></TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">High (same data may be stored multiple times).</TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">Low (data is normalized and managed efficiently).</TableCell>
+                                                </TableRow>
+                                                <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]"><strong>Data Integrity</strong></TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">Difficult to maintain.</TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">Ensures integrity via constraints (Primary Key, Foreign Key).</TableCell>
+                                                </TableRow>
+                                                <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]"><strong>Security</strong></TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">Basic security, difficult to control access.</TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">High security with authentication and role-based access.
+                                                    </TableCell>
+                                                </TableRow>
+
+                                                <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]"><strong>Concurrency</strong></TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">No proper support for multiple users.</TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">Multiple users can access data simultaneously with proper locking mechanisms.
+                                                    </TableCell>
+                                                </TableRow>
+
+                                                <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]"><strong>Data Access Speed</strong></TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">Slower due to sequential searching.</TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">Faster due to indexing and optimized queries.
+                                                    </TableCell>
+                                                </TableRow>
+
+                                                <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]"><strong>Backup & Recovery</strong></TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">Manual and less reliable.</TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">Automated backups with recovery mechanisms.
+                                                    </TableCell>
+                                                </TableRow>
+
+                                                <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]"><strong>Example</strong></TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">Text files, Excel sheets.</TableCell>
+                                                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">MySQL, PostgreSQL, Oracle, MongoDB.
+                                                    </TableCell>
+                                                </TableRow>
+                                            </TableBody>
+
+                                        </Table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </section>
 
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-8">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='key'>
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden" id='key'>
 
 
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <div className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
-                                Types of Keys in DBMS
-                            </h2>
+
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    Types of Keys in DBMS
+                                </h2>
+
+                            </div>
 
 
                             <p className="mt-2 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                                 Keys in DBMS help identify unique records in a table and establish relationships between tables.
                             </p>
 
-                            {/* Table */}
-                            <div className="overflow-x-auto mt-6">
-                                <Table className="w-full">
-                                    <TableHeader>
-                                        <TableRow className="bg-gray-100 dark:bg-gray-700">
-                                            <TableHead>Key Type</TableHead>
-                                            <TableHead>Definition</TableHead>
-                                            <TableHead>Example</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableCell><strong>Primary Key</strong></TableCell>
-                                            <TableCell>A unique identifier for a record in a table. It cannot have NULL values.</TableCell>
-                                            <TableCell>Student_ID in a Students table.</TableCell>
-                                        </TableRow>
+                            <div className='space-y-6 pt-5'>
+                                <div className="overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm">
 
-                                        <TableRow>
-                                            <TableCell><strong>Candidate Key</strong></TableCell>
-                                            <TableCell>A set of attributes that can uniquely identify a record. One of them is chosen as the Primary Key.</TableCell>
-                                            <TableCell>{`{Aadhar_No, Passport_No}`} (both can uniquely identify a person).</TableCell>
-                                        </TableRow>
+                                    <Table className="w-full">
+                                        <TableHeader className="bg-gradient-to-r from-[#00C1B3]/10 to-[#2A3F5F]/10 dark:from-[#00E3CC]/10 dark:to-[#0D1117]/10">
+                                            <TableRow>
+                                                <TableHead className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">
+                                                    Key Type
+                                                </TableHead>
+                                                <TableHead className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">
+                                                    Definition
+                                                </TableHead>
+                                                <TableHead className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">
+                                                    Example
+                                                </TableHead>
+                                            </TableRow>
+                                        </TableHeader>
 
-                                        <TableRow>
-                                            <TableCell><strong>Super Key</strong></TableCell>
-                                            <TableCell>A set of attributes that uniquely identifies a record. It may contain extra attributes.</TableCell>
-                                            <TableCell>{`{Student_ID, Name}`}, where Name is extra.</TableCell>
-                                        </TableRow>
+                                        <TableBody className="divide-y divide-[#00C1B3]/10 dark:divide-[#00E3CC]/10 bg-white/50 dark:bg-[#1A202C]/50">
+                                            <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    <strong>Primary Key</strong>
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    A unique identifier for a record in a table. It cannot have NULL values.
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    Student_ID in a Students table.
+                                                </TableCell>
+                                            </TableRow>
 
-                                        <TableRow>
-                                            <TableCell><strong>Foreign Key</strong></TableCell>
-                                            <TableCell>A key that references a Primary Key in another table to establish relationships.</TableCell>
-                                            <TableCell>Department_ID in Employees table referring to Department_ID in Departments table.</TableCell>
-                                        </TableRow>
+                                            <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    <strong>Candidate Key</strong>
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    A set of attributes that can uniquely identify a record. One of them is chosen as the Primary Key.
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    {`{Aadhar_No, Passport_No}`} (both can uniquely identify a person).
+                                                </TableCell>
+                                            </TableRow>
 
-                                        <TableRow>
-                                            <TableCell><strong>Composite Key</strong></TableCell>
-                                            <TableCell>A key made of two or more attributes that uniquely identify a record.</TableCell>
-                                            <TableCell>{`{Order_ID, Product_ID}`} in Orders table.</TableCell>
-                                        </TableRow>
+                                            <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    <strong>Super Key</strong>
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    A set of attributes that uniquely identifies a record. It may contain extra attributes.
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    {`{Student_ID, Name}`}, where Name is extra.
+                                                </TableCell>
+                                            </TableRow>
 
-                                        <TableRow>
-                                            <TableCell><strong>Alternate Key</strong></TableCell>
-                                            <TableCell>A Candidate Key that is not chosen as the Primary Key.</TableCell>
-                                            <TableCell>If Aadhar_No is the Primary Key, then Passport_No is an Alternate Key.</TableCell>
-                                        </TableRow>
+                                            <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    <strong>Foreign Key</strong>
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    A key that references a Primary Key in another table to establish relationships.
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    Department_ID in Employees table referring to Department_ID in Departments table.
+                                                </TableCell>
+                                            </TableRow>
 
-                                        <TableRow>
-                                            <TableCell><strong>Unique Key</strong></TableCell>
-                                            <TableCell>Similar to Primary Key but allows NULL values.</TableCell>
-                                            <TableCell>Email column in Users table.</TableCell>
-                                        </TableRow>
+                                            <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    <strong>Composite Key</strong>
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    A key made of two or more attributes that uniquely identify a record.
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    {`{Order_ID, Product_ID}`} in Orders table.
+                                                </TableCell>
+                                            </TableRow>
 
-                                        <TableRow>
-                                            <TableCell><strong>Surrogate Key</strong></TableCell>
-                                            <TableCell>A system-generated unique key, usually an auto-incremented number.</TableCell>
-                                            <TableCell>Order_Number in an Orders table (generated automatically).</TableCell>
-                                        </TableRow>
+                                            <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    <strong>Alternate Key</strong>
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    A Candidate Key that is not chosen as the Primary Key.
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    If Aadhar_No is the Primary Key, then Passport_No is an Alternate Key.
+                                                </TableCell>
+                                            </TableRow>
 
-                                    </TableBody>
-                                </Table>
+                                            <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    <strong>Unique Key</strong>
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    Similar to Primary Key but allows NULL values.
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    Email column in Users table.
+                                                </TableCell>
+                                            </TableRow>
+
+                                            <TableRow className="hover:bg-[#00C1B3]/5 dark:hover:bg-[#00E3CC]/5 transition-colors">
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    <strong>Surrogate Key</strong>
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    A system-generated unique key, usually an auto-incremented number.
+                                                </TableCell>
+                                                <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                                    Order_Number in an Orders table (generated automatically).
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
+
+                                </div>
+
                             </div>
                         </div>
+
                     </section>
 
 
-                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-8">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='er_model'>
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden" id='er_model'>
 
-
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
-                                ER Model (Entity-Relationship Model)
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    ER Model (Entity-Relationship Model):
+                                </h2>
                             </h2>
-
-
 
                             <p className="text-lg text-gray-600 dark:text-gray-300 leading-7">
 
@@ -432,10 +530,11 @@ const DBMS = () => {
 
 
                     <section className="max-w-4xl mx-auto px-6 md:px-8 py-8 ">
-                        < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='normalisation'>
+                        < div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden" id='normalisation'>
                             {/* Section Title */}
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
                                 Normalisation
@@ -496,7 +595,7 @@ const DBMS = () => {
                                         <div className='p-4 bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700'>
                                             <h4 className='font-semibold text-gray-800 dark:text-gray-200'>After 1NF</h4>
                                         </div>
-                                        <div className='overflow-x-auto'> {/* Make table horizontally scrollable on small screens */}
+                                        <div className='overflow-x-auto'>
                                             <Table className='w-full'>
                                                 <TableHeader>
                                                     <TableRow className='bg-gray-50 dark:bg-gray-900' >
@@ -850,14 +949,21 @@ const DBMS = () => {
                             </div>
                         </div>
                     </section>
+
+
                     <section className='max-w-4xl mx-auto px-6 md:px-8 py-8 space-y-8'>
                         {/* Header Section */}
-                        <div className='bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700' id='joins'>
+                        <div className='bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden' id='joins'>
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
-                                SQL Joins
+
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    SQL Joins
+                                </h2>
+
                             </h2>
                             <p className='text-lg text-gray-600 dark:text-gray-300 leading-7'>
                                 A <span className='font-semibold text-blue-600 dark:text-blue-400'>JOIN</span> clause combines records from two or more tables using a related column. Essential for working with normalized databases.
@@ -889,129 +995,88 @@ INNER JOIN Courses ON Students.Course_ID = Courses.Course_ID;
                                 </div>
 
                                 {/* Example Section */}
-                                <div className='space-y-8'>
-                                    {/* Tables Grid */}
-                                    <div className='grid md:grid-cols-2 gap-6'>
-                                        {/* Students Table */}
-                                        <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm'>
-                                            <div className='p-4 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t-xl'>
-                                                <h4 className='font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-2'>
-                                                    <svg className="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                                                    </svg>
-                                                    Students
-                                                </h4>
-                                            </div>
-                                            <Table className="w-full">
-                                                <TableHeader>
-                                                    <TableRow className="bg-gray-50 dark:bg-gray-900">
-                                                        <TableHead className="w-[100px]">Student_ID</TableHead>
-                                                        <TableHead>Name</TableHead>
-                                                        <TableHead>Course ID</TableHead>
-                                                    </TableRow>
-                                                </TableHeader>
-                                                <TableBody>
-                                                    {[
-                                                        [101, "John", 1],
-                                                        [102, "Alice", 2],
-                                                        [103, "Bob", null],
-                                                        [104, "Mike", 3]
-                                                    ].map(([id, name, course]) => (
-                                                        <TableRow key={id} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
-                                                            <TableCell>{id}</TableCell>
-                                                            <TableCell>{name}</TableCell>
-                                                            <TableCell>
-                                                                {course || <span className="text-red-500 dark:text-red-400">NULL</span>}
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                        </div>
-
-                                        {/* Courses Table */}
-                                        <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm'>
-                                            <div className='p-4 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t-xl'>
-                                                <h4 className='font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-2'>
-                                                    <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                                                    </svg>
-                                                    Courses
-                                                </h4>
-                                            </div>
-                                            <Table className="w-full">
-                                                <TableHeader>
-                                                    <TableRow className="bg-gray-50 dark:bg-gray-900">
-                                                        <TableHead className="w-[100px]">Course_ID</TableHead>
-                                                        <TableHead>Course_Name</TableHead>
-                                                    </TableRow>
-                                                </TableHeader>
-                                                <TableBody>
-                                                    {[
-                                                        [1, "Math"],
-                                                        [2, "Science"],
-                                                        [3, "Physics"],
-                                                        [4, "English"]
-                                                    ].map(([id, name]) => (
-                                                        <TableRow key={id} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
-                                                            <TableCell>{id}</TableCell>
-                                                            <TableCell>{name}</TableCell>
-                                                        </TableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                        </div>
+                                {/* Courses Table */}
+                                <div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm'>
+                                    <div className='p-4 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t-xl'>
+                                        <h4 className='font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-2'>
+                                            <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                                            </svg>
+                                            Courses
+                                        </h4>
                                     </div>
-
-                                    {/* Join Result */}
-                                    <div className='relative'>
-                                        <div className='absolute inset-0 flex items-center justify-center'>
-                                            <div className='w-full border-t border-dashed border-gray-300 dark:border-gray-600'></div>
-                                        </div>
-                                        <div className='relative flex justify-center py-4'>
-                                            <span className='px-4 bg-white dark:bg-gray-800 text-sm text-blue-500 font-medium'>
-                                                INNER JOIN RESULT
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    {/* Result Table */}
-                                    <div className='bg-white dark:bg-gray-800 rounded-xl border-2 border-blue-100 dark:border-blue-900 shadow-lg'>
-                                        <div className='p-4 border-b border-blue-50 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 rounded-t-xl'>
-                                            <h4 className='font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-2'>
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                                </svg>
-                                                Combined Results
-                                            </h4>
-                                        </div>
-                                        <Table className="w-full">
+                                    <div className='overflow-x-auto'>
+                                        <Table className="w-auto">
                                             <TableHeader>
-                                                <TableRow className="bg-blue-50 dark:bg-blue-900/20">
-                                                    <TableHead>
-                                                        Student_ID</TableHead>
-                                                    <TableHead>Name</TableHead>
+                                                <TableRow className="bg-gray-50 dark:bg-gray-900">
+                                                    <TableHead className="w-[100px]">Course_ID</TableHead>
                                                     <TableHead>Course_Name</TableHead>
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
                                                 {[
-                                                    [101, "John", "Math"],
-                                                    [102, "Alice", "Science"],
-                                                    [104, "Mike", "Physics"]
-                                                ].map(([id, name, course]) => (
-                                                    <TableRow key={id} className="hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                                                    [1, "Math"],
+                                                    [2, "Science"],
+                                                    [3, "Physics"],
+                                                    [4, "English"]
+                                                ].map(([id, name]) => (
+                                                    <TableRow key={id} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
                                                         <TableCell>{id}</TableCell>
                                                         <TableCell>{name}</TableCell>
-                                                        <TableCell>{course}</TableCell>
                                                     </TableRow>
                                                 ))}
                                             </TableBody>
                                         </Table>
                                     </div>
                                 </div>
-                            </div>
 
+                                {/* Join Result */}
+                                <div className='relative'>
+                                    <div className='absolute inset-0 flex items-center justify-center'>
+                                        <div className='w-full border-t border-dashed border-gray-300 dark:border-gray-600'></div>
+                                    </div>
+                                    <div className='relative flex justify-center py-4'>
+                                        <span className='px-4 bg-white dark:bg-gray-800 text-sm text-blue-500 font-medium'>
+                                            INNER JOIN RESULT
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Result Table */}
+                                <div className='bg-white dark:bg-gray-800 rounded-xl border-2 border-blue-100 dark:border-blue-900 shadow-lg'>
+                                    <div className='p-4 border-b border-blue-50 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 rounded-t-xl'>
+                                        <h4 className='font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-2'>
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                            </svg>
+                                            Combined Results
+                                        </h4>
+                                    </div>
+                                    <Table className="w-full">
+                                        <TableHeader>
+                                            <TableRow className="bg-blue-50 dark:bg-blue-900/20">
+                                                <TableHead>
+                                                    Student_ID</TableHead>
+                                                <TableHead>Name</TableHead>
+                                                <TableHead>Course_Name</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {[
+                                                [101, "John", "Math"],
+                                                [102, "Alice", "Science"],
+                                                [104, "Mike", "Physics"]
+                                            ].map(([id, name, course]) => (
+                                                <TableRow key={id} className="hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                                                    <TableCell>{id}</TableCell>
+                                                    <TableCell>{name}</TableCell>
+                                                    <TableCell>{course}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </div>
+                            </div>
                             <div className='space-y-6'>
                                 <div className='space-y-2'>
                                     <h3 className='text-xl font-bold text-gray-800 dark:text-gray-100 pt-6'>2. LEFT JOIN (All Left Table + Matching Right Table)</h3>
@@ -1410,17 +1475,23 @@ CROSS JOIN Courses;
                                 </div>
                             </div>
                         </div>
+
+
                     </section>
 
                     <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="view_indexing">
-                        < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='view&indexing'>
-                            {/* Section Title */}
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        < div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden" id='view&indexing'>
+
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
-                                View & Indexing
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    View & Indexing
+                                </h2>
                             </h2>
+
 
                             <div className='space-y-6 pt-5'>
                                 {/* Heading */}
@@ -1493,15 +1564,21 @@ SELECT Name, Course_ID FROM Students;`}
 
                         </div>
                     </section>
+
                     <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id="stored_procedures_triggers">
-                        < div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
+                        < div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
                             {/* Section Title */}
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
-                                Stored Procedures & Triggers
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    Stored Procedures & Triggers
+                                </h2>
                             </h2>
+
 
                             <div className='space-y-6 pt-5'>
                                 {/* Heading */}
@@ -1532,15 +1609,21 @@ SELECT Name, Course_ID FROM Students;`}
                         </div>
                     </section>
 
+
                     <section className="max-w-4xl mx-auto px-6 md:px-8 py-8">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='transaction_concurrency'>
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden" id='transaction_concurrency'>
                             {/* Section Title */}
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
-                                Transaction Management & Concurrency Control
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    Transaction Management & Concurrency Control
+                                </h2>
                             </h2>
+
 
                             <div className='space-y-6 pt-5'>
                                 {/* Heading */}
@@ -1574,8 +1657,18 @@ SELECT Name, Course_ID FROM Students;`}
                     </section>
 
                     <section className="max-w-4xl mx-auto px-6 md:px-8 py-8">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" id='locks_serializability'>
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden" id='locks_serializability'>
                             {/* Section Title */}
+
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    Locks in DBMS & Serializability
+                                </h2>
+                            </h2>
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />

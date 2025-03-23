@@ -129,26 +129,48 @@ const Dsa150Question = () => {
    
     return (
         <div className="flex flex-col md:flex-row h-full bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
-            <div className="flex-1 flex flex-col">
-                <header className="flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 shadow-md sticky top-0 z-10">
-                    <Link to={`/dashboard`} className="flex items-center text-blue-600 hover:underline">
-                        <AiOutlineArrowLeft size={20} />
-                        <span className="ml-2">Back To Profile</span>
-                    </Link>
+            <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-lg fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/20 dark:border-[#00E3CC]/20">
+                {/* Back Link */}
+                <Link
+                    to='/dashboard'
+                    className="flex items-center text-[#00C1B3] dark:text-[#00E3CC] hover:text-white dark:hover:text-white transition-colors duration-300 group"
+                >
+                    <AiOutlineArrowLeft
+                        size={20}
+                        className="group-hover:-translate-x-1 transition-transform"
+                    />
+                    <span className="ml-2 font-medium">Back to Dashboard</span>
+                </Link>
 
-                    <div className="flex items-center gap-4">
-                        <button
-                            aria-label="Toggle theme"
-                            onClick={toggleTheme}
-                            className="p-2 bg-blue-600 text-white rounded-full shadow hover:bg-blue-700 transition"
-                        >
-                            {darkMode ? <FaMoon size={18} /> : <FaSun size={18} />}
-                        </button>
-                        {user.imageUrl && (
-                            <img className="w-10 h-10 rounded-full object-cover shadow-md" src={user.imageUrl} alt="Profile" />
+                {/* Right Section */}
+                <div className="flex items-center gap-4">
+                    {/* Theme Toggle */}
+                    <button
+                        aria-label="Toggle Theme"
+                        onClick={toggleTheme}
+                        className="p-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                    >
+                        {darkMode ? (
+                            <FaMoon size={18} className="hover:rotate-12 transition-transform" />
+                        ) : (
+                            <FaSun size={18} className="hover:rotate-12 transition-transform" />
                         )}
-                    </div>
-                </header>
+                    </button>
+
+                    {/* Profile Image */}
+                    {user?.imageUrl && (
+                        <div className="relative group">
+                            <img
+                                className="w-10 h-10 rounded-full object-cover border-2 border-[#00C1B3] dark:border-[#00E3CC] hover:border-white cursor-pointer transition-all"
+                                src={user.imageUrl}
+                                alt="Profile"
+                            />
+                            <div className="absolute inset-0 border-2 border-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
+                    )}
+                </div>
+            </header>
+            <div className="flex-1 flex flex-col">
 
                 <div className="w-full">
                     <div className="p-6 mt-6">

@@ -17,8 +17,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
+
 
 
 const ComputerNetwork = () => {
@@ -77,34 +76,65 @@ const ComputerNetwork = () => {
 
     return (
         <div className='gap-5'>
-            <header className="w-full flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 shadow-md fixed top-0 left-0 right-0 z-10">
-                <Link to="/dashboard" className="flex items-center text-blue-600 dark:text-yellow-500 hover:underline">
-                    <AiOutlineArrowLeft size={20} />
-                    <span className="ml-2">Back To Profile</span>
+            <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-lg fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/20 dark:border-[#00E3CC]/20">
+                {/* Back Link */}
+                <Link
+                    to='/dashboard'
+                    className="flex items-center text-[#00C1B3] dark:text-[#00E3CC] hover:text-white dark:hover:text-white transition-colors duration-300 group"
+                >
+                    <AiOutlineArrowLeft
+                        size={20}
+                        className="group-hover:-translate-x-1 transition-transform"
+                    />
+                    <span className="ml-2 font-medium">Back to Dashboard</span>
                 </Link>
+
+                {/* Right Section */}
                 <div className="flex items-center gap-4">
+                    {/* Theme Toggle */}
                     <button
-                        aria-label="Toggle theme"
+                        aria-label="Toggle Theme"
                         onClick={toggleTheme}
-                        className="p-2 bg-blue-600 dark:bg-yellow-500 text-white rounded-full shadow hover:scale-105 transition"
+                        className="p-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                     >
-                        {darkMode ? <FaMoon size={18} /> : <FaSun size={18} />}
+                        {darkMode ? (
+                            <FaMoon size={18} className="hover:rotate-12 transition-transform" />
+                        ) : (
+                            <FaSun size={18} className="hover:rotate-12 transition-transform" />
+                        )}
                     </button>
+
+                    {/* Profile Image */}
                     {user?.imageUrl && (
-                        <img className="w-10 h-10 rounded-full object-cover shadow-md" src={user.imageUrl} alt="Profile" />
+                        <div className="relative group">
+                            <img
+                                className="w-10 h-10 rounded-full object-cover border-2 border-[#00C1B3] dark:border-[#00E3CC] hover:border-white cursor-pointer transition-all"
+                                src={user.imageUrl}
+                                alt="Profile"
+                            />
+                            <div className="absolute inset-0 border-2 border-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
                     )}
                 </div>
             </header>
-            <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
 
 
-                <div className={`bg-white dark:bg-gray-900 mt-[60px] p-6 w-[60%] sm:w-[20%] fixed min-h-screen shadow-lg rounded-lg 
-                               dark:text-white text-black transition-all duration-300 ease-in-out transform
-                               ${isSidebarOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"} 
-                               z-30 overflow-y-auto`}
+            <div
+                className='flex min-h-screen 
+             bg-gradient-to-b from-[#F8F9FA] to-[#F1F3F5]
+             dark:bg-[#0D1117]
+             text-[#2A3F5F] dark:text-[#A0AEC0]
+             transition-all duration-300 ease-in-out'
+            >
+
+                {/* Sidebar */}
+                <div className={`bg-[#2A3F5F] dark:bg-[#0D1117] mt-[60px] p-6 w-[60%] sm:w-[20%] fixed min-h-screen shadow-xl rounded-r-lg 
+                text-gray-100 transition-all duration-300 ease-in-out transform
+                ${isSidebarOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"} 
+                z-30 overflow-y-auto border-r border-[#00C1B3]/20 dark:border-[#00E3CC]/20`}
                     role="navigation"
                     aria-label="Main navigation">
-                    <h3 className="text-center text-lg font-semibold pb-4 border-b border-gray-300 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-900">
+                    <h3 className="text-center text-lg font-semibold pb-4 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30 sticky top-0 bg-[#2A3F5F] dark:bg-[#0D1117] text-white">
                         Content
                     </h3>
 
@@ -114,11 +144,11 @@ const ComputerNetwork = () => {
                                 key={link.id}
                                 href={link.href}
                                 onClick={() => handleLinkClick(link.id)}
-                                className={`block px-4 py-2 rounded-md transition-all duration-200
-                                          ${currentSection === link.id
-                                        ? 'bg-blue-500 text-white dark:bg-blue-600'
-                                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'}
-                                          hover:pl-6 pointer`}
+                                className={`block px-4 py-2 rounded-md transition-all duration-300
+                           ${currentSection === link.id
+                                        ? 'bg-[#00C1B3] text-white dark:bg-[#00E3CC] dark:text-[#0D1117]'
+                                        : 'text-gray-300 dark:text-gray-400 hover:bg-[#00C1B3]/20 dark:hover:bg-[#00E3CC]/20'}
+                           hover:pl-6 font-medium`}
                                 aria-current={currentSection === link.id ? "page" : undefined}>
                                 {link.text}
                             </a>
@@ -126,16 +156,14 @@ const ComputerNetwork = () => {
                     </div>
                 </div>
 
-                {/* Backdrop for mobile */}
-                <div className={`sm:hidden fixed inset-0 bg-black/50 z-20 transition-opacity 
+
+                <div className={`sm:hidden fixed inset-0bg-[#00C1B3] dark:bg-[#00E3CC] z-20 transition-opacity 
                                ${isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
                     onClick={toggleSidebar}
                     aria-hidden="true" />
-
-                {/* Toggle Sidebar Button */}
                 <button
                     onClick={toggleSidebar}
-                    className="sm:hidden fixed top-16 right-4 bg-blue-600 dark:bg-yellow-500 text-white p-2 rounded-full shadow-lg z-30
+                    className="sm:hidden fixed top-20 right-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white p-2 rounded-full shadow-lg z-30
                             transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300"
                     aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
                     aria-expanded={isSidebarOpen}>
@@ -146,40 +174,51 @@ const ComputerNetwork = () => {
                 <main className="sm:w-4/5 w-full ml-auto p-6 mt-20">
 
 
-                    <section id='cn_desc' className="max-w-4xl mx-auto px-4 md:px-6 py-6">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
+                    <section id='cn_desc' className="max-w-4xl mx-auto px-6 md:px-8 py-8">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
+
+                            <div className="text-center mb-4">
+                                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#2A3F5F] to-[#00C1B3] dark:from-[#00E3CC] dark:to-[#A0AEC0]">
+                                    Computer Network
+                                </h1>
+
+                            </div>
+
+                            <div className='space-y-4 pt-2'>
+                                <div className='space-y-3'>
+                                    <div className='mt-4 flex gap-3'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                                            <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                        </svg>
+                                        <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                            Introduction
+                                        </h2>
+                                    </div>
+                                    <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+
+                                        A computer network is a set of interconnected devices (nodes) that communicate with each other to share resources and information using a defined set of protocols over a communication medium.
+
+                                    </p>
+                                </div>
+                            </div>
 
 
-
-                            <h1 className="text-center text-3xl font-extrabold text-blue-600 dark:text-yellow-500 mb-6">
-                                Computer Network
-                            </h1>
-
-                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
-                                </svg>
-                                Introduction
-                            </h2>
-
-                            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-
-                                A computer network is a set of interconnected devices (nodes) that communicate with each other to share resources and information using a defined set of protocols over a communication medium.
-
-                            </p>
                         </div>
                     </section>
 
 
-                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='topology'>
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id='topology'>
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
 
-                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <div className="mt-4 flex gap-3 ">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
-                                Topology
-                            </h2>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    Topology
+                                </h2>
+                            </div>
+
 
                             <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
                                 Network topology refers to the arrangement of devices (nodes) and how they are connected in a network.
@@ -211,16 +250,17 @@ const ComputerNetwork = () => {
                         </div>
                     </section>
 
-                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='lan_van'>
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id='lan_van'>
                         <div className="mb-2">
-                            <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
-
-                                <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
+                                <div className="mt-4 flex gap-3 ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                                         <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                     </svg>
-                                    LAN (Local Area Network)
-                                </h2>
+                                    <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                        LAN and VAN
+                                    </h2>
+                                </div>
 
                                 <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
                                     A <strong>Local Area Network (LAN)</strong> is a network that connects computers and devices within a
@@ -289,13 +329,20 @@ const ComputerNetwork = () => {
                         </div>
                     </section>
 
-                    <section className="max-w-4xl mx-auto px-4 py-6" id='firewall'>
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8" id='firewall'>
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
 
-                            {/* Firewall Title */}
-                            <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                                Firewall 🔥
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    Firewall 🔥
+                                </h2>
                             </h2>
+
+
 
                             {/* Firewall Definition */}
                             <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -309,15 +356,18 @@ const ComputerNetwork = () => {
                     </section>
 
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='dhcp'>
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
-
-
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
                             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
-                                DHCP (Dynamic Host Configuration Protocol)
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    DHCP (Dynamic Host Configuration Protocol)
+                                </h2>
                             </h2>
+
+
 
                             <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
                                 DHCP (Dynamic Host Configuration Protocol) is a network protocol that
@@ -349,14 +399,17 @@ const ComputerNetwork = () => {
 
 
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='httpvshttps'>
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
-
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
                             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
-                                HTTP vs HTTPS 🌐🔒
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    HTTP vs HTTPS 🌐🔒
+                                </h2>
                             </h2>
+
 
                             <p className="mt-3 text-gray-700 dark:text-gray-300">
                                 <strong>HTTP</strong> (HyperText Transfer Protocol) is an <strong>insecure</strong> communication protocol used for transferring data on the web.
@@ -416,13 +469,18 @@ const ComputerNetwork = () => {
                     </section>
 
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='ipv4vsipv6'>
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
+
                             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
-                                IPv4 vs IPv6 🌍🔢
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    IPv4 vs IPv6 🌍🔢
+                                </h2>
                             </h2>
+
                             {/* Firewall Definition */}
                             <p className="mt-3 text-gray-700 dark:text-gray-300">
                                 <strong>IPv4</strong> is the fourth version of the Internet Protocol, using a 32-bit address system.
@@ -487,23 +545,24 @@ const ComputerNetwork = () => {
                     </section>
 
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='osi'>
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
 
-                            <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                                OSI (Open Systems Interconnection) Model
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                    OSI (Open Systems Interconnection) Model
+                                </h2>
                             </h2>
 
-
                             <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
-                                The OSI Model is a conceptual framework that standardizes network
-                                communication into seven layers. Each layer has a specific role in
-                                ensuring smooth data transmission across a network.
+                                The OSI Model is a conceptual framework that standardizes network communication into seven layers. Each layer has a specific role in ensuring smooth data transmission across a network.
                             </p>
 
                             <h3 className="mt-5 text-xl font-semibold text-gray-800 dark:text-gray-100">
                                 🔹 OSI Model Layers & Responsibilities:
                             </h3>
-
 
                             <Table className="mt-3">
                                 <TableHeader>
@@ -516,46 +575,63 @@ const ComputerNetwork = () => {
                                 <TableBody>
                                     <TableRow>
                                         <TableCell><strong>Application (Layer 7)</strong></TableCell>
-                                        <TableCell>32-bit</TableCell>
-                                        <TableCell>128-bit</TableCell>
+                                        <TableCell>
+                                            Provides network services directly to the end-user. This includes software applications that users interact with, such as web browsers, email clients, etc.
+                                        </TableCell>
+                                        <TableCell>HTTP, HTTPS, FTP, SMTP</TableCell>
                                     </TableRow>
-
 
                                     <TableRow>
                                         <TableCell><strong>Presentation (Layer 6)</strong></TableCell>
-                                        <TableCell>Data encryption, compression, translation</TableCell>
-                                        <TableCell>SSL, TLS</TableCell>
+                                        <TableCell>
+                                            Translates data into a readable format for the application layer. It also handles data encryption, compression, and encoding, ensuring secure and efficient communication.
+                                        </TableCell>
+                                        <TableCell>SSL/TLS (for encryption), JPEG, PNG</TableCell>
                                     </TableRow>
+
                                     <TableRow>
                                         <TableCell><strong>Session (Layer 5)</strong></TableCell>
-                                        <TableCell>Manages sessions and communication</TableCell>
-                                        <TableCell>RPC, NetBIOS</TableCell>
+                                        <TableCell>
+                                            Manages sessions or connections between devices. It ensures that data is properly synchronized and that communication sessions are properly established, maintained, and terminated.
+                                        </TableCell>
+                                        <TableCell>NetBIOS, RPC (Remote Procedure Call)</TableCell>
                                     </TableRow>
+
                                     <TableRow>
                                         <TableCell><strong>Transport (Layer 4)</strong></TableCell>
-                                        <TableCell>Reliable delivery, error detection</TableCell>
-                                        <TableCell>TCP, UDP</TableCell>
+                                        <TableCell>
+                                            Responsible for error detection and reliable data transfer. This layer ensures that data is sent in the correct order and without errors. It also manages flow control and retransmission of lost data.
+                                        </TableCell>
+                                        <TableCell>TCP (Transmission Control Protocol), UDP (User Datagram Protocol)</TableCell>
                                     </TableRow>
+
                                     <TableRow>
                                         <TableCell><strong>Network (Layer 3)</strong></TableCell>
-                                        <TableCell>IP addressing, routing</TableCell>
-                                        <TableCell>ICMP</TableCell>
+                                        <TableCell>
+                                            Handles routing and forwarding of data packets. It ensures data reaches its destination across different networks, using logical IP addresses to direct the data.
+                                        </TableCell>
+                                        <TableCell>IP (Internet Protocol), ICMP (Internet Control Message Protocol)</TableCell>
                                     </TableRow>
 
                                     <TableRow>
                                         <TableCell><strong>Data Link (Layer 2)</strong></TableCell>
-                                        <TableCell>MAC addressing, error detection</TableCell>
-                                        <TableCell>Ethernet, Wi-Fi</TableCell>
+                                        <TableCell>
+                                            Manages data transfer between two directly connected nodes. This layer handles physical addressing (MAC addresses) and error detection/correction during transmission over the physical medium.
+                                        </TableCell>
+                                        <TableCell>Ethernet, Wi-Fi, ARP (Address Resolution Protocol)</TableCell>
                                     </TableRow>
 
                                     <TableRow>
                                         <TableCell><strong>Physical (Layer 1)</strong></TableCell>
-                                        <TableCell>Hardware, cables, signals</TableCell>
-                                        <TableCell>Fiber, Ethernet cables</TableCell>
+                                        <TableCell>
+                                            Deals with the physical connection between devices. It defines the hardware elements involved in the data transfer, such as cables, switches, and electrical signals.
+                                        </TableCell>
+                                        <TableCell>Fiber optic cables, Ethernet cables, Switches</TableCell>
                                     </TableRow>
 
                                 </TableBody>
                             </Table>
+
                             <div className="mt-6 flex items-center space-x-3">
                                 <h3>To understand this topic</h3>
                                 <a
@@ -572,12 +648,19 @@ const ComputerNetwork = () => {
                         </div>
                     </section>
 
-                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='tcp/ip'>
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
 
-                            <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='tcp/ip'>
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
+                        <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
                                 TCP/IP Model
+                                </h2>
                             </h2>
+                          
 
 
                             <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -641,10 +724,18 @@ const ComputerNetwork = () => {
                     </section>
 
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='handshake'>
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
-                            <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
+                        <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
                                 TCP Three-Way Handshake 🚀
+                                </h2>
                             </h2>
+
+                           
                             <p className="text-gray-600 dark:text-gray-300 mt-2">
                                 This process establishes a reliable connection between a client and a server.
                             </p>

@@ -13,12 +13,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { useNavigate } from "react-router-dom";  
-import { Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { ClipboardList, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { logout } from "../utils/slices/user.slice.js";
 import Footer from "../components/Footer.jsx";
-
+import { LogOut } from 'lucide-react';
+import { Heart } from "lucide-react";
+import { User } from 'lucide-react';
 
 const API_URL = 'http://localhost:3000';
 
@@ -26,7 +28,7 @@ const UserDashBoard = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user?.userInfo || {});
   const darkMode = useSelector((state) => state.theme?.darkMode || false);
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const toggleTheme = () => {
     dispatch(setDarkMode(!darkMode));
@@ -49,7 +51,7 @@ const UserDashBoard = () => {
 
       const data = await response.json();
       console.log(data);
-      
+
       if (data.success) {
         dispatch(logout());
         navigate('/');
@@ -59,16 +61,16 @@ const UserDashBoard = () => {
     } catch (error) {
       toast.error('An error occurred. Please try again.');
       console.log(error);
-      
+
     } finally {
       setLoader(false);
     }
   };
 
   // Reusable Card Component
-  const FeatureCard = ({ imageUrl, title, description, buttonText , navigateTo}) => {
-    const navigate  = useNavigate();
-    
+  const FeatureCard = ({ imageUrl, title, description, buttonText, navigateTo }) => {
+    const navigate = useNavigate();
+
     const handleClick = () => {
       navigate(navigateTo);
     }
@@ -95,47 +97,86 @@ const UserDashBoard = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
       {/* Header */}
-      <header className="flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 shadow-md sticky top-0 z-30">
-        <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
-          PatternPrep
-        </h3>
+      <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-xl backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30">
+        <div className="flex items-center space-x-2">
+          <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:from-blue-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-500 hover:scale-105">
+            PatternPrep
+          </h3>
 
-        <div className="flex items-center space-x-4">
+          {/* <h3 className="text-2xl font-extrabold text-gray-900">PatternPrep</h3> */}
+
+          <div className="h-4 w-1 bg-gradient-to-b from-[#00C1B3] to-[#00E3CC] rounded-full animate-pulse"></div>
+        </div>
+
+
+
+        <div className="flex items-center gap-5">
           <Button
             variant="ghost"
             size="icon"
             onClick={toggleTheme}
-            className="hover:bg-gray-200 dark:hover:bg-gray-700"
+            className="p-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 group"
           >
-            {darkMode ? <FaMoon size={20} /> : <FaSun size={20} />}
+            {darkMode ? (
+              <FaMoon size={20} className="group-hover:rotate-[-15deg] transition-transform duration-300" />
+            ) : (
+              <FaSun size={20} className="group-hover:rotate-12 transition-transform duration-300" />
+            )}
           </Button>
 
           {/* Profile Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                <Avatar className="h-10 w-10">
-                  <AvatarImage src={user.imageUrl || "/assets/placeholder.png"} className='border-2 border-white border-r-2' />
-                  <AvatarFallback>{user.name?.charAt(0) || "U"}</AvatarFallback>
+              <Button
+                variant="ghost"
+                className="relative h-10 w-10 rounded-full hover:scale-105 transition-transform duration-200"
+              >
+                <Avatar className="h-10 w-10 border-2 border-white/20 hover:border-[#00C1B3]/40 dark:hover:border-[#00E3CC]/40 transition-colors duration-300">
+                  <AvatarImage
+                    src={user.imageUrl || "/assets/placeholder.png"}
+                    className="hover:brightness-110 transition-all duration-300"
+                  />
+                  <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+                    {user.name?.charAt(0) || "U"}
+                  </AvatarFallback>
                 </Avatar>
+                <span className="absolute -bottom-1 -right-1 h-3 w-3 bg-green-400 rounded-full border-2 border-white dark:border-[#0D1117]"></span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Liked Questions</DropdownMenuItem>
-              <DropdownMenuItem>Interview Experience</DropdownMenuItem>
-              <DropdownMenuItem>
+            <DropdownMenuContent
+              className="w-56 bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-lg border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 shadow-xl"
+              align="end"
+            >
+              <DropdownMenuLabel className="text-[#00C1B3] dark:text-[#00E3CC] font-semibold">
+                My Account
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
+              <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
+                <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
+                <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                Liked Questions
+              </DropdownMenuItem>
+              <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
+                <ClipboardList className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                Interview Experience
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
+              <DropdownMenuItem className="p-0 hover:bg-transparent">
                 {loader ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <div className="w-full flex justify-center">
+                    <Loader2 className="h-5 w-5 animate-spin text-[#00C1B3] dark:text-[#00E3CC]" />
+                  </div>
                 ) : (
                   <Button
                     variant="destructive"
-                    className="w-full"
+                    className="w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 transition-colors"
                     onClick={handleLogout}
                   >
                     Logout
+                    <LogOut className="ml-2 h-4 w-4" />
                   </Button>
                 )}
               </DropdownMenuItem>
@@ -145,8 +186,8 @@ const UserDashBoard = () => {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <FeatureCard
+      <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pt-24">
+        <FeatureCard
           imageUrl="src/assets/public/maqsds.png"
           title="Crack DSA Interviews"
           description="Master Data Structures and Algorithms with top coding questions asked by FAANG companies."
@@ -186,9 +227,9 @@ const UserDashBoard = () => {
           navigateTo={"/os"}
         />
 
-       
+
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

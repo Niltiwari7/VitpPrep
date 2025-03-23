@@ -51,7 +51,7 @@ const OOPS = () => {
         setCurrentSection(sectionId);
 
         toggleSidebar();
-       
+
         setTimeout(() => {
             const section = document.querySelector(sectionId);
             if (section) {
@@ -67,35 +67,64 @@ const OOPS = () => {
     return (
         <div className='gap-5'>
 
-            <header className="w-full flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 shadow-md fixed top-0 left-0 right-0 z-10">
-                <Link to="/dashboard" className="flex items-center text-blue-600 dark:text-yellow-500 hover:underline">
-                    <AiOutlineArrowLeft size={20} />
-                    <span className="ml-2">Back To Profile</span>
+            <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-lg fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/20 dark:border-[#00E3CC]/20">
+                {/* Back Link */}
+                <Link
+                    to='/dashboard'
+                    className="flex items-center text-[#00C1B3] dark:text-[#00E3CC] hover:text-white dark:hover:text-white transition-colors duration-300 group"
+                >
+                    <AiOutlineArrowLeft
+                        size={20}
+                        className="group-hover:-translate-x-1 transition-transform"
+                    />
+                    <span className="ml-2 font-medium">Back to Dashboard</span>
                 </Link>
+
+                {/* Right Section */}
                 <div className="flex items-center gap-4">
+                    {/* Theme Toggle */}
                     <button
-                        aria-label="Toggle theme"
+                        aria-label="Toggle Theme"
                         onClick={toggleTheme}
-                        className="p-2 bg-blue-600 dark:bg-yellow-500 text-white rounded-full shadow hover:scale-105 transition"
+                        className="p-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                     >
-                        {darkMode ? <FaMoon size={18} /> : <FaSun size={18} />}
+                        {darkMode ? (
+                            <FaMoon size={18} className="hover:rotate-12 transition-transform" />
+                        ) : (
+                            <FaSun size={18} className="hover:rotate-12 transition-transform" />
+                        )}
                     </button>
+
+                    {/* Profile Image */}
                     {user?.imageUrl && (
-                        <img className="w-10 h-10 rounded-full object-cover shadow-md" src={user.imageUrl} alt="Profile" />
+                        <div className="relative group">
+                            <img
+                                className="w-10 h-10 rounded-full object-cover border-2 border-[#00C1B3] dark:border-[#00E3CC] hover:border-white cursor-pointer transition-all"
+                                src={user.imageUrl}
+                                alt="Profile"
+                            />
+                            <div className="absolute inset-0 border-2 border-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
                     )}
                 </div>
             </header>
 
-            <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+            <div
+                className='flex min-h-screen 
+             bg-gradient-to-b from-[#F8F9FA] to-[#F1F3F5]
+             dark:bg-[#0D1117]
+             text-[#2A3F5F] dark:text-[#A0AEC0]
+             transition-all duration-300 ease-in-out'
+            >
 
-
-                <div className={`bg-white dark:bg-gray-900 mt-[60px] p-6 w-[60%] sm:w-[20%] fixed min-h-screen shadow-lg rounded-lg 
-                dark:text-white text-black transition-all duration-300 ease-in-out transform
+                {/* Sidebar */}
+                <div className={`bg-[#2A3F5F] dark:bg-[#0D1117] mt-[60px] p-6 w-[60%] sm:w-[20%] fixed min-h-screen shadow-xl rounded-r-lg 
+                text-gray-100 transition-all duration-300 ease-in-out transform
                 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"} 
-                z-30 overflow-y-auto`}
+                z-30 overflow-y-auto border-r border-[#00C1B3]/20 dark:border-[#00E3CC]/20`}
                     role="navigation"
                     aria-label="Main navigation">
-                    <h3 className="text-center text-lg font-semibold pb-4 border-b border-gray-300 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-900">
+                    <h3 className="text-center text-lg font-semibold pb-4 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30 sticky top-0 bg-[#2A3F5F] dark:bg-[#0D1117] text-white">
                         Content
                     </h3>
 
@@ -105,11 +134,11 @@ const OOPS = () => {
                                 key={link.id}
                                 href={link.href}
                                 onClick={() => handleLinkClick(link.id)}
-                                className={`block px-4 py-2 rounded-md transition-all duration-200
+                                className={`block px-4 py-2 rounded-md transition-all duration-300
                            ${currentSection === link.id
-                                        ? 'bg-blue-500 text-white dark:bg-blue-600'
-                                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'}
-                           hover:pl-6 pointer`}
+                                        ? 'bg-[#00C1B3] text-white dark:bg-[#00E3CC] dark:text-[#0D1117]'
+                                        : 'text-gray-300 dark:text-gray-400 hover:bg-[#00C1B3]/20 dark:hover:bg-[#00E3CC]/20'}
+                           hover:pl-6 font-medium`}
                                 aria-current={currentSection === link.id ? "page" : undefined}>
                                 {link.text}
                             </a>
@@ -117,15 +146,15 @@ const OOPS = () => {
                     </div>
                 </div>
 
-                {/* Backdrop for mobile */}
-                <div className={`sm:hidden fixed inset-0 bg-black/50 z-20 transition-opacity 
-                ${isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+
+                <div className={`sm:hidden fixed inset-0bg-[#00C1B3] dark:bg-[#00E3CC] z-20 transition-opacity 
+                               ${isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
                     onClick={toggleSidebar}
                     aria-hidden="true" />
                 <button
                     onClick={toggleSidebar}
-                    className="sm:hidden fixed top-16 right-4 bg-blue-600 dark:bg-yellow-500 text-white p-2 rounded-full shadow-lg z-30
-             transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    className="sm:hidden fixed top-20 right-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white p-2 rounded-full shadow-lg z-30
+                            transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300"
                     aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
                     aria-expanded={isSidebarOpen}>
                     {isSidebarOpen ? <AiOutlineClose size={24} /> : <AiOutlineBars size={24} />}
@@ -133,22 +162,27 @@ const OOPS = () => {
                 <main className="sm:w-4/5 w-full ml-auto p-6 mt-20">
 
 
-                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6"  id="oops_desc">
+                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id="oops_desc">
 
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
 
                             {/* Title */}
-                            <h1 className="text-center text-3xl font-extrabold text-blue-600 dark:text-yellow-500 mb-6">
+                            <div className="text-center mb-4">
+                                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#2A3F5F] to-[#00C1B3] dark:from-[#00E3CC] dark:to-[#A0AEC0]">
                                 Object-Oriented Programming
-                            </h1>
+                                </h1>
 
+                            </div>
                             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
                                 Introduction
+                                </h2>
                             </h2>
-
+                           
                             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
                                 OOP stands for <span className="font-bold text-gray-900 dark:text-white">Object-Oriented Programming</span>. It helps solve real-world problems using classes and objects.
                             </p>
@@ -225,13 +259,17 @@ The student age is 20`}
 
 
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id="Constructor">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
+                        <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
                                 Constructor in C++
+                                </h2>
                             </h2>
+                         
 
                             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
                                 A <span className="font-bold text-gray-900 dark:text-white">constructor</span> is a special method that does not return anything. It is automatically invoked when an object is created.
@@ -329,16 +367,18 @@ The student age is 20`}
 
 
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id="Destructor">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
-
-
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
+                        <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
                                 Destructor in C++
+                                </h2>
                             </h2>
 
+                          
                             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
                                 A <span className="font-bold text-gray-900 dark:text-white">destructor</span> in C++ is a special member function that is called automatically
                                 when an object goes out of scope or is explicitly deleted. It is used to release resources allocated to the object.
@@ -410,14 +450,17 @@ Destructor called!`}
 
 
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id="Four-Pillars-of-OOPS">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700" >
-
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden" >
+                        <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
                                 Four Pillars of OOPS
+                                </h2>
                             </h2>
+                           
 
                             {/* List of Pillars */}
                             <ul className="list-disc ml-6 mt-3 space-y-2 text-gray-700 dark:text-gray-300 mb-6">
@@ -437,16 +480,18 @@ Destructor called!`}
 
 
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id="Abstraction">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
-
-
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
+                        <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
                                 Abstraction
+                                </h2>
                             </h2>
 
+                           
                             {/* Definition and Explanation */}
                             <p className="text-gray-700 dark:text-gray-300 mt-2 leading-relaxed">
                                 Abstraction is the process of hiding the implementation details and showing only the functionality to the user. It helps to reduce programming complexity and effort.
@@ -530,14 +575,17 @@ The car has stopped.`}
 
 
                     <section className="max-w-4xl mx-auto px-6 py-8" id="Polymorphism">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
-
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
+                        <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
                                 Polymorphism
+                                </h2>
                             </h2>
+                         
 
                             {/* Definition */}
                             <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -685,14 +733,17 @@ int main() {
 
                     <section className='max-w-4xl mx-auto px-4 md:px-6 py-6' id='Inheritance'>
                         <div className='mb-2'>
-                            <div className='bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700'>
-
-                                <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
-                                    </svg>
-                                    Inheritance
+                            <div className='bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden'>
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                Inheritance
                                 </h2>
+                            </h2>
+                               
 
                                 {/* Introduction Paragraph */}
                                 <p className='text-gray-700 dark:text-gray-300 mt-2 leading-relaxed'>
@@ -1015,14 +1066,17 @@ Car is driving.`}
 
                     <section className='max-w-4xl mx-auto px-4 md:px-6 py-6 ' id='Encapsulation'>
                         <div className='mb-2'>
-                            <div className='bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700'>
-
-                                <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
-                                    </svg>
-                                    Encapsulation
+                            <div className='bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden'>
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                Encapsulation
                                 </h2>
+                            </h2>
+                               
 
                                 {/* Description Paragraph */}
                                 <p className='text-gray-700 dark:text-gray-300 mt-2 leading-relaxed'>
@@ -1037,14 +1091,17 @@ Car is driving.`}
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id="Friend-Function-and-Friend-Class">
                         {/* Friend Functions Section */}
                         <div className="mb-2">
-                            <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
-
-                                <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
-                                    </svg>
-                                    Friend Function and Friend Class
+                            <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
+                                Friend Function and Friend Class
                                 </h2>
+                            </h2>
+                              
 
                                 {/* Friend Function Section */}
                                 <div className="mb-8">
@@ -1215,14 +1272,18 @@ int main() {
                     </section>
 
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id="Access-Modifier">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 shadow-lg rounded-xl p-8 border border-gray-100 dark:border-gray-700">
-
-                            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
+                        <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
+                                <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
                                 Access Modifier
+                                </h2>
                             </h2>
+
+                           
                             <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
                                 Access modifiers in C++ define the visibility and accessibility of class members (variables and methods).
                                 They control how class members are accessed inside or outside the class.

@@ -1,85 +1,114 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { FaGithub, FaLinkedin, FaBook, FaCode, FaUserCircle } from 'react-icons/fa';
+import Header from '../components/Header';
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-      <div className="container mx-auto px-6 py-12">
-        <h1 className="text-4xl font-extrabold text-center mb-6 text-blue-600 dark:text-blue-400">
-          About Us
-        </h1>
-        <p className="text-center text-lg max-w-2xl mx-auto mb-8">
-          Welcome to <span className="font-bold">PatternPrep</span>! Our mission is to help you master 
-          patterns, problem-solving, and coding challenges, making your journey to technical excellence smooth and enjoyable.
-        </p>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+        <Header/>
+      <div className="container mx-auto px-4 sm:px-6 py-16">
+        {/* Platform Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent mb-4">
+            🎯 PatternPrep
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            A Student-Built Platform for Structured Placement Preparation
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Our Mission */}
-          <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
-            <p>
-              At PatternPrep, we aim to empower developers and learners to hone their coding skills 
-              by providing intuitive resources, interactive tutorials, and a collaborative community. 
-              Whether you're preparing for interviews or leveling up your knowledge, we’ve got you covered.
-            </p>
+        {/* Creator Introduction */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl mb-16 border border-gray-100 dark:border-gray-700 text-center">
+          <div className="flex flex-col items-center mb-6">
+            <img 
+              src="\src\assets\public\nilesh.png" // Add your profile image path
+              alt="Nilesh Tiwari"
+              className="w-32 h-32 rounded-full object-cover mb-4 border-4 border-blue-100 dark:border-blue-800"
+            />
+            <h2 className="text-2xl font-bold">Nilesh Tiwari</h2>
+            <p className="text-gray-600 dark:text-gray-300">Project Creator & Senior Student</p>
           </div>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            "As someone who's been through the placement grind, I built PatternPrep to help 
+            juniors avoid common pitfalls and focus on what really matters."
+          </p>
+          <div className="flex justify-center gap-4">
+            <a href="https://github.com/Niltiwari7" className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
+              <FaGithub /> GitHub
+            </a>
+            <a href="https://linkedin.com/in/nilesh-tiwari" className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
+              <FaLinkedin /> LinkedIn
+            </a>
+          </div>
+        </div>
 
-          {/* Why Choose Us */}
-          <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-4">Why Choose Us?</h2>
-            <ul className="list-disc pl-6">
-              <li>Comprehensive learning materials tailored to your needs.</li>
-              <li>Structured resources for each topic in Data Structures.</li>
-              <li>A supportive community of fellow learners and mentors.</li>
-              <li>Focused preparation on coding patterns for real-world problems.</li>
-              <li>Regularly updated content to keep you ahead in the tech world.</li>
+        {/* Platform Features */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+              <FaCode className="text-green-500" />
+              What PatternPrep Offers
+            </h2>
+            <ul className="space-y-4 text-gray-600 dark:text-gray-300">
+              <li>✅ Curated DSA Roadmaps</li>
+              <li>📚 CS Fundamental Guides</li>
+              <li>🎯 Pattern-Based Problem Solving</li>
+              <li>📝 Interview Preparation Kits</li>
             </ul>
           </div>
-        </div>
 
-        {/* Our Values Section */}
-        <div className="mt-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold mb-4 text-center">Our Values</h2>
-          <p className="text-center mb-4">
-            We believe in fostering a culture of learning, collaboration, and innovation. Our core values include:
-          </p>
-          <ul className="list-disc pl-6">
-            <li>Integrity: We uphold the highest standards of honesty and transparency.</li>
-            <li>Community: We thrive on collaboration and support among our members.</li>
-            <li>Excellence: We strive for the best in everything we do.</li>
-            <li>Innovation: We embrace change and encourage creative solutions.</li>
-          </ul>
-        </div>
-
-        {/* Success Stories Section */}
-        {/* <div className="mt-12">
-          <h2 className="text-2xl font-bold mb-4 text-center">Success Stories</h2>
-          <p className="text-center mb-6">
-            Hear from our users who have transformed their coding skills with PatternPrep:
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-              <h3 className="font-semibold">John Doe</h3>
-              <p>"PatternPrep helped me land my dream job! The resources were invaluable during my interview preparation."</p>
-            </div>
-            <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-              <h3 className="font-semibold">Jane Smith</h3>
-              <p>"The community support and interactive tutorials made learning so much easier and enjoyable!"</p>
+          <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+              <FaBook className="text-purple-500" />
+              Key Features
+            </h2>
+            <div className="grid grid-cols-2 gap-4 text-gray-600 dark:text-gray-300">
+              <div>🧩 50+ Coding Patterns</div>
+              <div>📊 300+ Curated Problems</div>
+              <div>💡 Visual Explanations</div>
+              <div>⏱️ Time-Saving Structure</div>
             </div>
           </div>
-        </div> */}
-
-        {/* Call to Action */}
-        <div className="mt-12 text-center">
-          <h2 className="text-2xl font-bold mb-4">Join Us Today!</h2>
-          <p className="mb-6">
-            Start your journey with PatternPrep and transform the way you solve problems. 
-            Sign up now to unlock all the resources and tools available for you!
-          </p>
-          <Link to="/signup" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300">
-            Get Started
-          </Link>
         </div>
+
+        {/* Why It Works */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl mb-16 border border-gray-100 dark:border-gray-700">
+          <h2 className="text-2xl font-bold mb-6 text-center">Why PatternPrep Works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center p-4">
+              <div className="text-4xl mb-2">🚀</div>
+              <h3 className="font-bold mb-2">Tested Approach</h3>
+              <p className="text-sm">Methods verified through personal placement journey</p>
+            </div>
+            <div className="text-center p-4">
+              <div className="text-4xl mb-2">🎯</div>
+              <h3 className="font-bold mb-2">Focus on Essentials</h3>
+              <p className="text-sm">Only what you need for placements</p>
+            </div>
+            <div className="text-center p-4">
+              <div className="text-4xl mb-2">💡</div>
+              <h3 className="font-bold mb-2">Student Perspective</h3>
+              <p className="text-sm">Built by someone who understands your challenges</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Final CTA */}
+        <div className="text-center bg-gradient-to-r from-blue-600 to-green-600 rounded-2xl p-12 shadow-xl">
+          <h2 className="text-3xl font-bold text-white mb-6">Start Learning Today!</h2>
+          <p className="text-white/90 mb-8 max-w-2xl mx-auto">
+            Join hundreds of VIT students using PatternPrep for their placement prep
+          </p>
+          <div className="flex justify-center gap-6">
+            <button className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-all">
+              Explore DSA Patterns
+            </button>
+            <button className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all">
+              View CS Modules
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
   );
