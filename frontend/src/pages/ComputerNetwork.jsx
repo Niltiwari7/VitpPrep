@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setDarkMode } from '../utils/slices/theme.slice';
 import { FaBars, FaMoon, FaSun, FaYoutube } from 'react-icons/fa';
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import {
@@ -18,6 +18,21 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
+import { Button } from "@/components/ui/button";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { toast } from "react-hot-toast";
+import { LogOut } from 'lucide-react';
+import { Heart } from "lucide-react";
+import { User } from 'lucide-react';
+import { logout } from "../utils/slices/user.slice.js";
 
 
 const ComputerNetwork = () => {
@@ -26,7 +41,10 @@ const ComputerNetwork = () => {
     const user = useSelector((state) => state.user.userInfo);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [step, setStep] = useState(1);
-
+    const API_URL = 'http://localhost:3000';
+    const [error, setError] = useState('');
+    const [loader, setLoader] = useState(false);
+    const navigate = useNavigate();
     const nextStep = () => {
         if (step < 3) setStep(step + 1);
     };
@@ -39,6 +57,36 @@ const ComputerNetwork = () => {
         dispatch(setDarkMode(!darkMode));
     }
 
+
+    const handleLogout = async () => {
+        setError('');
+        setLoader(true);
+        try {
+            const response = await fetch(`${API_URL}/users/logout`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+            console.log(data);
+
+            if (data.success) {
+                dispatch(logout());
+                navigate('/');
+            } else {
+                toast.error('Failed to logout. Please try again.');
+            }
+        } catch (error) {
+            toast.error('An error occurred. Please try again.');
+            console.log(error);
+
+        } finally {
+            setLoader(false);
+        }
+    };
     const [currentSection, setCurrentSection] = useState('#cn_desc');
     const handleLinkClick = (sectionId) => {
         // Update current section
@@ -76,45 +124,84 @@ const ComputerNetwork = () => {
 
     return (
         <div className='gap-5'>
-            <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-lg fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/20 dark:border-[#00E3CC]/20">
-                {/* Back Link */}
-                <Link
-                    to='/dashboard'
-                    className="flex items-center text-[#00C1B3] dark:text-[#00E3CC] hover:text-white dark:hover:text-white transition-colors duration-300 group"
-                >
-                    <AiOutlineArrowLeft
-                        size={20}
-                        className="group-hover:-translate-x-1 transition-transform"
-                    />
-                    <span className="ml-2 font-medium">Back to Dashboard</span>
-                </Link>
+            <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-xl backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30">
+                <div className="flex items-center space-x-2">
+                    <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:from-blue-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-500 hover:scale-105">
+                        VitpPrep
+                    </h3>
 
-                {/* Right Section */}
-                <div className="flex items-center gap-4">
-                    {/* Theme Toggle */}
-                    <button
-                        aria-label="Toggle Theme"
+                    {/* <h3 className="text-2xl font-extrabold text-gray-900">PatternPrep</h3> */}
+
+                    <div className="h-4 w-1 bg-gradient-to-b from-[#00C1B3] to-[#00E3CC] rounded-full animate-pulse"></div>
+                </div>
+
+
+
+                <div className="flex items-center gap-5">
+                    <Button
+                        variant="ghost"
+                        size="icon"
                         onClick={toggleTheme}
-                        className="p-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                        className="p-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 group"
                     >
                         {darkMode ? (
-                            <FaMoon size={18} className="hover:rotate-12 transition-transform" />
+                            <FaMoon size={20} className="group-hover:rotate-[-15deg] transition-transform duration-300" />
                         ) : (
-                            <FaSun size={18} className="hover:rotate-12 transition-transform" />
+                            <FaSun size={20} className="group-hover:rotate-12 transition-transform duration-300" />
                         )}
-                    </button>
+                    </Button>
 
-                    {/* Profile Image */}
-                    {user?.imageUrl && (
-                        <div className="relative group">
-                            <img
-                                className="w-10 h-10 rounded-full object-cover border-2 border-[#00C1B3] dark:border-[#00E3CC] hover:border-white cursor-pointer transition-all"
-                                src={user.imageUrl}
-                                alt="Profile"
-                            />
-                            <div className="absolute inset-0 border-2 border-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        </div>
-                    )}
+                    {/* Profile Dropdown */}
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                variant="ghost"
+                                className="relative h-10 w-10 rounded-full hover:scale-105 transition-transform duration-200"
+                            >
+                                <Avatar className="h-10 w-10 border-2 border-white/20 hover:border-[#00C1B3]/40 dark:hover:border-[#00E3CC]/40 transition-colors duration-300">
+                                    <AvatarImage
+                                        src={user.imageUrl || "/assets/placeholder.png"}
+                                        className="hover:brightness-110 transition-all duration-300"
+                                    />
+                                    <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+                                        {user.name?.charAt(0) || "U"}
+                                    </AvatarFallback>
+                                </Avatar>
+                                <span className="absolute -bottom-1 -right-1 h-3 w-3 bg-green-400 rounded-full border-2 border-white dark:border-[#0D1117]"></span>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                            className="w-56 bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-lg border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 shadow-xl"
+                            align="end"
+                        >
+                            <DropdownMenuLabel className="text-[#00C1B3] dark:text-[#00E3CC] font-semibold">
+                                My Account
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
+                            <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
+                                <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                Profile
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
+                                <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                Liked Questions
+                            </DropdownMenuItem>
+
+                            <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
+                            <DropdownMenuItem className="p-0 hover:bg-transparent">
+
+                                <Button
+                                    variant="destructive"
+                                    className="w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 transition-colors"
+                                    onClick={handleLogout}
+                                >
+                                    Logout
+                                    <LogOut className="ml-2 h-4 w-4" />
+                                </Button>
+
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
             </header>
 
@@ -651,16 +738,16 @@ const ComputerNetwork = () => {
 
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='tcp/ip'>
                         <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
-                        <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                                 <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
                                 <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
-                                TCP/IP Model
+                                    TCP/IP Model
                                 </h2>
                             </h2>
-                          
+
 
 
                             <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -725,17 +812,17 @@ const ComputerNetwork = () => {
 
                     <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='handshake'>
                         <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
-                        <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                                 <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
                                 </svg>
                                 <h2 className="text-2xl font-extrabold text-[#2A3F5F] dark:text-[#A0AEC0]">
-                                TCP Three-Way Handshake 🚀
+                                    TCP Three-Way Handshake 🚀
                                 </h2>
                             </h2>
 
-                           
+
                             <p className="text-gray-600 dark:text-gray-300 mt-2">
                                 This process establishes a reliable connection between a client and a server.
                             </p>

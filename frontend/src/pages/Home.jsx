@@ -1,58 +1,253 @@
 import React, { useEffect, useState } from 'react';
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import Header from '../components/Header';
+import { FaCode, FaUsers, FaChartLine, FaRocket, FaGraduationCap } from 'react-icons/fa';
+
 const HomePage = () => {
-   
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const fadeIn = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.8 } }
+  };
+
+  const staggerChildren = {
+    visible: { transition: { staggerChildren: 0.2 } }
+  };
+
   return (
-    <div className={`bg-gray-100 dark:bg-black transition duration-500`}>
-      <Header/>
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-500">
+      <Header />
+
       {/* Hero Section */}
-      <header className="bg-blue-600 text-white py-20">
-        <div className="container mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-4">Master Data Structures & Algorithms</h1>
-          <p className="text-lg mb-8">Your one-stop solution for mastering DSA with topic-wise and category-wise patterns.</p>
-          <Link to='/signin' className="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-200 transition duration-300">
-            Get Started
-          </Link>
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="relative bg-gradient-to-br from-blue-600 to-purple-600 text-white py-28 overflow-hidden"
+      >
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-5xl md:text-6xl font-bold mb-6 leading-tight"
+          >
+            Your Ultimate Placement Guide with VitpPrep
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="text-xl mb-8 max-w-2xl mx-auto text-gray-200"
+          >
+            Accelarate your placement journey with VitpPrep. we have cumulated all the neccessary resources to help you ace your placement journey.
+            here you will find all the resources you need to ace your placement journey. All the best!
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            <Link
+              to='/signin'
+              className="inline-flex items-center bg-white text-blue-600 px-8 py-4 rounded-full font-bold hover:bg-opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              <FaRocket className="mr-2" />
+              Start Learning Now
+            </Link>
+          </motion.div>
         </div>
-      </header>
+
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={i}
+              animate={{
+                y: [0, -100, 0],
+                x: [0, Math.random() * 100 - 50, 0],
+                rotate: [0, 360]
+              }}
+              transition={{
+                duration: 10 + Math.random() * 10,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="absolute w-2 h-2 bg-white/10 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`
+              }}
+            />
+          ))}
+        </div>
+      </motion.section>
+
+      {/* Features Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <motion.h2
+            initial="hidden"
+            animate={mounted ? "visible" : "hidden"}
+            variants={fadeIn}
+            className="text-4xl font-bold text-center mb-16 dark:text-white"
+          >
+            Why Choose VitpPrep?
+          </motion.h2>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            variants={staggerChildren}
+            initial="hidden"
+            animate={mounted ? "visible" : "hidden"}
+          >
+            <FeatureCard
+              icon={<FaCode className="w-8 h-8" />}
+              title="Pattern-Based Learning"
+              description="Master Data Structures and Algorithms through structured problem patterns and real-world applications."
+            />
+            <FeatureCard
+              icon={<FaChartLine className="w-8 h-8" />}
+              title="Comprehensive CS Notes"
+              description="Access well-structured notes on core Computer Science fundamentals, curated from real-world experience."
+            />
+            <FeatureCard
+              icon={<FaUsers className="w-8 h-8" />}
+              title="Personalized Resume Guidance"
+              description="We will going to take resume sessions and help you ace your resume."
+            />
+
+          </motion.div>
+        </div>
+      </section>
 
       {/* Featured Topics Section */}
-      <section id="topics" className="py-20">
-        <div className="container mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-10 dark:text-white">Featured Topics</h2>
+      <section className="py-20 bg-white dark:bg-gray-800">
+        <div className="container mx-auto px-4">
+          <motion.h2
+            initial="hidden"
+            animate={mounted ? "visible" : "hidden"}
+            variants={fadeIn}
+            className="text-4xl font-bold text-center mb-16 dark:text-white"
+          >
+            Featured Learning Paths
+          </motion.h2>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 transition-transform transform hover:scale-105">
-              <h3 className="text-2xl font-semibold mb-4 dark:text-gray-200">Dynamic Programming</h3>
-              <p className="text-gray-700 dark:text-gray-300 mb-4">Learn about different types of pattern and their applications.</p>
-              <a href="/arrays" className="text-blue-600 font-semibold">Explore</a>
-            </div>
-            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 transition-transform transform hover:scale-105">
-              <h3 className="text-2xl font-semibold mb-4 dark:text-gray-200">Linked Lists</h3>
-              <p className="text-gray-700 dark:text-gray-300 mb-4">Understand linked lists and their various operations.</p>
-              <a href="/linked-lists" className="text-blue-600 font-semibold">Explore</a>
-            </div>
-            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 transition-transform transform hover:scale-105">
-              <h3 className="text-2xl font-semibold mb-4 dark:text-gray-200">Trees</h3>
-              <p className="text-gray-700 dark:text-gray-300 mb-4">Dive into tree data structures and their traversal methods.</p>
-              <a href="/trees" className="text-blue-600 font-semibold">Explore</a>
-            </div>
+            <TopicCard
+              title="Top Interview Questions - Pattern Wise"
+              description="Master frequently asked interview questions by understanding their underlying patterns and approaches."
+              icon={<FaGraduationCap />}
+              path="/top-interview-questions-dsa"
+            />
+            <TopicCard
+              title="OOPs Concepts & Notes"
+              description="Deep dive into Object-Oriented Programming with structured notes and real-world examples."
+              icon={<FaGraduationCap />}
+              path="/oops"
+            />
+            <TopicCard
+              title="DBMS Essentials"
+              description="Explore key concepts of Database Management Systems with concise and easy-to-understand notes."
+              icon={<FaGraduationCap />}
+              path="/dbms"
+            />
+            <TopicCard
+              title="Operating System Fundamentals"
+              description="Learn core OS concepts, including memory management, process scheduling, and concurrency."
+              icon={<FaGraduationCap />}
+              path="/os"
+            />
+            <TopicCard
+              title="Computer Networks Guide"
+              description="Understand networking fundamentals, protocols, and security concepts for technical interviews."
+              icon={<FaGraduationCap />}
+              path="/computer-network"
+            />
+
+
           </div>
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="bg-blue-600 text-white py-10">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Join Our Community</h2>
-          <p className="mb-6">Connect with fellow learners and enhance your DSA skills.</p>
-          <a href="/signup" className="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-200 transition duration-300">
-            Sign Up Now
-          </a>
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-purple-600 to-blue-600">
+        <div className="container mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <h2 className="text-4xl font-bold text-white mb-6">Start Your Journey Today</h2>
+            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+              Your placement journey begins here! Prepare with structured resources, guidance to crack your dream job.
+            </p>
+            <div className="flex justify-center space-x-4">
+              <Link
+                to="/signup"
+                className="bg-white text-blue-600 px-8 py-4 rounded-full font-bold hover:bg-opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center"
+              >
+                <FaRocket className="mr-2" />
+                Get Started Free
+              </Link>
+              <Link
+                to="/about"
+                className="border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-blue-600 transition-all duration-300"
+              >
+                Learn More
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>
   );
 };
+
+const FeatureCard = ({ icon, title, description }) => (
+  <motion.div
+    variants={{
+      hidden: { opacity: 0, y: 20 },
+      visible: { opacity: 1, y: 0 }
+    }}
+    className="bg-white dark:bg-gray-700 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+  >
+    <div className="w-16 h-16 bg-blue-100 dark:bg-blue-800 rounded-xl flex items-center justify-center mb-6">
+      {icon}
+    </div>
+    <h3 className="text-2xl font-bold mb-4 dark:text-white">{title}</h3>
+    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{description}</p>
+  </motion.div>
+);
+
+const TopicCard = ({ title, description, icon, path }) => (
+  <motion.div
+    whileHover={{ y: -10 }}
+    className="group bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
+  >
+    <div className="p-8">
+      <div className="w-12 h-12 bg-purple-100 dark:bg-purple-800 rounded-lg flex items-center justify-center mb-6">
+        {icon}
+      </div>
+      <h3 className="text-2xl font-bold mb-4 dark:text-white">{title}</h3>
+      <p className="text-gray-600 dark:text-gray-300 mb-6">{description}</p>
+      <Link
+        to={path}
+        className="inline-flex items-center text-blue-600 dark:text-blue-400 font-semibold hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+      >
+        Explore Path
+        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </Link>
+    </div>
+  </motion.div>
+);
 
 export default HomePage;

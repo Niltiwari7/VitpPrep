@@ -100,7 +100,7 @@ const UserDashBoard = () => {
       <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-xl backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30">
         <div className="flex items-center space-x-2">
           <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:from-blue-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-500 hover:scale-105">
-            PatternPrep
+           VitpPrep
           </h3>
 
           {/* <h3 className="text-2xl font-extrabold text-gray-900">PatternPrep</h3> */}
@@ -159,10 +159,7 @@ const UserDashBoard = () => {
                 <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
                 Liked Questions
               </DropdownMenuItem>
-              <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
-                <ClipboardList className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                Interview Experience
-              </DropdownMenuItem>
+            
               <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
               <DropdownMenuItem className="p-0 hover:bg-transparent">
                 {loader ? (
