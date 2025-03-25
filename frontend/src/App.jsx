@@ -26,6 +26,7 @@ import OOPS from "./pages/OOPS";
 import ComputerNetwork from "./pages/ComputerNetwork";
 import DBMS from "./pages/DBMS";
 import OS from "./pages/OS";
+import UserProfile from "./pages/UserProfile";
 
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
         <Route path="/admin/topic/:adminId" element={<Topic />} />
         <Route path='/admin/questions' element={<Quesion />} />
         <Route path='/admin/edit-question/:questionId' element={<UpdateQuestion />} />
+        <Route path = '/user/:userId' element = {<UserProfile/>}/>
         <Route path='/top-interview-questions-dsa' element={<Dsa150Question />} />
         <Route path='/oops' element={<OOPS />} />
         <Route path='/computer-network' element={<ComputerNetwork />} />

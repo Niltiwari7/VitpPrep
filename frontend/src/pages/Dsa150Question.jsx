@@ -127,7 +127,8 @@ const Dsa150Question = () => {
             prev.map((sub) => (sub._id === updatedSubtopic._id ? updatedSubtopic : sub))
         );
     };
-
+    console.log("User ",user);
+    
     // Memoized subtopics for performance
     const memoizedSubtopics = useMemo(() => (
         <div className="text-white font-semibold rounded-lg p-2 shadow-md transition-all duration-300 hover:shadow-lg">
@@ -229,9 +230,12 @@ const Dsa150Question = () => {
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
                             <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
-                                <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                                Profile
+                                <Link to={`/user/${user._id}`} className="flex items-center">
+                                    <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                    Profile
+                                </Link>
                             </DropdownMenuItem>
+
                             <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
                                 <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
                                 Liked Questions
