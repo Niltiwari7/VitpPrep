@@ -11,9 +11,10 @@ import UserDashBoard from "./pages/UserDashBoard";
 import AdminSignUp from "./pages/AdminSignUp";
 import AdminSignIn from "./pages/AdminSignIn";
 import AdminProfile from "./pages/AdminProfile";
+import AdminEdit from "./pages/AdminEdit";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import AdminEdit from "./pages/AdminEdit";
+
 
 // Import the Toaster component
 import { Toaster } from "react-hot-toast";
@@ -27,6 +28,7 @@ import ComputerNetwork from "./pages/ComputerNetwork";
 import DBMS from "./pages/DBMS";
 import OS from "./pages/OS";
 import UserProfile from "./pages/UserProfile";
+import UserEdit from "./pages/UserEdit";
 
 
 function App() {
@@ -79,6 +81,7 @@ function App() {
         <Route path='/admin/questions' element={<Quesion />} />
         <Route path='/admin/edit-question/:questionId' element={<UpdateQuestion />} />
         <Route path = '/user/:userId' element = {<UserProfile/>}/>
+        <Route path = '/user/edit/:userId' element = {<UserEdit/>}/>
         <Route path='/top-interview-questions-dsa' element={<Dsa150Question />} />
         <Route path='/oops' element={<OOPS />} />
         <Route path='/computer-network' element={<ComputerNetwork />} />

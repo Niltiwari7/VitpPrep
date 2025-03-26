@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDarkMode } from '../utils/slices/theme.slice';
-import { 
+import {
     FaEdit, FaMoon, FaSun, FaCheckCircle, FaBullseye, FaChartLine,
     FaHeart, FaCode, FaCogs, FaNetworkWired, FaDatabase, FaLaptop, FaBook,
-    FaUserCircle, FaCertificate, FaTrophy, FaSignOutAlt
+
 } from 'react-icons/fa';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import UserP from './UserP';
 import { updateUserInfo } from '../utils/slices/user.slice.js';
-
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { User, Heart, LogOut } from 'lucide-react'
 const API_URL = `http://localhost:3000`;
 
 const UserProfile = () => {
@@ -71,78 +81,121 @@ const UserProfile = () => {
         // Implement logout logic
         navigate('/login');
     };
-
+    const [activeTopicIndex, setActiveTopicIndex] = useState(0);
     return (
         <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-[#101927] text-gray-100' : 'bg-[#F3F4F6]text-gray-900'}`}>
             {/* Header */}
-            <header className={`sticky top-0 z-50 flex items-center justify-between px-6 py-4 shadow-lg ${darkMode ? 'bg-[#0E1522]' : 'bg-[#2B4167]'} transition-colors duration-300`}>
-                <div className='flex items-center space-x-4'>
-                    <img 
-                        src='/src/assets/public/logo.png' 
-                        alt='Logo' 
-                        className='w-12 h-12 rounded-full border-2 border-white/20 transform hover:scale-110 transition-transform duration-300' 
-                    />
-                    <Link to='/' className='text-2xl font-bold text-white hover:text-gray-200 transition-colors'>
+            <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-xl backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30">
+                <div className="flex items-center space-x-2">
+                    <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:from-blue-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-500 hover:scale-105">
                         VitpPrep
-                    </Link>
+                    </h3>
+
+                    {/* <h3 className="text-2xl font-extrabold text-gray-900">PatternPrep</h3> */}
+
+                    <div className="h-4 w-1 bg-gradient-to-b from-[#00C1B3] to-[#00E3CC] rounded-full animate-pulse"></div>
                 </div>
-                <div className='flex items-center space-x-6'>
-                    {/* Theme Toggle */}
-                    <button
+
+
+
+                <div className="flex items-center gap-5">
+                    <Button
+                        variant="ghost"
+                        size="icon"
                         onClick={toggleTheme}
-                        className={`p-2 rounded-full ${darkMode ? 'bg-gray-700 text-amber-400' : 'bg-blue-600 text-white'} hover:opacity-90 transition-opacity duration-300 group`}
+                        className="p-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 group"
                     >
-                        {darkMode ? <FaSun size={20} className='group-hover:rotate-180 transition-transform' /> : <FaMoon size={20} className='group-hover:rotate-180 transition-transform' />}
-                    </button>
-                    
+                        {darkMode ? (
+                            <FaMoon size={20} className="group-hover:rotate-[-15deg] transition-transform duration-300" />
+                        ) : (
+                            <FaSun size={20} className="group-hover:rotate-12 transition-transform duration-300" />
+                        )}
+                    </Button>
+
                     {/* Profile Dropdown */}
-                    <div className="relative group">
-                        <img
-                            className='w-10 h-10 rounded-full border-2 border-white/30 hover:border-blue-400 transition-all duration-300 cursor-pointer'
-                            src={user?.imageUrl || '/default-avatar.png'}
-                            alt='Profile'
-                        />
-                        <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg hidden group-hover:block transition-all duration-300 z-50">
-                            <div className="py-2">
-                                <Link 
-                                    to={`/admin/edit/${userId}`} 
-                                    className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                                >
-                                    <FaUserCircle className="mr-2" /> Profile
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                variant="ghost"
+                                className="relative h-10 w-10 rounded-full hover:scale-105 transition-transform duration-200"
+                            >
+                                <Avatar className="h-10 w-10 border-2 border-white/20 hover:border-[#00C1B3]/40 dark:hover:border-[#00E3CC]/40 transition-colors duration-300">
+                                    <AvatarImage
+                                        src={user.imageUrl || "/assets/placeholder.png"}
+                                        className="hover:brightness-110 transition-all duration-300"
+                                    />
+                                    <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+                                        {user.name?.charAt(0) || "U"}
+                                    </AvatarFallback>
+                                </Avatar>
+                                <span className="absolute -bottom-1 -right-1 h-3 w-3 bg-green-400 rounded-full border-2 border-white dark:border-[#0D1117]"></span>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                            className="w-56 bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-lg border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 shadow-xl"
+                            align="end"
+                        >
+                            <DropdownMenuLabel className="text-[#00C1B3] dark:text-[#00E3CC] font-semibold">
+                                My Account
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
+                            <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
+                                <Link to={`/user/${user._id}`} className="flex items-center">
+                                    <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                    Profile
                                 </Link>
-                                <Link 
-                                    to="/achievements" 
-                                    className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                                >
-                                    <FaTrophy className="mr-2" /> Achievements
-                                </Link>
-                                <button 
+                            </DropdownMenuItem>
+
+                            <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
+                                <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                Liked Questions
+                            </DropdownMenuItem>
+
+                            <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
+                            <DropdownMenuItem className="p-0 hover:bg-transparent">
+
+                                <Button
+                                    variant="destructive"
+                                    className="w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 transition-colors"
                                     onClick={handleLogout}
-                                    className="w-full text-left flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                                 >
-                                    <FaSignOutAlt className="mr-2" /> Logout
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                                    Logout
+                                    <LogOut className="ml-2 h-4 w-4" />
+                                </Button>
+
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
             </header>
 
             {/* Main Content */}
-            <main className='container mx-auto px-4 xl:px-6 py-8 grid grid-cols-1 md:grid-cols-4 gap-6'>
+            <main className='container mx-auto px-4 xl:px-6 py-8 grid grid-cols-1 md:grid-cols-4 gap-6 pt-20'>
                 {/* Sidebar */}
-                <aside className="col-span-1 bg-[#FEFEFF] dark:bg-[#374050]rounded-xl shadow-lg p-6 transition-colors duration-300">
-                    <div className="text-center font-semibold text-2xl text-gray-800 dark:text-white mb-6">
+                <aside className="col-span-1 bg-[#FEFEFF] dark:bg-[#374050] rounded-xl shadow-lg p-6 transition-all duration-500 ease-in-out transform -translate-x-2 animate-slideInLeft">
+                    <div className="text-center font-semibold text-2xl text-gray-800 dark:text-white mb-6 transition-colors duration-300">
                         Learning Topics
                     </div>
 
                     {learningTopics.map((topic, index) => (
                         <button
                             key={index}
-                            className="w-full text-center text-black dark:text-white text-xl font-semibold rounded-md p-4 mb-4 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:bg-blue-100 dark:hover:bg-gray-700 dark:bg-gray-800 hover:text-blue-500 flex items-center justify-center gap-3"
+                            className={`group w-full text-center text-xl font-semibold rounded-md p-4 mb-3 
+                transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] 
+                hover:translate-x-2 hover:shadow-2xl
+                ${activeTopicIndex === index
+                                    ? 'bg-blue-100 dark:bg-gray-700 border-l-4 border-blue-500 dark:border-blue-400 text-blue-500'
+                                    : 'text-gray-800 dark:text-white hover:bg-blue-50 dark:hover:bg-gray-800'}
+                flex items-center justify-center gap-3`}
+                            onClick={() => setActiveTopicIndex(index)}
                         >
-                            <topic.icon className={`${topic.color} text-2xl`} />
-                            {topic.title}
+                            <topic.icon
+                                className={`${topic.color} text-2xl transition-transform duration-300 
+                    group-hover:scale-110 group-hover:-translate-y-1`}
+                            />
+                            <span className="transition-all duration-300 group-hover:tracking-wide">
+                                {topic.title}
+                            </span>
                         </button>
                     ))}
                 </aside>
@@ -154,7 +207,7 @@ const UserProfile = () => {
                             User Profile
                         </h1>
                         <Link
-                            to={`/admin/edit/${userId}`}
+                            to={`/user/edit/${userId}`}
                             className='p-2 rounded-full bg-blue-100 dark:bg-gray-700 hover:bg-blue-200 dark:hover:bg-gray-600 transition-colors duration-300'
                         >
                             <FaEdit className='text-blue-600 dark:text-blue-400' size={24} />

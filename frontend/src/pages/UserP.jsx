@@ -92,7 +92,7 @@ const UserP = () => {
             <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Skills</h3>
                 <div className="flex flex-wrap gap-2">
-                    {['C++', 'Java', 'TailwindCSS', 'JavaScript', 'Python', 'React'].map((skill, index) => (
+                    {userInfo.technicalSkills.map((skill, index) => (
                         <span
                             key={index}
                             className="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full"

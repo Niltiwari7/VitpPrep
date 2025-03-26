@@ -252,7 +252,7 @@ export const updatePersonalInfo = async (req, res) => {
 
         // Validate adminId
         if (!adminId) {
-            return res.status(400).json({ message: "Admin ID is required", statusCode: 400, success: false });
+            return res.status(400).json({ message: "You are not authenticated", statusCode: 400, success: false });
         }
 
         // Validate updates
@@ -283,7 +283,11 @@ export const updateInformation = async (req, res) => {
 
         // Validate that the request body is not empty
         if (!updates || Object.keys(updates).length === 0) {
-            return res.status(400).json({ message: 'No updates provided.' });
+            return res.status(400).json({ 
+                message: 'No updates provided.',
+                statusCode:400,
+                success:false   
+            });
         }
         // checking userId is valid or not
         const user = await User.findById(userId);
@@ -307,7 +311,9 @@ export const updateInformation = async (req, res) => {
         res.status(200).json({ message: 'User updated successfully.', updatedUser });
     } catch (error) {
         console.error('Error updating user:', error);
-        res.status(500).json({ message: 'Failed to update user.', error: error.message });
+        res.status(500).json({ message: 'Failed to update user.', error: error.message ,
+            success:false
+        });
     }
 };
 
@@ -318,7 +324,7 @@ export const updateSocialLinks = async (req, res) => {
     try {
         const adminId = req.params.adminId;
         const { github, linkedin, twitter, website } = req.body;
-        console.log(linkedin);
+  
 
         // Validate adminId
         if (!adminId) {
@@ -343,7 +349,7 @@ export const updateSocialLinks = async (req, res) => {
             success: true, admin: updateAdmin
         });
     } catch (error) {
-        res.status(500).json({ message: "Internal server error" || error.message, statusCode: 500, success: false });
+       return  res.status(500).json({ message: "Internal server error" || error.message, statusCode: 500, success: false });
     }
 }
 

@@ -8,7 +8,7 @@ import AdminRouter from './routes/admin.route.js';
 import connectDB from './config/dbconfig.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-
+import helmet from 'helmet';
 
 dotenv.config();
 connectDB();
@@ -26,6 +26,8 @@ app.use(cors({
     },
     credentials: true, // Allow cookies to be sent with requests
 }));
+
+app.use(helmet());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));

@@ -6,6 +6,15 @@ export default {
 	],
 	theme: {
 	  extend: {
+		animation: {
+			slideInLeft: 'slideInLeft 0.5s ease-out',
+		},
+		keyframes: {
+			slideInLeft: {
+				'0%': { transform: 'translateX(-20px)', opacity: '0' },
+				'100%': { transform: 'translateX(0)', opacity: '1' },
+			}
+		},
 		borderRadius: {
 		  lg: 'var(--radius)',
 		  md: 'calc(var(--radius) - 2px)',

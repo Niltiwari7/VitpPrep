@@ -116,31 +116,31 @@ export const logoutUser = async (req, res) => {
     res.clearCookie('token');
     return res.status(200).json({
       message: 'User LogOut successfully',
-      statusCode:200,
-      success:true
+      statusCode: 200,
+      success: true
     });
   } catch (error) {
-    return res.status(500).json({ 
+    return res.status(500).json({
       message: error.message,
-      statusCode:500,
-      success:false
-     });
+      statusCode: 500,
+      success: false
+    });
   }
 }
 
 export const getProfile = async (req, res) => {
   try {
-    
+
     const user = await User.findById(req.user._id);
-    
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
     res.status(200).json({
       message: 'User profile fetched successfully',
-      statusCode:200,
-      success:true,
-      User : user
+      statusCode: 200,
+      success: true,
+      User: user
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -159,5 +159,247 @@ export const countUser = async (req, res) => {
   }
 };
 
+// updating personal Information of the user
+
+export const updatePersonalInfo = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const update = req.body;
+
+    if (!userId) {
+      return res.status(400).json({
+        message: "You are not authenticated",
+        statusCode: 400,
+        success: false
+      })
+    }
+
+    if (!update || Object.keys(update).length == 0) {
+      return res.status(400).json({
+        message: "No updates provided",
+        statusCode: 400,
+        success: false
+      })
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(userId, update, { new: true });
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        message: "User not found",
+        statusCode: 404,
+        success: false
+      })
+    }
 
 
+
+    return res.status(200).json({
+      message: "Personal Information updated successfully",
+      statusCode: 200,
+      User: updatedUser,
+      success: true
+    })
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: 'Internal Server Error',
+      statusCode: 500,
+      success: false
+    })
+  }
+}
+
+export const updateInformation = async (req, res) => {
+
+  try {
+
+    const userId = req.params.userId;
+
+    const update = req.body;
+
+    if (!update || Object.keys(update).length === 0) {
+      return res.status(400).json({
+        message: 'No updates Provided',
+        statusCode: 400,
+        success: false
+      })
+    }
+
+    const user = await User.findByIdAndUpdate(userId, update, { new: true });
+    if (!user) {
+      return res.status(404).json({
+        message: 'User not found',
+        statusCode: 404,
+        success: false
+      })
+    }
+
+    return res.status(200).json({
+      message: 'User Information updated successfully',
+      statusCode: 200,
+      User: user
+    })
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Internal Server Error',
+      statusCode: 500,
+      success: false,
+      error: error.message
+    })
+  }
+}
+
+
+export const updateSocialLinks = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const { github, linkedin, twitter, facebook } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({
+        message: "User is not authenticated",
+        statusCode: 400,
+        success: false
+      })
+    }
+
+    if (!github && !linkedin && !twitter && !facebook) {
+      return res.status(400).json({
+        message: "No updates Provided",
+        statusCode: 400,
+        success: false
+      })
+    }
+
+
+    const updatedUserSocial = await User.findByIdAndUpdate(userId, {
+      socialLinks: { github, linkedin, twitter, facebook }
+    }, { new: true })
+
+
+    if (!updatedUserSocial) {
+      return res.status(404).json({
+        message: "User not found",
+        statusCode: 404,
+        success: false
+      })
+    }
+
+    return res.status(200).json({
+      message: "Social Links updated successfully",
+      statusCode: 200,
+      success: true
+    })
+
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Internal Server Error',
+      statusCode: 500,
+      success: false,
+      error: error.message
+    })
+  }
+}
+
+
+export const updatePassword = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { newPassword, confirmPassword } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({
+        message: "User is not authenticated",
+        statusCode: 400,
+        success: false
+      })
+    }
+
+    if (!newPassword || !confirmPassword) {
+      return res.status(400).json(({
+        message: "NewPassword and ConfirmPassword are required",
+        statusCode: 400,
+        success: false
+      }))
+    }
+
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({
+        message: "Passwords do not match",
+        statusCode: 400,
+        success: false
+      })
+    }
+
+    // hash the password
+
+    const salt = await bcrypt.genSalt(10);
+
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    const updatedUser = await User.findByIdAndUpdate(userId, {
+      password: hashedPassword
+    }, { new: true });
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        message: "User not found",
+        statusCode: 404,
+        success: false
+      })
+    }
+
+    return res.status(200).json({
+      message: "Password updated successfully",
+      statusCode: 200,
+      success: true
+    })
+
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Internal Server Error',
+      statusCode: 500,
+      success: false,
+    })
+  }
+}
+
+export const updateTechSkills = async (req, res) => {
+  try {
+      const userId = req.params.userId;
+      const { technicalSkills } = req.body;
+      // Validate adminId
+      if (!userId) {
+          return res.status(400).json({ message: "User Id is required", statusCode: 400, success: false });
+      }
+      // Validate tech skills
+      if (!technicalSkills) {
+          return res.status(400).json({ message: "No technical skills provided", statusCode: 400, success: false });
+      }
+
+      // Update tech skills
+      const updateAdmin = await User.findByIdAndUpdate(userId, { skills: technicalSkills }, { new: true });
+
+      // If admin not found
+      if (!updateAdmin) {
+          return res.status(404).json({ message: "Admin not found", statusCode: 404, success: false });
+      }
+
+      return res.status(200).json({
+          message: "Technical skills updated successfully",
+          statusCode: 200,
+          success: true,
+          admin: updateAdmin
+      })
+  } catch (error) {
+      return res.status(500).json({
+          message: "Internal server error" || error.message,
+          statusCode: 500,
+          success: false
+      })
+  }
+}

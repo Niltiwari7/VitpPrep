@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAdminInfo, logInAdmin, logout, RegisterAdmin, updateInformation, updatePassword, updatePersonalInfo, updateSocialLinks, updateTechSkills, uploadImage } from '../controllers/admin.controller.js';
+import { getAdminInfo, logInAdmin, logout, RegisterAdmin, updatePassword, updatePersonalInfo, updateSocialLinks, updateTechSkills, uploadImage } from '../controllers/admin.controller.js';
 import { auth } from '../middlewares/auth.middleware.js';
 import { upload } from '../middlewares/multer.middleware.js';
 

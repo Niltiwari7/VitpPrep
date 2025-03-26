@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ClipboardList, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { logout } from "../utils/slices/user.slice.js";
@@ -21,6 +21,7 @@ import Footer from "../components/Footer.jsx";
 import { LogOut } from 'lucide-react';
 import { Heart } from "lucide-react";
 import { User } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const API_URL = 'http://localhost:3000';
 
@@ -99,9 +100,26 @@ const UserDashBoard = () => {
       {/* Header */}
       <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-xl backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30">
         <div className="flex items-center space-x-2">
-          <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:from-blue-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-500 hover:scale-105">
-           VitpPrep
-          </h3>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center space-x-3"
+          >
+            <img
+              src="/src/assets/public/logo.png"
+              alt="PatternPrep Logo"
+              className="h-12 w-12 object-contain rounded-full border-2 border-white/20 hover:scale-105 transition-transform"
+            />
+            <Link
+              to="/"
+              className={`text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${darkMode
+                  ? 'from-blue-400 via-purple-400 to-pink-400'
+                  : 'from-blue-600 via-purple-600 to-pink-600'
+                } hover:opacity-80 transition-opacity`}
+            >
+              VitpPrep
+            </Link>
+          </motion.div>
 
           {/* <h3 className="text-2xl font-extrabold text-gray-900">PatternPrep</h3> */}
 
@@ -159,7 +177,7 @@ const UserDashBoard = () => {
                 <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
                 Liked Questions
               </DropdownMenuItem>
-            
+
               <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
               <DropdownMenuItem className="p-0 hover:bg-transparent">
                 {loader ? (
