@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { User, Heart, LogOut } from 'lucide-react';
+import { logout } from "../utils/slices/admin.slice";
 
 const UserEdit = () => {
     const dispatch = useDispatch();
@@ -61,6 +62,11 @@ const UserEdit = () => {
         dispatch(setDarkMode(!darkMode));
     };
 
+
+    console.log("website",formData.website);
+    
+
+    useEffect(() => {}, []);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -147,7 +153,13 @@ const UserEdit = () => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(formData),
+                    body: JSON.stringify({
+                        github: formData.github,
+                        linkedin: formData.linkedin,
+                        twitter: formData.twitter,
+                        website: formData.website
+                    }),
+                    
                 }
             );
 
@@ -156,7 +168,7 @@ const UserEdit = () => {
                 toast.success("Your social links have been updated successfully");
                 setSuccess(data.message);
                 dispatch(updateUserInfo(data.User)); // Dispatch updated admin info to Redux
-                console.log(data.User); // Log the updated admin info
+                console.log("updated social link:",data.User); // Log the updated admin info
                 setError(""); // Clear error
             } else {
                 toast.error("Failed to update social links. Please try again");
@@ -234,6 +246,7 @@ const UserEdit = () => {
         setError("");
         setSuccess("");
         setSkillloading(true);
+    
         try {
             const response = await fetch(`http://localhost:3000/users/updateSkills/${userId}`, {
                 method: "PUT",
@@ -241,17 +254,18 @@ const UserEdit = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(formData)  // Ensure formData contains required fields 
+                body: JSON.stringify({ technicalSkills: formData.technicalSkills })  // Fix here
             });
-
+    
             const data = await response.json();
             if (data.success) {
                 toast.success("Your technical skills have been updated successfully");
                 setSuccess(data.message);
                 dispatch(updateUserInfo(data.User));
+                console.log(data.User);
+                
                 setSkillloading(false);
             } else {
-                // console.log(data);
                 setSkillloading(false);
                 toast.error("Failed to update technical skills. Please try again.");
                 setError("Failed to update technical skills. Please try again.");
@@ -263,6 +277,7 @@ const UserEdit = () => {
             console.error(error);
         }
     }
+    
 
     return (
         <div className="flex flex-col md:flex-row h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
@@ -459,7 +474,7 @@ const UserEdit = () => {
 
                                 <input
                                     type="text"
-                                    name="University"
+                                    name="university"
                                     value={formData.University}
                                     onChange={handleChange}
                                     placeholder="Enter your college name"
@@ -506,15 +521,15 @@ const UserEdit = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block font-medium" htmlFor="linkedIn">
+                                <label className="block font-medium" htmlFor="linkedin">
                                     LinkedIn
                                 </label>
                                 <input
                                     type="text"
-                                    name="linkedIn"
-                                    value={formData.linkedIn}
+                                    name="linkedin"
+                                    value={formData.linkedin}
                                     onChange={handleChange}
-                                    placeholder={`${userInfo.socialLinks?.linkedIn ? userInfo.socialLinks?.linkedIn : "LinkedIn profile URL"}`}
+                                    placeholder={`${userInfo.socialLinks?.linkedin ? userInfo.socialLinks?.linkedin : "LinkedIn profile URL"}`}
                                     className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
                                 />
                             </div>

@@ -5,7 +5,9 @@ import { useSelector } from 'react-redux';
 
 
 const UserP = () => {
+
     const userInfo = useSelector((state) => state.user.userInfo);
+   
     return (
         <div className="max-w-sm mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6">
 

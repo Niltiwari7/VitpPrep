@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setDarkMode } from "../utils/slices/theme.slice";
-import { FaAngleDown, FaMoon, FaSun } from "react-icons/fa";
+import { FaAngleDown, FaHeart, FaMoon, FaSun } from "react-icons/fa";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -72,7 +72,8 @@ const Dsa150Question = () => {
         }
     };
 
-
+    
+    const userId = user._id;
     const toggleTheme = () => {
         dispatch(setDarkMode(!darkMode));
     };
@@ -127,8 +128,8 @@ const Dsa150Question = () => {
             prev.map((sub) => (sub._id === updatedSubtopic._id ? updatedSubtopic : sub))
         );
     };
-    console.log("User ",user);
-    
+    console.log("User ", user);
+
     // Memoized subtopics for performance
     const memoizedSubtopics = useMemo(() => (
         <div className="text-white font-semibold rounded-lg p-2 shadow-md transition-all duration-300 hover:shadow-lg">
@@ -236,10 +237,13 @@ const Dsa150Question = () => {
                                 </Link>
                             </DropdownMenuItem>
 
-                            <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
-                                <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                                Liked Questions
+                            <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
+                                <Link to={`/user/likedQuestion/${user._id}`} className="flex items-center w-full px-2 py-2">
+                                    <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]">Liked Question</span>
+                                </Link>
                             </DropdownMenuItem>
+
 
                             <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
                             <DropdownMenuItem className="p-0 hover:bg-transparent">
@@ -262,6 +266,16 @@ const Dsa150Question = () => {
 
                 <div className="w-full">
                     <div className="p-6 mt-6">
+                        <div className="px-6 py-4 group relative mt-10">
+                            <Link
+                                to={`/dashboard`}
+                                className="inline-flex items-center space-x-3 px-4 py-2.5 rounded-lg transition-all duration-300 ease-out bg-blue-50 hover:bg-blue-100 dark:bg-gray-800 dark:hover:bg-gray-700 text-blue-600 hover:text-blue700 dark:text-blue-400 dark:hover:text-blue-300 transform hover:-translate-y-0.5 shadow-sm hover:shadow-sm border border-transparent hover:border-blue-200 dark:hover:border-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                            >
+                                <AiOutlineArrowLeft className="transition-all duration-300 group-hover:-translate-x-1 group-hover:scale-110" size={20} />
+                                <span className="relative font-medium">Back To DashBoard</span>
+
+                            </Link>
+                        </div>
                         <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-200 text-center pb-4">Top Dsa Interview Question</h1>
 
 

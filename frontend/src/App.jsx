@@ -6,7 +6,6 @@ import Header from "./components/Header";
 import SignUp from "./pages/SignUp";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import AdminDashBoard from "./pages/AdminDashBoard";
 import UserDashBoard from "./pages/UserDashBoard";
 import AdminSignUp from "./pages/AdminSignUp";
 import AdminSignIn from "./pages/AdminSignIn";
@@ -29,6 +28,7 @@ import DBMS from "./pages/DBMS";
 import OS from "./pages/OS";
 import UserProfile from "./pages/UserProfile";
 import UserEdit from "./pages/UserEdit";
+import UserLikedQuestion from "./pages/UserLikedQuestion";
 
 
 function App() {
@@ -82,6 +82,7 @@ function App() {
         <Route path='/admin/edit-question/:questionId' element={<UpdateQuestion />} />
         <Route path = '/user/:userId' element = {<UserProfile/>}/>
         <Route path = '/user/edit/:userId' element = {<UserEdit/>}/>
+        <Route path = '/user/likedQuestion/:userId' element = {<UserLikedQuestion/>}/>
         <Route path='/top-interview-questions-dsa' element={<Dsa150Question />} />
         <Route path='/oops' element={<OOPS />} />
         <Route path='/computer-network' element={<ComputerNetwork />} />

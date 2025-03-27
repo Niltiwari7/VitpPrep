@@ -1,5 +1,5 @@
 import express from 'express';
-import { countUser, getProfile, loginUser, logoutUser, registerUser, updatePassword, updatePersonalInfo, updateSocialLinks, updateTechSkills } from '../controllers/user.controller.js';
+import { countUser, favQuestion, getProfile, loginUser, logoutUser, registerUser, updatePassword, updatePersonalInfo, updateSocialLinks, updateTechSkills } from '../controllers/user.controller.js';
 import { auth } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
@@ -13,5 +13,6 @@ router.put('/updatePersonalInfo/:userId',auth,updatePersonalInfo);
 router.put('/updateSocialLinks/:userId',auth,updateSocialLinks);
 router.put('/updatePassword/:userId',auth,updatePassword);
 router.put('/updateSkills/:userId',auth,updateTechSkills);
+router.get('/likequestion/:userId',auth,favQuestion)
 
 export default router;

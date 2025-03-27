@@ -8,7 +8,7 @@ import {
 } from 'react-icons/fa';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import UserP from './UserP';
-import { updateUserInfo } from '../utils/slices/user.slice.js';
+import { logout, updateUserInfo } from '../utils/slices/user.slice.js';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -30,7 +30,7 @@ const UserProfile = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const user = useSelector((state) => state.user.userInfo);
-
+   
     const toggleTheme = () => {
         dispatch(setDarkMode(!darkMode));
     };
@@ -61,26 +61,50 @@ const UserProfile = () => {
         if (userId) fetchUserInfo();
     }, [userId, dispatch]);
 
-    const learningTopics = [
-        { title: 'Liked Questions', icon: FaHeart, color: 'text-red-500' },
-        { title: 'Top DSA Questions', icon: FaCode, color: 'text-blue-500' },
-        { title: 'OOPS Concepts', icon: FaCogs, color: 'text-green-500' },
-        { title: 'Computer Networks', icon: FaNetworkWired, color: 'text-purple-500' },
-        { title: 'DBMS', icon: FaDatabase, color: 'text-indigo-500' },
-        { title: 'Operating Systems', icon: FaLaptop, color: 'text-teal-500' }
-    ];
+    
+const learningTopics = [
+    { title: 'Liked Questions', icon: FaHeart, color: 'text-red-500', path: '/user/likedQuestion' },
+    { title: 'Top DSA Questions', icon: FaCode, color: 'text-blue-500', path: '/top-interview-questions-dsa' },
+    { title: 'OOPS Concepts', icon: FaCogs, color: 'text-green-500', path: '/oops' },
+    { title: 'Computer Networks', icon: FaNetworkWired, color: 'text-purple-500', path: '/computer-network' },
+    { title: 'DBMS', icon: FaDatabase, color: 'text-indigo-500', path: '/dbms' },
+    { title: 'Operating Systems', icon: FaLaptop, color: 'text-teal-500', path: '/os' }
+];
 
-    const userStats = [
-        { title: 'Completed Courses', value: '12', icon: FaCheckCircle, color: 'text-blue-500' },
-        { title: 'Solved Problems', value: '24', icon: FaBook, color: 'text-green-500' },
-        { title: 'Accuracy', value: '85%', icon: FaBullseye, color: 'text-yellow-500' },
-        { title: 'Active Goals', value: '3', icon: FaChartLine, color: 'text-purple-500' }
-    ];
 
-    const handleLogout = () => {
-        // Implement logout logic
-        navigate('/login');
-    };
+
+  
+        const handleLogout = async () => {
+            setError('');
+            setLoading(true);
+            try {
+                const response = await fetch(`${API_URL}/users/logout`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+    
+                const data = await response.json();
+                console.log(data);
+    
+                if (data.success) {
+                    dispatch(logout());
+                    navigate('/');
+                } else {
+                    toast.error('Failed to logout. Please try again.');
+                }
+            } catch (error) {
+                toast.error('An error occurred. Please try again.');
+                console.log(error);
+    
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+    
     const [activeTopicIndex, setActiveTopicIndex] = useState(0);
     return (
         <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-[#101927] text-gray-100' : 'bg-[#F3F4F6]text-gray-900'}`}>
@@ -170,15 +194,23 @@ const UserProfile = () => {
             </header>
 
             {/* Main Content */}
-            <main className='container mx-auto px-4 xl:px-6 py-8 grid grid-cols-1 md:grid-cols-4 gap-6 pt-20'>
+            <main className='container mx-auto px-4 xl:px-6 py-8 grid grid-cols-1 md:grid-cols-4 md:gap-4 gap-0.5 pt-20'>
                 {/* Sidebar */}
-                <aside className="col-span-1 bg-[#FEFEFF] dark:bg-[#374050] rounded-xl shadow-lg p-6 transition-all duration-500 ease-in-out transform -translate-x-2 animate-slideInLeft">
+                <aside
+                    className="col-span-1 bg-[#FEFEFF] dark:bg-[#374050] rounded-xl shadow-lg p-6 
+    transition-all duration-500 ease-in-out 
+    md:transform md:-translate-x-2 animate-slideInLeft 
+    w-full mx-auto flex flex-col items-center
+    sm:max-w-full max-w-full 
+    md:w-auto "
+                >
                     <div className="text-center font-semibold text-2xl text-gray-800 dark:text-white mb-6 transition-colors duration-300">
                         Learning Topics
                     </div>
 
                     {learningTopics.map((topic, index) => (
-                        <button
+                        <Link 
+                            to = {topic.path}
                             key={index}
                             className={`group w-full text-center text-xl font-semibold rounded-md p-4 mb-3 
                 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] 
@@ -196,12 +228,13 @@ const UserProfile = () => {
                             <span className="transition-all duration-300 group-hover:tracking-wide">
                                 {topic.title}
                             </span>
-                        </button>
+                        </Link>
                     ))}
                 </aside>
 
+
                 {/* Profile Section */}
-                <section className='col-span-3 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-300'>
+                <section className='col-span-3 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-300 max-w-full'>
                     <div className='flex items-center justify-between mb-8'>
                         <h1 className='text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent'>
                             User Profile
@@ -225,30 +258,7 @@ const UserProfile = () => {
                     ) : (
                         <>
                             <UserP />
-                            <div className='mt-8 p-6 rounded-xl bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600'>
-                                <h3 className='text-xl font-semibold mb-6 flex items-center'>
-                                    <FaChartLine className='mr-2 text-blue-500' />
-                                    Activity Overview
-                                </h3>
-                                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
-                                    {userStats.map((stat, index) => (
-                                        <div
-                                            key={index}
-                                            className='p-4 rounded-lg bg-[#FEFEFF] dark:bg-[#374050] shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2'
-                                        >
-                                            <div className='flex items-center justify-between'>
-                                                <div>
-                                                    <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-                                                    <p className='text-sm text-gray-600 dark:text-gray-300'>{stat.title}</p>
-                                                </div>
-                                                <div className={`${stat.color} text-2xl`}>
-                                                    {stat.icon}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+
                         </>
                     )}
                 </section>

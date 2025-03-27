@@ -166,6 +166,8 @@ export const updatePersonalInfo = async (req, res) => {
     const userId = req.params.userId;
 
     const update = req.body;
+    console.log(update);
+    
 
     if (!userId) {
       return res.status(400).json({
@@ -257,8 +259,11 @@ export const updateSocialLinks = async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    const { github, linkedin, twitter, facebook } = req.body;
-
+    const { github, linkedin, twitter,website } = req.body;
+  
+    
+    console.log(github, linkedin, twitter,website);
+    
     if (!userId) {
       return res.status(400).json({
         message: "User is not authenticated",
@@ -267,7 +272,7 @@ export const updateSocialLinks = async (req, res) => {
       })
     }
 
-    if (!github && !linkedin && !twitter && !facebook) {
+    if (!github && !linkedin && !twitter && !website) {
       return res.status(400).json({
         message: "No updates Provided",
         statusCode: 400,
@@ -277,7 +282,7 @@ export const updateSocialLinks = async (req, res) => {
 
 
     const updatedUserSocial = await User.findByIdAndUpdate(userId, {
-      socialLinks: { github, linkedin, twitter, facebook }
+      socialLinks: { github, linkedin, twitter }
     }, { new: true })
 
 
@@ -285,7 +290,8 @@ export const updateSocialLinks = async (req, res) => {
       return res.status(404).json({
         message: "User not found",
         statusCode: 404,
-        success: false
+        success: false,
+        User: updatedUserSocial
       })
     }
 
@@ -372,34 +378,67 @@ export const updateTechSkills = async (req, res) => {
   try {
       const userId = req.params.userId;
       const { technicalSkills } = req.body;
-      // Validate adminId
+      console.log(technicalSkills);
+      
+
+     
       if (!userId) {
           return res.status(400).json({ message: "User Id is required", statusCode: 400, success: false });
       }
-      // Validate tech skills
-      if (!technicalSkills) {
-          return res.status(400).json({ message: "No technical skills provided", statusCode: 400, success: false });
+    
+      if (!technicalSkills || !Array.isArray(technicalSkills)) {
+          return res.status(400).json({ message: "Valid technical skills array is required", statusCode: 400, success: false });
       }
 
-      // Update tech skills
-      const updateAdmin = await User.findByIdAndUpdate(userId, { skills: technicalSkills }, { new: true });
+   
+      const updatedUser = await User.findByIdAndUpdate(userId, { technicalSkills: technicalSkills }, { new: true });
 
-      // If admin not found
-      if (!updateAdmin) {
-          return res.status(404).json({ message: "Admin not found", statusCode: 404, success: false });
+      if (!updatedUser) {
+          return res.status(404).json({ message: "User not found", statusCode: 404, success: false });
       }
+      
 
       return res.status(200).json({
           message: "Technical skills updated successfully",
           statusCode: 200,
           success: true,
-          admin: updateAdmin
-      })
+          User : updatedUser
+      });
   } catch (error) {
       return res.status(500).json({
-          message: "Internal server error" || error.message,
+          message: error.message || "Internal server error",
           statusCode: 500,
           success: false
+      });
+  }
+};
+
+
+export const favQuestion = async(req,res)=>{
+  try {
+    const userId = req.params.userId;
+    const question = await User.findById(userId).populate('favorites.questions');
+    if(!question){
+      return res.status(404).json({
+        message:"No favorite question found",
+        success:false,
+        statusCode:404
       })
+    }
+
+    return res.status(200).json({
+      message:"favorite question fetched successfully",
+      success:true,
+      statusCode:200,
+      question:question
+    })
+
+  }
+  catch(error){
+    return res.status(500).json({
+      message:'Internal Server Error',
+      statusCode:500,
+      success:false,
+    })
   }
 }
