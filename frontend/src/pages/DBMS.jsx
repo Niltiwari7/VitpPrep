@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setDarkMode } from '../utils/slices/theme.slice';
 import { Link, useNavigate } from 'react-router-dom';
-import { AiOutlineArrowLeft, AiOutlineBars, AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineArrowLeft, AiOutlineBars, AiOutlineClose, AiOutlineDashboard } from 'react-icons/ai';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import {
     Table,
@@ -44,7 +44,7 @@ const DBMS = () => {
     const navigate = useNavigate();
 
 
-    
+
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -52,7 +52,7 @@ const DBMS = () => {
 
     const toggleTheme = () => {
         dispatch(setDarkMode(!darkMode));
-     }
+    }
 
 
     const links = [
@@ -155,7 +155,7 @@ const DBMS = () => {
     return (
         <div className='gap-5'>
             <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-xl backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30">
-                <div className="flex items-center space-x-2">
+                <Link to="/dashboard" className="flex items-center space-x-2">
                     <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:from-blue-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-500 hover:scale-105">
                         VitpPrep
                     </h3>
@@ -163,7 +163,7 @@ const DBMS = () => {
                     {/* <h3 className="text-2xl font-extrabold text-gray-900">PatternPrep</h3> */}
 
                     <div className="h-4 w-1 bg-gradient-to-b from-[#00C1B3] to-[#00E3CC] rounded-full animate-pulse"></div>
-                </div>
+                </Link>
 
 
 
@@ -209,13 +209,27 @@ const DBMS = () => {
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
                             <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
-                                <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                                Profile
+                                <Link to={`/user/${user._id}`} className="flex items-center w-full px-2 py-2">
+                                    <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]"> Profile</span>
+                                </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
-                                <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                                Liked Questions
+
+                            <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
+                                <Link to={`/user/likedQuestion/${user._id}`} className="flex items-center w-full px-2 py-2">
+                                    <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]">Liked Question</span>
+                                </Link>
                             </DropdownMenuItem>
+
+                            <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
+                                <Link to={`/dashboard`} className="flex items-center w-full px-2 py-2">
+                                    <AiOutlineDashboard className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]">DashBoard</span>
+                                </Link>
+                            </DropdownMenuItem>
+
 
                             <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
                             <DropdownMenuItem className="p-0 hover:bg-transparent">

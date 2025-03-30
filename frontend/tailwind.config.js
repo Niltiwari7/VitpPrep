@@ -5,9 +5,11 @@ export default {
 	  "./src/**/*.{js,ts,jsx,tsx}",
 	],
 	theme: {
+		
 	  extend: {
 		animation: {
 			slideInLeft: 'slideInLeft 0.5s ease-out',
+			'pulse-slow': 'pulse 10s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 		},
 		keyframes: {
 			slideInLeft: {

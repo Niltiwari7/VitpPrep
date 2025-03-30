@@ -35,7 +35,7 @@ const UserEdit = () => {
     const [skillLoading, setSkillloading] = useState(false);
     const skillOptions = ["CPP", "Java", "Python", "JavaScript", "React", "Node", "Express", "MongoDB", "HTML", "CSS", "Tailwind", "Bootstrap", "Material-UI", "Chakra-UI", "Redux", "Context API", "GraphQL", "REST API", "Firebase", "AWS", "Azure", "Heroku", "Netlify", "Vercel", "Docker", "Kubernetes", "Jenkins", "Git", "GitHub", "GitLab", "Bitbucket", "Jira", "Trello", "Asana", "Slack", "Zoom", "Google Meet", "Microsoft Teams", "Discord", "Figma", "Adobe XD", "Sketch", "Photoshop", "Illustrator", "Premiere Pro", "After Effects", "Final Cut Pro", "DaVinci Resolve", "Blender", "Unity", "Unreal Engine", "Maya", "3DS Max", "AutoCAD", "SolidWorks", "Fusion 360", "SketchUp", "Revit", "Rhino", "Grasshopper", "Lumion", "V-Ray", "Enscape", "Twinmotion", "Photoscan", "RealityCapture", "Agisoft Metashape", "ZBrush", "Substance Painter", "Substance Designer", "Marvelous Designer", "Keyshot", "Blender", "Unity", "Unreal Engine", "Maya", "3DS Max", "AutoCAD", "SolidWorks", "Fusion 360", "SketchUp", "Revit", "Rhino", "Grasshopper", "Lumion", "V-Ray", "Enscape", "Twinmotion", "Photoscan", "RealityCapture", "Agisoft Metashape", "ZBrush", "Substance Painter", "Substance Designer", "Marvelous Designer", "Keyshot", "Blender", "Unity", "Unreal Engine", "Maya", "3DS Max", "AutoCAD", "SolidWorks", "Fusion 360", "SketchUp", "Revit", "Rhino", "Grasshopper", "Lumion", "V-Ray", "Enscape", "Twinmotion", "Photoscan", "RealityCapture", "Agisoft Metashape", "ZBrush", "Substance Painter", "Substance Designer", "Marvelous Designer", "Keyshot", "Blender", "Unity", "Unreal Engine", "Maya", "3DS Max", "AutoCAD", "SolidWorks", "Fusion 360", "SketchUp", "Revit", "Rhino", "Grasshopper", "Lumion", "V-Ray", "Enscape", "Twinmotion", "Photoscan", "RealityCapture", "Agisoft Metashape", "ZBrush", "Substance Painter", "Substance Designer", "Marvelous Designer", "Keyshot", "Blender", "Unity", "Unreal Engine", "Maya", "3DS Max", "AutoCAD", "SolidWorks", "Fusion 360", "SketchUp", "Revit", "Rhino", "Grasshopper", "Lumion", "V-Ray", "Enscape"];
 
- 
+
     const [inputValue, setInputValue] = useState("");
 
     const [formData, setFormData] = useState({
@@ -55,18 +55,18 @@ const UserEdit = () => {
         technicalSkills: userInfo.technicalSkills || [],
     });
     // console.log(formData);
-     console.log(formData);
-     
+    console.log(formData);
+
     const [success, setSuccess] = useState('');
     const toggleTheme = () => {
         dispatch(setDarkMode(!darkMode));
     };
 
 
-    console.log("website",formData.website);
-    
+    console.log("website", formData.website);
 
-    useEffect(() => {}, []);
+
+    useEffect(() => { }, []);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -159,7 +159,7 @@ const UserEdit = () => {
                         twitter: formData.twitter,
                         website: formData.website
                     }),
-                    
+
                 }
             );
 
@@ -168,7 +168,7 @@ const UserEdit = () => {
                 toast.success("Your social links have been updated successfully");
                 setSuccess(data.message);
                 dispatch(updateUserInfo(data.User)); // Dispatch updated admin info to Redux
-                console.log("updated social link:",data.User); // Log the updated admin info
+                console.log("updated social link:", data.User); // Log the updated admin info
                 setError(""); // Clear error
             } else {
                 toast.error("Failed to update social links. Please try again");
@@ -246,7 +246,7 @@ const UserEdit = () => {
         setError("");
         setSuccess("");
         setSkillloading(true);
-    
+
         try {
             const response = await fetch(`http://localhost:3000/users/updateSkills/${userId}`, {
                 method: "PUT",
@@ -256,14 +256,14 @@ const UserEdit = () => {
                 },
                 body: JSON.stringify({ technicalSkills: formData.technicalSkills })  // Fix here
             });
-    
+
             const data = await response.json();
             if (data.success) {
                 toast.success("Your technical skills have been updated successfully");
                 setSuccess(data.message);
                 dispatch(updateUserInfo(data.User));
                 console.log(data.User);
-                
+
                 setSkillloading(false);
             } else {
                 setSkillloading(false);
@@ -277,38 +277,21 @@ const UserEdit = () => {
             console.error(error);
         }
     }
-    
+
 
     return (
         <div className="flex flex-col md:flex-row h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
 
             <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-xl backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30">
-                <div className="flex items-center space-x-2">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="flex items-center space-x-3"
-                    >
-                        <img
-                            src="/src/assets/public/logo.png"
-                            alt="PatternPrep Logo"
-                            className="h-12 w-12 object-contain rounded-full border-2 border-white/20 hover:scale-105 transition-transform"
-                        />
-                        <Link
-                            to="/"
-                            className={`text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${darkMode
-                                ? 'from-blue-400 via-purple-400 to-pink-400'
-                                : 'from-blue-600 via-purple-600 to-pink-600'
-                                } hover:opacity-80 transition-opacity`}
-                        >
-                            VitpPrep
-                        </Link>
-                    </motion.div>
+                <Link to = "/dashboard" className="flex items-center space-x-2">
+                    <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:from-blue-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-500 hover:scale-105">
+                        VitpPrep
+                    </h3>
 
                     {/* <h3 className="text-2xl font-extrabold text-gray-900">PatternPrep</h3> */}
 
                     <div className="h-4 w-1 bg-gradient-to-b from-[#00C1B3] to-[#00E3CC] rounded-full animate-pulse"></div>
-                </div>
+                </Link>
 
 
 
@@ -354,30 +337,40 @@ const UserEdit = () => {
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
                             <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
-                                <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                                Profile
+                                <Link to={`/user/${userInfo._id}`} className="flex items-center w-full px-2 py-2">
+                                    <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]"> Profile</span>
+                                </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
-                                <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                                Liked Questions
+
+                            <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
+                                <Link to={`/user/likedQuestion/${userInfo._id}`} className="flex items-center w-full px-2 py-2">
+                                    <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]">Liked Question</span>
+                                </Link>
                             </DropdownMenuItem>
+
+                            <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
+                                <Link to={`/dashboard`} className="flex items-center w-full px-2 py-2">
+                                    <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]">DashBoard</span>
+                                </Link>
+                            </DropdownMenuItem>
+
 
                             <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
                             <DropdownMenuItem className="p-0 hover:bg-transparent">
-                                {loader ? (
-                                    <div className="w-full flex justify-center">
-                                        <Loader2 className="h-5 w-5 animate-spin text-[#00C1B3] dark:text-[#00E3CC]" />
-                                    </div>
-                                ) : (
-                                    <Button
-                                        variant="destructive"
-                                        className="w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 transition-colors"
-                                        onClick={handleLogout}
-                                    >
-                                        Logout
-                                        <LogOut className="ml-2 h-4 w-4" />
-                                    </Button>
-                                )}
+
+                                <Button
+                                    variant="destructive"
+                                    className="w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 transition-colors"
+                                    onClick={handleLogout}
+                                >
+                                    Logout
+                                    <LogOut className="ml-2 h-4 w-4" />
+                                </Button>
+
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -395,7 +388,7 @@ const UserEdit = () => {
                     >
                         <AiOutlineArrowLeft className="transition-all duration-300 group-hover:-translate-x-1 group-hover:scale-110" size={20} />
                         <span className="relative font-medium">Back To Profile</span>
-                      
+
                     </Link>
                 </div>
 

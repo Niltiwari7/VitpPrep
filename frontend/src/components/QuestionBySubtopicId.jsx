@@ -18,8 +18,10 @@ const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
     const [error, setError] = useState(null);
     const [questionId, setQuestionId] = useState("");
 
-
-
+   
+   
+    
+    
     const handleChange = useCallback(async (userId, questionId) => {
         // Optimistically update the state immediately
         setQuestion((prev)=> prev.map((q)=>q._id === questionId ? {...q, completed:!q.completed}:q));               
@@ -48,6 +50,8 @@ const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
         }
     }, []);
 
+   
+    
 
 
     const handleFavorite = async (questionId, userId) => {
@@ -66,7 +70,7 @@ const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
         );
 
         try {
-            const response = await fetch(`${API_URL}/questions//toggle-like`, {
+            const response = await fetch(`${API_URL}/questions/toggle-like`, {
                 method: "PUT",
                 credentials: "include",
                 headers: { "Content-Type": "application/json" },
@@ -162,6 +166,7 @@ const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
 
 
 
+  
 
     if (error) {
         return <div className="text-red-500 text-center py-4">⚠️ {error}</div>;

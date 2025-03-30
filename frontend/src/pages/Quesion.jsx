@@ -86,6 +86,8 @@ const Question = () => {
                     });
 
                     const data = await response.json();
+                    console.log(data);
+                    
                     if (data.success) {
                         setSubtopic(data.subtopics);
                         setSubtopicError('');
@@ -177,7 +179,7 @@ const Question = () => {
                             {expandedSubtopic === value._id && (
                                 <div className="ml-4 mt-2">
                                     {/* Render the questions related to this subtopic */}
-                                    {<QuestionBySubtopicId selectSubtopic={value._id} />}
+                                    {<QuestionBySubtopicId selectSubtopic={value._id}  />}
                                 </div>
                             )}
                         </div>

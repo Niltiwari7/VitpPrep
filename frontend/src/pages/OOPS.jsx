@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AiOutlineArrowLeft, AiOutlineBars, AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineArrowLeft, AiOutlineBars, AiOutlineClose, AiOutlineDashboard } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDarkMode } from '../utils/slices/theme.slice';
 import { FaBars, FaMoon, FaSun } from 'react-icons/fa';
@@ -38,8 +38,8 @@ const OOPS = () => {
     const darkMode = useSelector((state) => state.theme.darkMode);
     const user = useSelector((state) => state.user.userInfo);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [error,setError] = useState('');
-    const [loader,setLoader] = useState(false);
+    const [error, setError] = useState('');
+    const [loader, setLoader] = useState(false);
     const navigate = useNavigate();
     // Toggle Sidebar Function
     const toggleSidebar = () => {
@@ -167,13 +167,27 @@ const OOPS = () => {
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
                             <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
-                                <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                                Profile
+                                <Link to={`/user/${user._id}`} className="flex items-center w-full px-2 py-2">
+                                    <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]"> Profile</span>
+                                </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
-                                <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                                Liked Questions
+
+                            <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
+                                <Link to={`/user/likedQuestion/${user._id}`} className="flex items-center w-full px-2 py-2">
+                                    <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]">Liked Question</span>
+                                </Link>
                             </DropdownMenuItem>
+
+                            <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
+                                <Link to={`/dashboard`} className="flex items-center w-full px-2 py-2">
+                                    <AiOutlineDashboard className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]">DashBoard</span>
+                                </Link>
+                            </DropdownMenuItem>
+
 
                             <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
                             <DropdownMenuItem className="p-0 hover:bg-transparent">

@@ -22,6 +22,7 @@ import { LogOut } from 'lucide-react';
 import { Heart } from "lucide-react";
 import { User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { AiOutlineDashboard } from "react-icons/ai";
 
 const API_URL = 'http://localhost:3000';
 
@@ -100,26 +101,9 @@ const UserDashBoard = () => {
       {/* Header */}
       <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-xl backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30">
         <div className="flex items-center space-x-2">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center space-x-3"
-          >
-            <img
-              src="/src/assets/public/logo.png"
-              alt="PatternPrep Logo"
-              className="h-12 w-12 object-contain rounded-full border-2 border-white/20 hover:scale-105 transition-transform"
-            />
-            <Link
-              to="/"
-              className={`text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${darkMode
-                  ? 'from-blue-400 via-purple-400 to-pink-400'
-                  : 'from-blue-600 via-purple-600 to-pink-600'
-                } hover:opacity-80 transition-opacity`}
-            >
-              VitpPrep
-            </Link>
-          </motion.div>
+          <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:from-blue-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-500 hover:scale-105">
+            VitpPrep
+          </h3>
 
           {/* <h3 className="text-2xl font-extrabold text-gray-900">PatternPrep</h3> */}
 
@@ -170,30 +154,40 @@ const UserDashBoard = () => {
               </DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
               <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
-                <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                Profile
+                <Link to={`/user/${user._id}`} className="flex items-center w-full px-2 py-2">
+                  <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+
+                  <span className="text-[#00C1B3] dark:text-[#00E3CC]"> Profile</span>
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
-                <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                Liked Questions
+
+              <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
+                <Link to={`/user/likedQuestion/${user._id}`} className="flex items-center w-full px-2 py-2">
+                  <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                  <span className="text-[#00C1B3] dark:text-[#00E3CC]">Liked Question</span>
+                </Link>
               </DropdownMenuItem>
+
+              <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
+                <Link to={`/dashboard`} className="flex items-center w-full px-2 py-2">
+                  <AiOutlineDashboard className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                  <span className="text-[#00C1B3] dark:text-[#00E3CC]">DashBoard</span>
+                </Link>
+              </DropdownMenuItem>
+
 
               <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
               <DropdownMenuItem className="p-0 hover:bg-transparent">
-                {loader ? (
-                  <div className="w-full flex justify-center">
-                    <Loader2 className="h-5 w-5 animate-spin text-[#00C1B3] dark:text-[#00E3CC]" />
-                  </div>
-                ) : (
-                  <Button
-                    variant="destructive"
-                    className="w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 transition-colors"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                    <LogOut className="ml-2 h-4 w-4" />
-                  </Button>
-                )}
+
+                <Button
+                  variant="destructive"
+                  className="w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 transition-colors"
+                  onClick={handleLogout}
+                >
+                  Logout
+                  <LogOut className="ml-2 h-4 w-4" />
+                </Button>
+
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
