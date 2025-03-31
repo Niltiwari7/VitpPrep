@@ -174,9 +174,10 @@ const AdminProfile = () => {
                 });
 
                 const data = await response.json(); 
-
+               
+                
                 if (data.success) {
-                    setUserCount(data.count);  
+                    setUserCount(data.data);  
                     setStaticsError('');
                 } else {
                     setStaticsError(data.message);
@@ -190,6 +191,9 @@ const AdminProfile = () => {
 
         fetchUserCount();
     }, [API_URL]);
+
+    
+    
 
 
     return (

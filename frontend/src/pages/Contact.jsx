@@ -2,6 +2,15 @@ import React, { useState } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { toast } from 'react-hot-toast';
+import { 
+  FaUser, 
+  FaEnvelope, 
+  FaComment, 
+  FaExclamationCircle, 
+  FaCheckCircle, 
+  FaPaperPlane, 
+  FaSpinner 
+} from 'react-icons/fa';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -9,7 +18,7 @@ const Contact = () => {
     email: '',
     message: '',
   });
-
+  const [isSubmitting,setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -49,77 +58,146 @@ const Contact = () => {
     <>
       <Header />
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 pt-10">
-        <div className="container mx-auto px-6 py-12">
-          <h1 className="text-4xl font-extrabold text-center mb-6 text-blue-600 dark:text-blue-400">
-            Contact Us
-          </h1>
-          <p className="text-center text-lg max-w-xl mx-auto mb-8">
-            Got a question, feedback, or just want to say hello? Fill out the form below, and we'll get back to you shortly!
-          </p>
+  <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-3xl mx-auto text-center">
+      <h1 className="text-4xl md:text-5xl font-extrabold mb-6 bg-gradient-to-r from-blue-600 to-purple-500 bg-clip-text text-transparent">
+        Get in Touch
+      </h1>
+      <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+        Have a question? We're here to help! 
+        Drop us a message and we'll respond within 24 hours.
+      </p>
+    </div>
 
-          <form onSubmit={handleSubmit} className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
-            <div className="mb-4">
-              <label htmlFor="name" className="block text-sm font-medium mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className={`w-full px-4 py-2 rounded-lg border ${errors.name ? 'border-red-500' : 'border-gray-300'
-                  } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-              />
-              {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="email" className="block text-sm font-medium mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className={`w-full px-4 py-2 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'
-                  } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-              />
-              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-            </div>
-
-            <div className="mb-6">
-              <label htmlFor="message" className="block text-sm font-medium mb-2">
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                className={`w-full px-4 py-2 rounded-lg border ${errors.message ? 'border-red-500' : 'border-gray-300'
-                  } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                rows="5"
-              ></textarea>
-              {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
-            </div>
-
-            {successMessage && (
-              <div className="mb-4 text-green-600 text-sm font-medium">{successMessage}</div>
-            )}
-
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300"
-            >
-              Submit
-            </button>
-          </form>
+    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-8 md:p-12 transition-all hover:shadow-3xl">
+      <div className="space-y-6">
+        {/* Name Field */}
+        <div className="relative group">
+          <label 
+            htmlFor="name" 
+            className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300"
+          >
+            Your Name
+          </label>
+          <div className="relative">
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              className={`w-full px-4 py-3 rounded-lg border-2 focus:ring-4 ${
+                errors.name 
+                  ? 'border-red-500 ring-red-200 dark:ring-red-900' 
+                  : 'border-gray-200 dark:border-gray-700 focus:border-blue-500 ring-blue-200 dark:ring-blue-900'
+              } bg-white dark:bg-gray-900 focus:outline-none transition-all`}
+              placeholder="John Doe"
+            />
+            <FaUser className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+          </div>
+          {errors.name && (
+            <p className="text-red-500 text-sm mt-2 flex items-center gap-1">
+              <FaExclamationCircle className="flex-shrink-0" /> {errors.name}
+            </p>
+          )}
         </div>
-        <Footer className='fixed bottom-0' />
+
+        {/* Email Field */}
+        <div className="relative group">
+          <label 
+            htmlFor="email" 
+            className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300"
+          >
+            Email Address
+          </label>
+          <div className="relative">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className={`w-full px-4 py-3 rounded-lg border-2 focus:ring-4 ${
+                errors.email 
+                  ? 'border-red-500 ring-red-200 dark:ring-red-900' 
+                  : 'border-gray-200 dark:border-gray-700 focus:border-blue-500 ring-blue-200 dark:ring-blue-900'
+              } bg-white dark:bg-gray-900 focus:outline-none transition-all`}
+              placeholder="john@example.com"
+            />
+            <FaEnvelope className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+          </div>
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-2 flex items-center gap-1">
+              <FaExclamationCircle className="flex-shrink-0" /> {errors.email}
+            </p>
+          )}
+        </div>
+
+        {/* Message Field */}
+        <div className="relative group">
+          <label 
+            htmlFor="message" 
+            className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300"
+          >
+            Your Message
+          </label>
+          <div className="relative">
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleInputChange}
+              className={`w-full px-4 py-3 rounded-lg border-2 focus:ring-4 ${
+                errors.message 
+                  ? 'border-red-500 ring-red-200 dark:ring-red-900' 
+                  : 'border-gray-200 dark:border-gray-700 focus:border-blue-500 ring-blue-200 dark:ring-blue-900'
+              } bg-white dark:bg-gray-900 focus:outline-none transition-all resize-none`}
+              rows="5"
+              placeholder="Write your message here..."
+            />
+            <FaComment className="absolute right-4 top-4 text-gray-400 dark:text-gray-500" />
+          </div>
+          {errors.message && (
+            <p className="text-red-500 text-sm mt-2 flex items-center gap-1">
+              <FaExclamationCircle className="flex-shrink-0" /> {errors.message}
+            </p>
+          )}
+        </div>
+
+        {/* Success Message */}
+        {successMessage && (
+          <div className="p-4 rounded-lg bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200 flex items-center gap-3">
+            <FaCheckCircle className="text-xl flex-shrink-0" />
+            <span className="text-sm">{successMessage}</span>
+          </div>
+        )}
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white px-8 py-4 rounded-xl font-semibold 
+                    hover:from-blue-700 hover:to-blue-600 transition-all transform hover:scale-[1.02] 
+                    active:scale-95 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+        >
+          {isSubmitting ? (
+            <>
+              <FaSpinner className="animate-spin" />
+              Sending...
+            </>
+          ) : (
+            <>
+              <FaPaperPlane className="transform -translate-y-px" />
+              Send Message
+            </>
+          )}
+        </button>
       </div>
+    </form>
+  </div>
+  
+  <Footer className="mt-20" />
+</div>
     </>
   );
 };

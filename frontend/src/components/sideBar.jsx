@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { toast } from 'react-hot-toast'
 import { logout } from '../utils/slices/admin.slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { Loader2 } from 'lucide-react';
+import { Loader2, LayoutDashboard, FilePlus, BookOpen, ListTree, LogOut } from 'lucide-react';
+
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const adminInfo = useSelector((state) => state.admin.adminInfo || {});
@@ -13,141 +14,135 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const [logoutLoading, setLogoutLoading] = useState(false);
 
+  // Close sidebar when clicking outside on mobile
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (isOpen && !document.querySelector('.sidebar-container').contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
 
-  const handlelogOut = async () => {
-
+  const handleLogOut = async () => {
+    if (!window.confirm('Are you sure you want to logout?')) return;
+    
     try {
       setLogoutLoading(true);
       const response = await fetch(`http://localhost:3000/admin/logout/${adminId}`, {
         method: 'POST',
         credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
       });
 
       const data = await response.json();
+      if (!data.success) throw new Error(data.message);
 
-      if (!data.success) {
-        setLogoutLoading(false);
-        toast.error(data.message || 'An error occurred. Please try again later.');
-        return;
-      }
-
-      // Clear admin state in Redux
       dispatch(logout());
-
-      setLogoutLoading(false);
-
-      // Clear admin info from localStorage
       localStorage.removeItem('adminInfo');
-
-      // Display success toast and navigate
       toast.success('Logout Successful');
       navigate('/');
     } catch (error) {
+      toast.error(error.message || 'Logout failed');
+    } finally {
       setLogoutLoading(false);
-      toast.error(error.message || 'Internal server error');
     }
-  };
-
-  console.log(adminId);
-  
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
   };
 
   return (
     <div className="relative">
-      {/* Hamburger Icon for Smaller Screens */}
+      {/* Hamburger Icon */}
       <button
-        className="absolute top-4 left-4 text-gray-300 text-2xl md:hidden z-50"
-        onClick={toggleSidebar}
+        className="fixed top-4 left-4 z-50 p-2 md:hidden rounded-lg bg-gray-800/80 backdrop-blur-sm text-gray-300 hover:bg-gray-700 transition-all"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle sidebar"
       >
-        {isOpen ? <span>&#x2715;</span> : <span>&#9776;</span>} {/* Close or Hamburger Icon */}
+        {isOpen ? <span className="text-2xl">✕</span> : <span className="text-2xl">☰</span>}
       </button>
 
-      {/* Sidebar */}
+      {/* Sidebar Container */}
       <div
-        className={`fixed inset-y-0 left-0 w-64 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-gray-300 h-screen p-5 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
-          } md:translate-x-0 md:w-64 md:block`}
+        className={`sidebar-container fixed inset-y-0 left-0 w-64 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 
+        backdrop-blur-lg shadow-2xl h-screen p-5 transform transition-all duration-300 ease-in-out 
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 z-40
+        border-r border-gray-700/50`}
       >
-        {/* Logo and Brand */}
-        <div className="flex items-center space-x-3 mb-8">
+        {/* Logo Section */}
+        <div className="flex items-center space-x-3 mb-8 p-3 bg-gray-800/50 rounded-xl">
           <img
-            src="/logo.png"
-            alt="PatternPrep Logo"
-            className="h-12 w-12 object-cover rounded-full"
+            src="/src/assets/public/logo.png"
+            alt="VitpPrep Logo"
+            className="h-12 w-12 object-cover rounded-xl border-2 border-purple-400/30 shadow-lg"
           />
-          <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-            PatternPrep
-          </h3>
+          <div>
+            <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
+              VitpPrep
+            </h3>
+            <p className="text-xs text-gray-400 mt-1">Admin Dashboard</p>
+          </div>
         </div>
 
-        {/* Admin Panel Header */}
-        <h2 className="text-lg font-bold mb-6 text-gray-100 uppercase tracking-wide">
-          Admin Panel
-        </h2>
-
         {/* Navigation Links */}
-        <ul className="space-y-4">
-          <li>
-            <Link
-              to={`/admin/profile/${adminInfo._id}`}
-              className="block py-2 px-4 text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition duration-200"
-            >
-              Profile
-            </Link>
-          </li>
+        <nav className="space-y-2">
+          <NavLink to={`/admin/profile/${adminInfo._id}`} icon={<LayoutDashboard size={18} />}>
+            Dashboard
+          </NavLink>
 
-          <li>
-            <Link
-              to={`/admin/addQuestion`}
-              className='block py-2 px-4 text-gray-300 hover:text-yellow-400 hover:bg-gray-700 rounded-lg transition duration-200'
-            >Add Question</Link>
+          <NavLink to="/admin/addQuestion" icon={<FilePlus size={18} />}>
+            Add Question
+          </NavLink>
 
-          </li>
+          <NavLink to={`/admin/topic/${adminInfo._id}`} icon={<BookOpen size={18} />}>
+            Topics
+          </NavLink>
 
-          <li>
-            <Link
-              to={`/admin/topic/${adminInfo._id}`}
-              className="block py-2 px-4 text-gray-300 hover:text-teal-400 hover:bg-gray-700 rounded-lg transition duration-200"
-            >
-              Topics
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/admin/subtopics"
-              className="block py-2 px-4 text-gray-300 hover:text-purple-400 hover:bg-gray-700 rounded-lg transition duration-200"
-            >
-              Subtopics
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/admin/questions"
-              className="block py-2 px-4 text-gray-300 hover:text-green-400 hover:bg-gray-700 rounded-lg transition duration-200"
-            >
-              Questions
-            </Link>
-          </li>
-        </ul>
+          <NavLink to="/admin/subtopics" icon={<ListTree size={18} />}>
+            Subtopics
+          </NavLink>
+
+          <NavLink to="/admin/questions" icon={<ListTree size={18} />}>
+            Questions
+          </NavLink>
+        </nav>
 
         {/* Logout Button */}
         <div className="absolute bottom-6 left-0 w-full px-5">
           <Button
-            to="/logout"
-            className="w-full py-2 text-center bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg shadow-md transition duration-200"
-            onClick={handlelogOut}
+            onClick={handleLogOut}
+            className="w-full py-3 bg-gradient-to-r from-red-500/80 to-rose-600/80 hover:from-red-600 hover:to-rose-700 
+            text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-red-500/20 
+            flex items-center justify-center gap-2"
+            disabled={logoutLoading}
           >
-            {logoutLoading ? <Loader2 className="w-6 h-6" /> : 'Logout'}
+            {logoutLoading ? (
+              <Loader2 className="w-5 h-5 animate-spin" />
+            ) : (
+              <>
+                <LogOut size={16} />
+                Logout
+              </>
+            )}
           </Button>
         </div>
       </div>
     </div>
   );
 };
+
+// Reusable NavLink Component
+const NavLink = ({ to, icon, children }) => (
+  <Link
+    to={to}
+    className="flex items-center p-3 space-x-3 text-gray-300 hover:text-white hover:bg-gray-700/50 
+    rounded-lg transition-all duration-200 group border border-transparent hover:border-gray-600/50
+    hover:shadow-sm"
+  >
+    <span className="text-gray-400 group-hover:text-purple-400 transition-colors">
+      {icon}
+    </span>
+    <span className="text-sm font-medium">{children}</span>
+  </Link>
+);
 
 export default Sidebar;

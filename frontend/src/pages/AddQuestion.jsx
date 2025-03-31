@@ -62,6 +62,8 @@ const AddContentPage = () => {
   }
 
   // fetching the topics when page load and when topic got updated
+  console.log(questionDetails);
+  
 
   useEffect(() => {
     const fetchTopics = async () => {
@@ -113,7 +115,7 @@ const AddContentPage = () => {
         })
 
         const data = await response.json();
-        console.log(data);
+       // console.log(data);
 
         if (data.success) {
           setSubtopic(data.subtopics);
@@ -248,7 +250,8 @@ const AddContentPage = () => {
   }
 
 
-
+ console.log(selectedSubtopic);
+ 
 
 
   const handleQuestionSubmit = async () => {

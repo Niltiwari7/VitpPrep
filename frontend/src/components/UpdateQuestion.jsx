@@ -9,12 +9,13 @@ import { DrawerClose } from '@/components/ui/drawer';
 
 const API_URL = "http://localhost:3000";
 
-const UpdateQuestion = ({ question, className, onQuestionUpdate }) => {
+const UpdateQuestion = ({ question, className , onQuestionUpdate }) => {
     const [title, setTitle] = useState(question?.title || '');
     const [description, setDescription] = useState(question?.description || '');
     const [tags, setTags] = useState(question?.tags.join(", ") || ''); // Convert tags to comma-separated string
     const [url, setUrl] = useState(question?.url || '');
     
+    const [youtubeLink,setYoutubeLink] = useState(question?.videoLink || '');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -40,14 +41,16 @@ const UpdateQuestion = ({ question, className, onQuestionUpdate }) => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ title, description, tags: tagsArray, url }),
+                body: JSON.stringify({ title, description, tags: tagsArray, url,videoLink:youtubeLink }),
             });
 
             const data = await response.json();
 
             if (data.success) {
                 toast.success(data.message);
-                onQuestionUpdate(data.question); // Call the function to update the question list
+                console.log(data);
+                
+                onQuestionUpdate(data.question);
                 setError("");
             } else {
                 console.log(data.message);
@@ -61,10 +64,12 @@ const UpdateQuestion = ({ question, className, onQuestionUpdate }) => {
         }
     };
 
+    console.log(youtubeLink)
+    
     return (
-        <Card className={cn("w-full max-w-md shadow-lg rounded-xl", className)}>
+        <Card className={cn("w-full max-w-md shadow-lg rounded-xl mx-auto", className)}>
             <CardHeader className="border-b">
-                <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
+                <h3 className="text-xl font-semibold text-gray-800 dark:text-white text-center">
                     Update Question
                 </h3>
             </CardHeader>
@@ -126,6 +131,21 @@ const UpdateQuestion = ({ question, className, onQuestionUpdate }) => {
                             placeholder="Enter URL..."
                         />
                     </div>
+
+                    <div className="grid gap-2">
+                        <Label htmlFor="url" className="text-sm font-medium">
+                            Youtube Link
+                        </Label>
+                        <Input
+                            type="text"
+                            id="youtubeLink"
+                            value={youtubeLink}
+                            onChange={(e) => setYoutubeLink(e.target.value)}
+                            className="border-gray-300 focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                            placeholder="Enter Youtube URL..."
+                        />
+                    </div>
+
 
                     {/* Error message */}
                     {error && (

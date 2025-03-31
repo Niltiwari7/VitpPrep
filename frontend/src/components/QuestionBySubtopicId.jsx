@@ -17,14 +17,25 @@ const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
     const [questionLoading, setQuestionLoading] = useState(false);
     const [error, setError] = useState(null);
     const [questionId, setQuestionId] = useState("");
+    const admin = useSelector((state) => state.admin?.adminInfo || {});
 
-   
-   
-    
-    
+
+
+
+
+    if (userId === null) {
+        setUserId(admin._id);
+    }
+
+    const onQuestionUpdate = (updatedQuestion) => {
+        setQuestion(...question.map((q) => q.id === updatedQuestion.id ? updatedQuestion : q));
+
+    }
+
     const handleChange = useCallback(async (userId, questionId) => {
         // Optimistically update the state immediately
-        setQuestion((prev)=> prev.map((q)=>q._id === questionId ? {...q, completed:!q.completed}:q));               
+        setQuestion((prev) => prev.map((q) => q._id === questionId ? { ...q, completed: !q.completed } : q));
+
 
         try {
             setQuestionLoading(true);
@@ -39,7 +50,7 @@ const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
 
             const data = await response.json();
             if (data.success) {
-                console.log(data.message);
+
             } else {
                 setError(data.message || 'Internal server error');
             }
@@ -50,8 +61,8 @@ const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
         }
     }, []);
 
-   
-    
+
+
 
 
     const handleFavorite = async (questionId, userId) => {
@@ -82,7 +93,7 @@ const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
             const data = await response.json();
             if (!data.success) throw new Error(data.message || "Server Error");
 
-            console.log(data.message);
+
         } catch (error) {
             console.error("Error:", error.message);
         }
@@ -112,7 +123,7 @@ const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
 
                 const data = await response.json();
                 if (data.success) {
-                    console.log(data.message);
+
                 } else {
                     setError(data.message || 'Internal server error');
                 }
@@ -125,6 +136,7 @@ const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
 
         UpdatedQuestion();
     }, [questionId, handleChange]);
+
 
 
 
@@ -149,7 +161,7 @@ const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
                 const data = await response.json();
 
                 if (data.success) {
-                    console.log("succesfully fetch data", data);
+
                     setQuestion(data.questions)
                 } else {
                     setError(data.message || 'Internal server error')
@@ -166,7 +178,7 @@ const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
 
 
 
-  
+
 
     if (error) {
         return <div className="text-red-500 text-center py-4">⚠️ {error}</div>;
@@ -197,7 +209,7 @@ const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
                             {question.map((question) => (
                                 <TableRow key={question._id} className="hover:bg-gray-700 transition duration-300">
                                     <TableCell className="text-center">
-                                        <input type="checkbox" className="h-5 w-5 "
+                                        <input type="checkbox" className="h-5 w-5"
                                             onChange={() => handleChange(user._id, question._id)}
                                             checked={question.completed}
                                         />
@@ -214,49 +226,54 @@ const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
                                         </span>
                                     </TableCell>
                                     <TableCell className="text-center">
-                                    <button
-                                        className="p-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition-all"
-                                        onClick={() => handleFavorite(question._id, user._id)}
-                                    >
-                                        {Array.isArray(question.likedBy) && question.likedBy.includes(user._id)
-                                            ? <FaStar size={20} className="text-yellow-400" />  // Favorite (filled star)
-                                            : <FaRegStar size={20} className="text-gray-200" />  // Not favorite (outline star)
-                                        }
-
-                                    </button>
+                                        <button
+                                            className="p-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition-all mx-auto block"
+                                            onClick={() => handleFavorite(question._id, user._id)}
+                                        >
+                                            {Array.isArray(question.likedBy) && question.likedBy.includes(user._id)
+                                                ? <FaStar size={20} className="text-yellow-400" />
+                                                : <FaRegStar size={20} className="text-gray-200" />
+                                            }
+                                        </button>
                                     </TableCell>
 
+                                    {/* LeetCode Cell */}
                                     <TableCell className="text-center">
                                         {question.url ? (
-                                            <a href={question.url} target="_blank" rel="noopener noreferrer">
-                                                <SiLeetcode size={20} className="text-orange-500 mx-auto" />
+                                            <a href={question.url} target="_blank" rel="noopener noreferrer"
+                                                className="w-full h-full flex justify-center items-center">
+                                                <SiLeetcode size={20} className="text-orange-500" />
                                             </a>
                                         ) : (
                                             <span className="text-gray-400">—</span>
                                         )}
                                     </TableCell>
+
+                                    {/* YouTube Cell */}
                                     <TableCell className="text-center">
                                         {question.videoLink ? (
-                                            <a href={question.videoLink} target="_blank" rel="noopener noreferrer">
+                                            <a href={question.videoLink} target="_blank" rel="noopener noreferrer"
+                                                className="w-full h-full flex justify-center items-center">
                                                 <FaYoutube size={20} className="text-red-500" />
                                             </a>
                                         ) : (
                                             <span className="text-gray-400">—</span>
                                         )}
                                     </TableCell>
+
                                     {!isUser && (
                                         <TableCell className="text-center">
                                             <Drawer>
                                                 <DrawerTrigger asChild>
-                                                    <button className="p-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition">
+                                                    <button className="p-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition mx-auto block">
                                                         <FaEdit size={20} className="text-white" />
                                                     </button>
                                                 </DrawerTrigger>
                                                 <DrawerContent>
                                                     <DrawerHeader>
-                                                        <DrawerTitle>Edit Question</DrawerTitle>
+                                                        <DrawerTitle className="text-lg text-center">Edit Question</DrawerTitle>
                                                     </DrawerHeader>
-                                                    <UpdateQuestion question={question} />
+                                                    <UpdateQuestion question={question} onQuestionUpdate={onQuestionUpdate} />
                                                 </DrawerContent>
                                             </Drawer>
                                         </TableCell>

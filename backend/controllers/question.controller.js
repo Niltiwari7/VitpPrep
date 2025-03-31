@@ -2,7 +2,7 @@ import Question from "../models/question.model.js";
 import Subtopic from "../models/subtopic.model.js";
 import Topic from "../models/topic.model.js";
 import User from "../models/user.model.js";
-
+import mongoose from "mongoose";
 
 // Create a new Question
 export const createQuestion = async (req, res) => {
@@ -129,35 +129,53 @@ export const getQuestionById = async (req, res) => {
     }
 };
 
-// Update a Question by ID
+
+
 export const updateQuestion = async (req, res) => {
     try {
-        const question = await Question.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const { id } = req.params;
+        const { title, description, tags, url, videoLink } = req.body;
 
-        if (!question) {
-            return res.status(404).json({
-                message: 'Question not found',
-                statusCode: 404,
+        // Check if the ID is valid
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({
+                message: "Invalid Question ID",
                 success: false
             });
         }
 
-        res.status(200).json({
+        const question = await Question.findById(id);
+        if (!question) {
+            return res.status(404).json({
+                message: 'Question not found',
+                success: false
+            });
+        }
+
+        // Update question fields
+        question.title = title || question.title;
+        question.description = description || question.description;
+        question.tags = tags || question.tags;
+        question.url = url || question.url;
+        question.videoLink = videoLink || question.videoLink;
+
+        // Save updated question
+        await question.save();
+
+        return res.status(200).json({
             success: true,
-            statusCode: 200,
-            question: question,
-            message:'Question Updated successfully'
+            message: 'Question updated successfully',
+            question
         });
     } catch (error) {
-        
-
-        res.status(400).json({
-            message: error.message,
-            statusCode: 400,
+        console.error(error);
+        return res.status(400).json({
+            message: error.message || 'Something went wrong',
             success: false
         });
     }
 };
+
 
 
 // Delete a Question by ID
@@ -218,7 +236,8 @@ export const Questions = async (req, res) => {
 export const updateQuestionWithProgress = async (req, res) => {
     try {
         const { userId, questionId } = req.body;
-
+        console.log("updted question",userId, questionId);
+        
         if (!userId || !questionId) {
             return res.status(400).json({
                 message: "User ID and Question ID are required",
@@ -226,7 +245,7 @@ export const updateQuestionWithProgress = async (req, res) => {
                 statusCode: 400,
             });
         }
-
+        
         // Find the user first
         const user = await User.findById(userId);
 
@@ -272,6 +291,8 @@ export const updateQuestionWithProgress = async (req, res) => {
 export const getQuestionWithProgress = async (req, res) => {
     try {
         const { subtopicId, userId } = req.body;
+        
+     
         
         
         const questions = await Question.find({ subtopicId });
