@@ -23,7 +23,6 @@ import { Heart } from "lucide-react";
 import { User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AiOutlineDashboard } from "react-icons/ai";
-
 const API_URL = 'http://localhost:3000';
 
 const UserDashBoard = () => {
@@ -236,7 +235,13 @@ const UserDashBoard = () => {
           navigateTo={"/os"}
         />
 
-
+        <FeatureCard
+          imageUrl="src/assets/public/aptitude.png"
+          title="Aptitude"
+          description="Prepare for placements with essential aptitude questions and solutions."
+          buttonText="Start Practicing"
+          navigateTo={"/aptitude"}
+        />
       </main>
       <Footer />
     </div>

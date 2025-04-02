@@ -29,6 +29,7 @@ import OS from "./pages/OS";
 import UserProfile from "./pages/UserProfile";
 import UserEdit from "./pages/UserEdit";
 import UserLikedQuestion from "./pages/UserLikedQuestion";
+import Aptitude from "./pages/Aptitude";
 
 
 function App() {
@@ -88,6 +89,7 @@ function App() {
         <Route path='/computer-network' element={<ComputerNetwork />} />
         <Route path='/dbms' element={<DBMS />} />
         <Route path = '/os' element = {<OS/>}/>
+        <Route path = '/aptitude' element = {<Aptitude/>}/>
       </Routes>
     </>
   );
