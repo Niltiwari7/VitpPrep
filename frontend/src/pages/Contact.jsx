@@ -143,7 +143,7 @@ const Contact = () => {
                       ? 'border-red-500 ring-red-200 dark:ring-red-900'
                       : 'border-gray-200 dark:border-gray-700 focus:border-blue-500 ring-blue-200 dark:ring-blue-900'
                       } bg-white dark:bg-gray-900 focus:outline-none transition-all`}
-                    placeholder="John Doe"
+                    placeholder="Enter your name"
                   />
                   <FaUser className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
                 </div>
@@ -173,7 +173,7 @@ const Contact = () => {
                       ? 'border-red-500 ring-red-200 dark:ring-red-900'
                       : 'border-gray-200 dark:border-gray-700 focus:border-blue-500 ring-blue-200 dark:ring-blue-900'
                       } bg-white dark:bg-gray-900 focus:outline-none transition-all`}
-                    placeholder="john@example.com"
+                    placeholder="xyz@example.com"
                   />
                   <FaEnvelope className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
                 </div>

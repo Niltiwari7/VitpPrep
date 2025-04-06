@@ -10,6 +10,7 @@ import questionReducer from './slices/question.slice.js';
 import subtopicByIdReducer from './slices/topicQuestion.slice.js';
 import questionBysubtopicIdReducer from './slices/questionbyId.slice.js';
 import topicSlice from './slices/topic.slice.js';
+import actionReducer from './slices/action.slice.js';
 // Combine reducers
 const rootReducer = combineReducers({
     admin: adminReducer,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
     subtopic: subTopicReducer,
     question: questionReducer,
     subtopicById: subtopicByIdReducer,
-    questionBysubtopicId: questionBysubtopicIdReducer
+    questionBysubtopicId: questionBysubtopicIdReducer,
+    action: actionReducer
 });
 
 // Persist configuration

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Router } from "react-router-dom";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import Footer from "./components/Footer";
@@ -30,6 +30,8 @@ import UserProfile from "./pages/UserProfile";
 import UserEdit from "./pages/UserEdit";
 import UserLikedQuestion from "./pages/UserLikedQuestion";
 import Aptitude from "./pages/Aptitude";
+import PrivateRoute from "./components/PrivateRoute";
+
 
 
 function App() {
@@ -73,23 +75,34 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/admin/signup" element={<AdminSignUp />} />
         <Route path="/admin/signin" element={<AdminSignIn />} />
-        {/* <Route path='/admin/dashboard/:id' element = {<AdminDashBoard/>}/> */}
-        <Route path="/dashboard" element={<UserDashBoard />} />
-        <Route path="/admin/profile/:adminId" element={<AdminProfile />} />
-        <Route path="/admin/edit/:adminId" element={<AdminEdit />} />
-        <Route path="/admin/addQuestion" element={<AddQuestion />} />
-        <Route path="/admin/topic/:adminId" element={<Topic />} />
-        <Route path='/admin/questions' element={<Quesion />} />
-        <Route path='/admin/edit-question/:questionId' element={<UpdateQuestion />} />
-        <Route path = '/user/:userId' element = {<UserProfile/>}/>
-        <Route path = '/user/edit/:userId' element = {<UserEdit/>}/>
-        <Route path = '/user/likedQuestion/:userId' element = {<UserLikedQuestion/>}/>
-        <Route path='/top-interview-questions-dsa' element={<Dsa150Question />} />
-        <Route path='/oops' element={<OOPS />} />
-        <Route path='/computer-network' element={<ComputerNetwork />} />
-        <Route path='/dbms' element={<DBMS />} />
-        <Route path = '/os' element = {<OS/>}/>
-        <Route path = '/aptitude' element = {<Aptitude/>}/>
+
+
+        {/* <Route path='/dashboard' element={<UserDashBoard />} /> */}
+        <Route element={<PrivateRoute requiredRole="user" />}>
+          <Route path="/dashboard" element={<UserDashBoard />} />
+        </Route>
+        <Route element={<PrivateRoute roles={['user']} />}>
+          <Route path="/dashboard" element={<UserDashBoard />} />
+          <Route path='/user/:userId' element={<UserProfile />} />
+          <Route path='/user/edit/:userId' element={<UserEdit />} />
+          <Route path='/user/likedQuestion/:userId' element={<UserLikedQuestion />} />
+          <Route path='/top-interview-questions-dsa' element={<Dsa150Question />} />
+          <Route path='/oops' element={<OOPS />} />
+          <Route path='/computer-network' element={<ComputerNetwork />} />
+          <Route path='/dbms' element={<DBMS />} />
+          <Route path='/os' element={<OS />} />
+          <Route path='/aptitude' element={<Aptitude />} />
+        </Route>
+
+
+        <Route element={<PrivateRoute requiredRole="admin" />}>
+          <Route path="/admin/profile/:adminId" element={<AdminProfile />} />
+          <Route path="/admin/edit/:adminId" element={<AdminEdit />} />
+          <Route path="/admin/addQuestion" element={<AddQuestion />} />
+          <Route path="/admin/topic/:adminId" element={<Topic />} />
+          <Route path='/admin/questions' element={<Quesion />} />
+          <Route path='/admin/edit-question/:questionId' element={<UpdateQuestion />} />
+        </Route>
       </Routes>
     </>
   );

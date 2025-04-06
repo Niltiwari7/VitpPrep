@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { updateUserInfo } from '../utils/slices/user.slice.js';
+import { login } from '../utils/slices/user.slice.js';
 
 const API_URL = 'http://localhost:3000';
 
@@ -33,13 +34,18 @@ const SignIn = () => {
       });
 
       const data = await response.json();
+      console.log(data);
+      
       if (data.success) {
-        dispatch(updateUserInfo(data.user));
+        dispatch(login((data.user)));
+        console.log(data);
+        
         navigate('/dashboard');
       } else {
         setError(data.message || 'Invalid credentials. Please try again.');
       }
     } catch (error) {
+      console.log(error);
       setError('Connection error. Please try again later.');
     } finally {
       setLoader(false);
@@ -167,7 +173,7 @@ const SignIn = () => {
             </p>
           </form>
 
-         
+
         </div>
       </motion.div>
     </div>

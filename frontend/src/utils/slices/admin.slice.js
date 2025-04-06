@@ -5,14 +5,18 @@ const adminSlice = createSlice({
     initialState:{
         adminInfo:{},
         isAuthenticated:false,
+        role:'admin',
         dashboardStats:{},
     },
     reducers:{
         updateAdminInfo:(state,action)=>{
             state.adminInfo = action.payload;
         },
-        login:(state)=>{
+        login:(state,action)=>{
             state.isAuthenticated = true;
+            state.adminInfo = action.payload;
+            state.role = action.payload.role || 'admin';
+            
         },
         logout: (state)=>{
             state.isAuthenticated=false;

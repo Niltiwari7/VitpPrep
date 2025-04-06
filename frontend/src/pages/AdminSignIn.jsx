@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AiFillGoogleCircle } from "react-icons/ai";
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { updateAdminInfo } from '../utils/slices/admin.slice';
+import { login, updateAdminInfo } from '../utils/slices/admin.slice';
 import { Button } from "@/components/ui/button"
 import {toast} from 'react-hot-toast';
 import { Loader2, Eye, EyeOff, Mail, Lock } from 'lucide-react';
@@ -43,7 +43,7 @@ const AdminSignIn = () => {
             } else {
                 const id = data.admin.id;
                 setError('');
-                dispatch(updateAdminInfo(data));
+                dispatch(login(data.admin));
                 navigate(`/admin/profile/${id}`);
                 setLoader(false);
             }
