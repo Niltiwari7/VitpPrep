@@ -41,18 +41,7 @@ const Footer = () => {
               >
                 About Us
               </Link>
-              <Link
-                to="/courses"
-                className="hover:text-blue-700 dark:hover:text-blue-400 transition-all duration-300 hover:pl-2"
-              >
-                Courses
-              </Link>
-              <Link
-                to="/blog"
-                className="hover:text-blue-700 dark:hover:text-blue-400 transition-all duration-300 hover:pl-2"
-              >
-                Blog
-              </Link>
+             
             </nav>
           </div>
 
@@ -74,19 +63,14 @@ const Footer = () => {
               >
                 FAQ
               </Link>
-              <Link
-                to="/privacy"
-                className="hover:text-blue-700 dark:hover:text-blue-400 transition-all duration-300 hover:pl-2"
-              >
-                Privacy Policy
-              </Link>
+              
             </nav>
           </div>
 
           {/* Social Section */}
           <div className="space-y-4">
             <h4 className="text-lg font-semibold mb-3 text-gray-900 dark:text-gray-200">
-              Connect With Us
+              Connect With Me
             </h4>
             <div className="flex space-x-4">
               <a

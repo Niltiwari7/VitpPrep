@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Header from '../components/Header';
 import { FaCode, FaUsers, FaChartLine, FaRocket, FaGraduationCap } from 'react-icons/fa';
+import Footer from '../components/Footer';
 
 const HomePage = () => {
   const [mounted, setMounted] = useState(false);
@@ -206,6 +207,9 @@ const HomePage = () => {
           </motion.div>
         </div>
       </section>
+      
+      <Footer/>
+
     </div>
   );
 };

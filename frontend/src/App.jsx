@@ -31,6 +31,7 @@ import UserEdit from "./pages/UserEdit";
 import UserLikedQuestion from "./pages/UserLikedQuestion";
 import Aptitude from "./pages/Aptitude";
 import PrivateRoute from "./components/PrivateRoute";
+import FAQ from "./pages/Faq";
 
 
 
@@ -75,14 +76,12 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/admin/signup" element={<AdminSignUp />} />
         <Route path="/admin/signin" element={<AdminSignIn />} />
-
+        <Route path="/faq" element={<FAQ />} />
+        
 
         {/* <Route path='/dashboard' element={<UserDashBoard />} /> */}
         <Route element={<PrivateRoute requiredRole="user" />}>
-          <Route path="/dashboard" element={<UserDashBoard />} />
-        </Route>
-        <Route element={<PrivateRoute roles={['user']} />}>
-          <Route path="/dashboard" element={<UserDashBoard />} />
+        <Route path="/dashboard" element={<UserDashBoard />} />
           <Route path='/user/:userId' element={<UserProfile />} />
           <Route path='/user/edit/:userId' element={<UserEdit />} />
           <Route path='/user/likedQuestion/:userId' element={<UserLikedQuestion />} />
@@ -93,8 +92,7 @@ function App() {
           <Route path='/os' element={<OS />} />
           <Route path='/aptitude' element={<Aptitude />} />
         </Route>
-
-
+      
         <Route element={<PrivateRoute requiredRole="admin" />}>
           <Route path="/admin/profile/:adminId" element={<AdminProfile />} />
           <Route path="/admin/edit/:adminId" element={<AdminEdit />} />
