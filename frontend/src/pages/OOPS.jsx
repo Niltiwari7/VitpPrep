@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { AiOutlineArrowLeft, AiOutlineBars, AiOutlineClose, AiOutlineDashboard } from 'react-icons/ai';
+import React, { useEffect, useState } from 'react';
+import { AiFillCopy, AiOutlineArrowLeft, AiOutlineBars, AiOutlineClose, AiOutlineDashboard } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDarkMode } from '../utils/slices/theme.slice';
 import { FaBars, FaMoon, FaSun } from 'react-icons/fa';
@@ -31,6 +31,7 @@ import { LogOut } from 'lucide-react';
 import { Heart } from "lucide-react";
 import { User } from 'lucide-react';
 import { logout } from "../utils/slices/user.slice.js";
+import { classSnippet } from '../assets/OOPS_static_code.js';
 
 
 const OOPS = () => {
@@ -109,101 +110,139 @@ const OOPS = () => {
     };
 
 
+    useEffect(() => {
+        const timeOut = setTimeout(() => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((enteries) => {
+                enteries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setCurrentSection(`#${entry.target.id}`);
+                    }
+                })
+            }, observerOptions);
+
+            links.forEach((link) => {
+                const section = document.querySelector(link.id);
+                if (section) {
+                    observer.observe(section);
+                }
+            })
+
+            return () => {
+                links.forEach((link) => {
+                    const section = document.querySelector(link.id);
+                    if (section) {
+                        observer.unobserve(section);
+                    }
+                })
+            }
+        }, 200);
+
+
+        return () => clearTimeout(timeOut);
+    }, []);
+
+ 
+
     return (
         <div className='gap-5'>
 
-          <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-xl backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30">
-                          <Link to = "/dashboard" className="flex items-center space-x-2">
-                              <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:from-blue-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-500 hover:scale-105">
-                                  VitpPrep
-                              </h3>
-          
-                              {/* <h3 className="text-2xl font-extrabold text-gray-900">PatternPrep</h3> */}
-          
-                              <div className="h-4 w-1 bg-gradient-to-b from-[#00C1B3] to-[#00E3CC] rounded-full animate-pulse"></div>
-                          </Link>
-                  
-                          <div className="flex items-center gap-5">
-                              <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  onClick={toggleTheme}
-                                  className="p-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 group"
-                              >
-                                  {darkMode ? (
-                                      <FaMoon size={20} className="group-hover:rotate-[-15deg] transition-transform duration-300" />
-                                  ) : (
-                                      <FaSun size={20} className="group-hover:rotate-12 transition-transform duration-300" />
-                                  )}
-                              </Button>
-          
-                              {/* Profile Dropdown */}
-                              <DropdownMenu>
-                                  <DropdownMenuTrigger asChild>
-                                      <Button
-                                          variant="ghost"
-                                          className="relative h-10 w-10 rounded-full hover:scale-105 transition-transform duration-200"
-                                      >
-                                          <Avatar className="h-10 w-10 border-2 border-white/20 hover:border-[#00C1B3]/40 dark:hover:border-[#00E3CC]/40 transition-colors duration-300">
-                                              <AvatarImage
-                                                  src={user.imageUrl || "/assets/placeholder.png"}
-                                                  className="hover:brightness-110 transition-all duration-300"
-                                              />
-                                              <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
-                                                  {user.name?.charAt(0) || "U"}
-                                              </AvatarFallback>
-                                          </Avatar>
-                                          <span className="absolute -bottom-1 -right-1 h-3 w-3 bg-green-400 rounded-full border-2 border-white dark:border-[#0D1117]"></span>
-                                      </Button>
-                                  </DropdownMenuTrigger>
-                                  <DropdownMenuContent
-                                      className="w-56 bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-lg border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 shadow-xl"
-                                      align="end"
-                                  >
-                                      <DropdownMenuLabel className="text-[#00C1B3] dark:text-[#00E3CC] font-semibold">
-                                          My Account
-                                      </DropdownMenuLabel>
-                                      <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
-                                      <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
-                                          <Link to={`/user/${user._id}`} className="flex items-center w-full px-2 py-2">
-                                              <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-          
-                                              <span className="text-[#00C1B3] dark:text-[#00E3CC]"> Profile</span>
-                                          </Link>
-                                      </DropdownMenuItem>
-          
-                                      <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
-                                          <Link to={`/user/likedQuestion/${user._id}`} className="flex items-center w-full px-2 py-2">
-                                              <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                                              <span className="text-[#00C1B3] dark:text-[#00E3CC]">Liked Question</span>
-                                          </Link>
-                                      </DropdownMenuItem>
-          
-                                      <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
-                                          <Link to={`/dashboard`} className="flex items-center w-full px-2 py-2">
-                                              <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                                              <span className="text-[#00C1B3] dark:text-[#00E3CC]">DashBoard</span>
-                                          </Link>
-                                      </DropdownMenuItem>
-          
-          
-                                      <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
-                                      <DropdownMenuItem className="p-0 hover:bg-transparent">
-          
-                                          <Button
-                                              variant="destructive"
-                                              className="w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 transition-colors"
-                                              onClick={handleLogout}
-                                          >
-                                              Logout
-                                              <LogOut className="ml-2 h-4 w-4" />
-                                          </Button>
-          
-                                      </DropdownMenuItem>
-                                  </DropdownMenuContent>
-                              </DropdownMenu>
-                          </div>
-                      </header>
+            <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-xl backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30">
+                <Link to="/dashboard" className="flex items-center space-x-2">
+                    <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:from-blue-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-500 hover:scale-105">
+                        VitpPrep
+                    </h3>
+
+
+                    <div className="h-4 w-1 bg-gradient-to-b from-[#00C1B3] to-[#00E3CC] rounded-full animate-pulse"></div>
+                </Link>
+
+                <div className="flex items-center gap-5">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={toggleTheme}
+                        className="p-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 group"
+                    >
+                        {darkMode ? (
+                            <FaMoon size={20} className="group-hover:rotate-[-15deg] transition-transform duration-300" />
+                        ) : (
+                            <FaSun size={20} className="group-hover:rotate-12 transition-transform duration-300" />
+                        )}
+                    </Button>
+
+                    {/* Profile Dropdown */}
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                variant="ghost"
+                                className="relative h-10 w-10 rounded-full hover:scale-105 transition-transform duration-200"
+                            >
+                                <Avatar className="h-10 w-10 border-2 border-white/20 hover:border-[#00C1B3]/40 dark:hover:border-[#00E3CC]/40 transition-colors duration-300">
+                                    <AvatarImage
+                                        src={user.imageUrl || "/assets/placeholder.png"}
+                                        className="hover:brightness-110 transition-all duration-300"
+                                    />
+                                    <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+                                        {user.name?.charAt(0) || "U"}
+                                    </AvatarFallback>
+                                </Avatar>
+                                <span className="absolute -bottom-1 -right-1 h-3 w-3 bg-green-400 rounded-full border-2 border-white dark:border-[#0D1117]"></span>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                            className="w-56 bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-lg border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 shadow-xl"
+                            align="end"
+                        >
+                            <DropdownMenuLabel className="text-[#00C1B3] dark:text-[#00E3CC] font-semibold">
+                                My Account
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
+                            <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
+                                <Link to={`/user/${user._id}`} className="flex items-center w-full px-2 py-2">
+                                    <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]"> Profile</span>
+                                </Link>
+                            </DropdownMenuItem>
+
+                            <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
+                                <Link to={`/user/likedQuestion/${user._id}`} className="flex items-center w-full px-2 py-2">
+                                    <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]">Liked Question</span>
+                                </Link>
+                            </DropdownMenuItem>
+
+                            <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
+                                <Link to={`/dashboard`} className="flex items-center w-full px-2 py-2">
+                                    <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]">DashBoard</span>
+                                </Link>
+                            </DropdownMenuItem>
+
+
+                            <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
+                            <DropdownMenuItem className="p-0 hover:bg-transparent">
+
+                                <Button
+                                    variant="destructive"
+                                    className="w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 transition-colors"
+                                    onClick={handleLogout}
+                                >
+                                    Logout
+                                    <LogOut className="ml-2 h-4 w-4" />
+                                </Button>
+
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
+            </header>
 
             <div
                 className='flex min-h-screen 
@@ -292,18 +331,27 @@ const OOPS = () => {
                             </p>
 
                             {/* Class Example */}
-                            <h3 className="mt-6 text-lg font-semibold text-gray-800 dark:text-gray-100">
+                            <h3 className="r mt-6 text-lg font-semibold text-gray-800 dark:text-gray-100">
                                 Example:
                             </h3>
-                            <div className="mt-3 rounded-lg shadow-md overflow-hidden">
-                                <SyntaxHighlighter language="cpp" style={dracula} className="rounded-md">
-                                    {`class Student {
-public:
-string name;
-int age;
-};`}
+                            <div className="relative mt-3 rounded-lg shadow-md overflow-hidden">
+
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                                    title="Copy Code"
+                                >
+                                    <AiFillCopy className="text-gray-600 dark:text-gray-300" size={18} />
+                                </button>
+                                <SyntaxHighlighter language="cpp"
+                                    style={dracula}
+                                    className="rounded-md"
+
+
+                                >
+                                    {classSnippet}
                                 </SyntaxHighlighter>
                             </div>
+
 
                             {/* Object Section */}
                             <h2 className="mt-8 text-2xl font-semibold text-gray-800 dark:text-gray-100">
@@ -319,25 +367,32 @@ int age;
                             </h3>
                             <div className="mt-3 rounded-lg shadow-md overflow-hidden">
                                 <SyntaxHighlighter language="cpp" style={dracula} className="rounded-md">
-                                    {`class Student {
+                                    {`#include <iostream>
+using namespace std;
+
+class Student {
 public:
-string name;
-int age;
-void display() {
-    cout << "The student name is " << name << endl;
-    cout << "The student age is " << age << endl;
-}
+    string name;
+    int age;
+
+    void display() {
+        cout << "The student name is " << name << endl;
+        cout << "The student age is " << age << endl;
+    }
 };
 
 int main() {
-Student s1;   // Creating object of class Student
-s1.name = "John";
-s1.age = 20;
-s1.display();
-return 0;
+    Student s1;   // Creating object of class Student
+    s1.name = "John";
+    s1.age = 20;
+
+    s1.display();
+
+    return 0;
 }`}
                                 </SyntaxHighlighter>
                             </div>
+
 
                             {/* Output Section */}
                             <h3 className="mt-8 text-lg font-semibold text-gray-800 dark:text-gray-100">

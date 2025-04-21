@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Header from '../components/Header';
-import { FaCode, FaUsers, FaChartLine, FaRocket, FaGraduationCap } from 'react-icons/fa';
+import { FaCode, FaUsers, FaChartLine, FaRocket, FaGraduationCap, FaLightbulb } from 'react-icons/fa';
 import Footer from '../components/Footer';
 
 const HomePage = () => {
@@ -25,7 +25,7 @@ const HomePage = () => {
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-500">
       <Header />
 
-      {/* Hero Section */}
+
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -65,7 +65,7 @@ const HomePage = () => {
           </motion.div>
         </div>
 
-        {/* Animated Background Elements */}
+
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(5)].map((_, i) => (
             <motion.div
@@ -90,7 +90,7 @@ const HomePage = () => {
         </div>
       </motion.section>
 
-      {/* Features Section */}
+
       <section className="py-20">
         <div className="container mx-auto px-4">
           <motion.h2
@@ -119,9 +119,9 @@ const HomePage = () => {
               description="Access well-structured notes on core Computer Science fundamentals, curated from real-world experience."
             />
             <FeatureCard
-              icon={<FaUsers className="w-8 h-8" />}
-              title="Personalized Resume Guidance"
-              description="We will going to take resume sessions and help you ace your resume."
+              icon={<FaLightbulb className="w-8 h-8" />}
+              title="Master Aptitude with Structured Learning"
+              description="Get access to well-organized content that simplifies learning and helps you focus on what really matters."
             />
 
           </motion.div>
@@ -207,8 +207,8 @@ const HomePage = () => {
           </motion.div>
         </div>
       </section>
-      
-      <Footer/>
+
+      <Footer />
 
     </div>
   );

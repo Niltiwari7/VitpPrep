@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode } from "../utils/slices/theme.slice";
 import { Link, useNavigate } from "react-router-dom";
@@ -147,102 +147,138 @@ const OS = () => {
         }, 100)
     }
 
+    useEffect(() => {
+        const timeOut = setTimeout(() => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((enteries) => {
+                enteries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setCurrentSection(`#${entry.target.id}`);
+                    }
+                })
+            }, observerOptions);
+
+            links.forEach((link) => {
+                const section = document.querySelector(link.id);
+                if (section) {
+                    observer.observe(section);
+                }
+            })
+
+            return () => {
+                links.forEach((link) => {
+                    const section = document.querySelector(link.id);
+                    if (section) {
+                        observer.unobserve(section);
+                    }
+                })
+            }
+        }, 200);
+
+
+        return () => clearTimeout(timeOut);
+    }, []);
     return (
         <div className="gap-5">
             <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-xl backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30">
-                            <Link to = "/dashboard" className="flex items-center space-x-2">
-                                <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:from-blue-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-500 hover:scale-105">
-                                    VitpPrep
-                                </h3>
-            
-                                {/* <h3 className="text-2xl font-extrabold text-gray-900">PatternPrep</h3> */}
-            
-                                <div className="h-4 w-1 bg-gradient-to-b from-[#00C1B3] to-[#00E3CC] rounded-full animate-pulse"></div>
-                            </Link>
-            
-            
-            
-                            <div className="flex items-center gap-5">
+                <Link to="/dashboard" className="flex items-center space-x-2">
+                    <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:from-blue-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-500 hover:scale-105">
+                        VitpPrep
+                    </h3>
+
+                    {/* <h3 className="text-2xl font-extrabold text-gray-900">PatternPrep</h3> */}
+
+                    <div className="h-4 w-1 bg-gradient-to-b from-[#00C1B3] to-[#00E3CC] rounded-full animate-pulse"></div>
+                </Link>
+
+
+
+                <div className="flex items-center gap-5">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={toggleTheme}
+                        className="p-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 group"
+                    >
+                        {darkMode ? (
+                            <FaMoon size={20} className="group-hover:rotate-[-15deg] transition-transform duration-300" />
+                        ) : (
+                            <FaSun size={20} className="group-hover:rotate-12 transition-transform duration-300" />
+                        )}
+                    </Button>
+
+                    {/* Profile Dropdown */}
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                variant="ghost"
+                                className="relative h-10 w-10 rounded-full hover:scale-105 transition-transform duration-200"
+                            >
+                                <Avatar className="h-10 w-10 border-2 border-white/20 hover:border-[#00C1B3]/40 dark:hover:border-[#00E3CC]/40 transition-colors duration-300">
+                                    <AvatarImage
+                                        src={user.imageUrl || "/assets/placeholder.png"}
+                                        className="hover:brightness-110 transition-all duration-300"
+                                    />
+                                    <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+                                        {user.name?.charAt(0) || "U"}
+                                    </AvatarFallback>
+                                </Avatar>
+                                <span className="absolute -bottom-1 -right-1 h-3 w-3 bg-green-400 rounded-full border-2 border-white dark:border-[#0D1117]"></span>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                            className="w-56 bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-lg border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 shadow-xl"
+                            align="end"
+                        >
+                            <DropdownMenuLabel className="text-[#00C1B3] dark:text-[#00E3CC] font-semibold">
+                                My Account
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
+                            <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
+                                <Link to={`/user/${user._id}`} className="flex items-center w-full px-2 py-2">
+                                    <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]"> Profile</span>
+                                </Link>
+                            </DropdownMenuItem>
+
+                            <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
+                                <Link to={`/user/likedQuestion/${user._id}`} className="flex items-center w-full px-2 py-2">
+                                    <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]">Liked Question</span>
+                                </Link>
+                            </DropdownMenuItem>
+
+                            <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
+                                <Link to={`/dashboard`} className="flex items-center w-full px-2 py-2">
+                                    <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
+                                    <span className="text-[#00C1B3] dark:text-[#00E3CC]">DashBoard</span>
+                                </Link>
+                            </DropdownMenuItem>
+
+
+                            <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
+                            <DropdownMenuItem className="p-0 hover:bg-transparent">
+
                                 <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={toggleTheme}
-                                    className="p-2 bg-[#00C1B3] dark:bg-[#00E3CC] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 group"
+                                    variant="destructive"
+                                    className="w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 transition-colors"
+                                    onClick={handleLogout}
                                 >
-                                    {darkMode ? (
-                                        <FaMoon size={20} className="group-hover:rotate-[-15deg] transition-transform duration-300" />
-                                    ) : (
-                                        <FaSun size={20} className="group-hover:rotate-12 transition-transform duration-300" />
-                                    )}
+                                    Logout
+                                    <LogOut className="ml-2 h-4 w-4" />
                                 </Button>
-            
-                                {/* Profile Dropdown */}
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <Button
-                                            variant="ghost"
-                                            className="relative h-10 w-10 rounded-full hover:scale-105 transition-transform duration-200"
-                                        >
-                                            <Avatar className="h-10 w-10 border-2 border-white/20 hover:border-[#00C1B3]/40 dark:hover:border-[#00E3CC]/40 transition-colors duration-300">
-                                                <AvatarImage
-                                                    src={user.imageUrl || "/assets/placeholder.png"}
-                                                    className="hover:brightness-110 transition-all duration-300"
-                                                />
-                                                <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
-                                                    {user.name?.charAt(0) || "U"}
-                                                </AvatarFallback>
-                                            </Avatar>
-                                            <span className="absolute -bottom-1 -right-1 h-3 w-3 bg-green-400 rounded-full border-2 border-white dark:border-[#0D1117]"></span>
-                                        </Button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent
-                                        className="w-56 bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-lg border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 shadow-xl"
-                                        align="end"
-                                    >
-                                        <DropdownMenuLabel className="text-[#00C1B3] dark:text-[#00E3CC] font-semibold">
-                                            My Account
-                                        </DropdownMenuLabel>
-                                        <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
-                                        <DropdownMenuItem className="group hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10 transition-colors">
-                                            <Link to={`/user/${user._id}`} className="flex items-center w-full px-2 py-2">
-                                                <User className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-            
-                                                <span className="text-[#00C1B3] dark:text-[#00E3CC]"> Profile</span>
-                                            </Link>
-                                        </DropdownMenuItem>
-            
-                                        <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
-                                            <Link to={`/user/likedQuestion/${user._id}`} className="flex items-center w-full px-2 py-2">
-                                                <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                                                <span className="text-[#00C1B3] dark:text-[#00E3CC]">Liked Question</span>
-                                            </Link>
-                                        </DropdownMenuItem>
-            
-                                        <DropdownMenuItem className="group transition-colors hover:bg-[#00C1B3]/10 dark:hover:bg-[#00E3CC]/10 focus:bg-[#00C1B3]/10 dark:focus:bg-[#00E3CC]/10">
-                                            <Link to={`/dashboard`} className="flex items-center w-full px-2 py-2">
-                                                <Heart className="mr-2 h-4 w-4 text-[#00C1B3] dark:text-[#00E3CC]" />
-                                                <span className="text-[#00C1B3] dark:text-[#00E3CC]">DashBoard</span>
-                                            </Link>
-                                        </DropdownMenuItem>
-            
-            
-                                        <DropdownMenuSeparator className="bg-[#00C1B3]/20 dark:bg-[#00E3CC]/20" />
-                                        <DropdownMenuItem className="p-0 hover:bg-transparent">
-            
-                                            <Button
-                                                variant="destructive"
-                                                className="w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 transition-colors"
-                                                onClick={handleLogout}
-                                            >
-                                                Logout
-                                                <LogOut className="ml-2 h-4 w-4" />
-                                            </Button>
-            
-                                        </DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            </div>
-                        </header>
+
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
+            </header>
 
             <div
                 className='flex min-h-screen 
@@ -329,17 +365,18 @@ const OS = () => {
                                         <div className="overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm ">
                                             <Table className="w-full">
                                                 <TableHeader className="bg-gradient-to-r from-[#00C1B3]/10 to-[#2A3F5F]/10 dark:from-[#00E3CC]/10 dark:to-[#0D1117]/10">
-                                                    <TableRow>
-                                                        <TableHead className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">
-                                                            OS Type
-                                                        </TableHead>
-                                                        <TableHead className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">
-                                                            Architecture
-                                                        </TableHead>
-                                                        <TableHeader className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider">
-                                                            Use Cases
-                                                        </TableHeader>
-                                                    </TableRow>
+
+                                                    <TableHead className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">
+                                                        OS Type
+                                                    </TableHead>
+                                                    <TableHead className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">
+                                                        Architecture
+                                                    </TableHead>
+                                                    <TableHead className="px-6 py-4 text-left text-sm font-semibold text-[#2A3F5F] dark:text-[#A0AEC0] uppercase tracking-wider border-r border-[#00C1B3]/20">
+                                                        Use Cases
+                                                    </TableHead>
+
+
                                                 </TableHeader>
                                                 <TableBody className="divide-y divide-[#00C1B3]/10 dark:divide-[#00E3CC]/10 bg-white/50 dark:bg-[#1A202C]/50">
                                                     {[
@@ -925,13 +962,10 @@ const OS = () => {
                                     {/* Differences */}
                                     <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Differences</h4>
                                     <Table className="min-w-full text-left table-auto">
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableHead className="px-4 py-2 border">Feature</TableHead>
-                                                <TableHead className="px-4 py-2 border">Microkernel</TableHead>
-                                                <TableHead className="px-4 py-2 border">Monolithic Kernel</TableHead>
-                                            </TableRow>
-                                        </TableHead>
+                                        <TableHead className="px-4 py-2 border"> Feature</TableHead>
+                                        <TableHead className="px-4 py-2 border">MicroKernel</TableHead>
+                                        <TableHead className="px-4 py-2 border">Monolithis</TableHead>
+
                                         <TableBody>
                                             <TableRow>
                                                 <TableCell className="px-4 py-2 border">Architecture</TableCell>

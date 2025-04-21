@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineArrowLeft, AiOutlineBars, AiOutlineClose, AiOutlineDashboard } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDarkMode } from '../utils/slices/theme.slice';
@@ -89,13 +89,13 @@ const ComputerNetwork = () => {
     };
     const [currentSection, setCurrentSection] = useState('#cn_desc');
     const handleLinkClick = (sectionId) => {
-        // Update current section
+       
         setCurrentSection(sectionId);
 
-        // Close sidebar on mobile
+       
         toggleSidebar();
 
-        // Scroll to section with smooth behavior
+       
         setTimeout(() => {
             const section = document.querySelector(sectionId);
             if (section) {
@@ -104,10 +104,10 @@ const ComputerNetwork = () => {
                     block: 'start'
                 });
             }
-        }, 100); // Small delay to allow state update
+        }, 100); 
     };
 
-
+    
     const links = [
         { id: '#cn_desc', text: 'Introduction', color: 'bg-blue-500' },
         { id: '#topology', text: 'Topology', color: 'bg-red-500' },
@@ -117,11 +117,49 @@ const ComputerNetwork = () => {
         { id: '#httpvshttps', text: 'HTTP vs HTTPS', color: 'bg-pink-500' },
         { id: '#ipv4vsipv6', text: 'IPv4 vs IPv6', color: 'bg-orange-500' },
         { id: '#osi', text: 'OSI (Open Systems Interconnection) Model', color: 'bg-teal-500' },
-        { id: '#tcp/ip', text: 'TCP/IP Model', color: 'bg-indigo-500' },
+        { id: '#tcp-ip', text: 'TCP/IP Model', color: 'bg-indigo-500' },
         { id: '#handshake', text: 'TCP Three-Way Handshake', color: 'bg-gray-500' },
         { id: '#browser', text: 'What Happens When You Enter a URL in a Browser?', color: 'bg-rose-500' },
     ];
 
+
+    useEffect(() => {
+        const timeOut = setTimeout(() => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.6,
+            };
+    
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setCurrentSection(`#${entry.target.id}`);
+                    }
+                });
+            }, observerOptions);
+    
+            const observedSections = [];
+    
+            links.forEach((link) => {
+                const selector = link.id.startsWith('#') ? link.id : `#${link.id}`;
+                const section = document.querySelector(selector);
+                if (section) {
+                    observer.observe(section);
+                    observedSections.push(section);
+                }
+            });
+    
+        
+            return () => {
+                observedSections.forEach((section) => observer.unobserve(section));
+            };
+        }, 200);
+    
+        
+        return () => clearTimeout(timeOut);
+    }, []);
+    
     return (
         <div className='gap-5'>
            <header className="w-full flex items-center justify-between px-6 py-4 bg-[#2A3F5F] dark:bg-[#0D1117] shadow-xl backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90 fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/30 dark:border-[#00E3CC]/30">
@@ -130,7 +168,7 @@ const ComputerNetwork = () => {
                                    VitpPrep
                                </h3>
            
-                               {/* <h3 className="text-2xl font-extrabold text-gray-900">PatternPrep</h3> */}
+                    
            
                                <div className="h-4 w-1 bg-gradient-to-b from-[#00C1B3] to-[#00E3CC] rounded-full animate-pulse"></div>
                            </Link>
@@ -750,7 +788,7 @@ const ComputerNetwork = () => {
                     </section>
 
 
-                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='tcp/ip'>
+                    <section className="max-w-4xl mx-auto px-4 md:px-6 py-6" id='tcp-ip'>
                         <div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden">
                             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                                 <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
