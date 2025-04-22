@@ -37,7 +37,7 @@ const AdminSignIn = () => {
             });
 
             const data = await response.json();
-
+            console.log(data)
             if (!data.success) {
                 toast.error(data.message || 'Login failed.');
                 setError(data.message || 'Login failed.');
@@ -46,6 +46,7 @@ const AdminSignIn = () => {
                 const id = data.admin.id;
                 setError('');
                 dispatch(login(data.admin));
+              //  dispatch(updateAdminInfo(data.admin));
                 navigate(`/admin/profile/${id}`);
                 setLoader(false);
             }

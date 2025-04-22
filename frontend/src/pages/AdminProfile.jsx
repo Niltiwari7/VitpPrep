@@ -12,10 +12,14 @@ import AdminStats from '../components/AdminStats';
 import { Loader2 } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL;
+
+
 const AdminProfile = () => {
     const dispatch = useDispatch();
     const { adminId } = useParams();
+
     const darkMode = useSelector((state) => state.theme?.darkMode || false);
+    const admin = useSelector((state) => state.admin.adminInfo);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const adminInfo = useSelector((state) => state.admin.adminInfo);
@@ -30,14 +34,13 @@ const AdminProfile = () => {
         dispatch(setDarkMode(!darkMode));
     };
 
-  
-   
 
+    
     useEffect(() => {
         const fetchAdminInfo = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`http://localhost:3000/admin/getadmin/${adminId}`, {
+                const response = await fetch(`${API_URL}/admin/getadmin/${adminId}`, {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
@@ -46,6 +49,7 @@ const AdminProfile = () => {
                 });
 
                 const data = await response.json();
+                console.log(data)
                 if (!data.success) {
                     setError(data.message || 'Something went wrong');
                 } else {

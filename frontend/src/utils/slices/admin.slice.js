@@ -10,6 +10,8 @@ const adminSlice = createSlice({
     },
     reducers:{
         updateAdminInfo:(state,action)=>{
+            console.log(action.payload);
+            
             state.adminInfo = action.payload;
         },
         login:(state,action)=>{

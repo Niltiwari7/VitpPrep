@@ -7,13 +7,13 @@ const router = express.Router();
 
 router.post('/create',RegisterAdmin);
 router.post('/login',logInAdmin);
-router.get('/getadmin/:adminId', auth,getAdminInfo)
-router.post('/uploadimage/:adminId',auth,upload.single('image'),uploadImage);
-router.put('/updatePersonalInfo/:adminId',auth, updatePersonalInfo);
-router.put('/updateSocialLinks/:adminId',auth, updateSocialLinks);
-router.put('/updatePassword/:adminId',auth, updatePassword);
-router.put('/updateSkills/:adminId',auth, updateTechSkills);
-router.post('/logout/:adminId',auth,logout);
+router.get('/getadmin/:adminId', getAdminInfo)
+router.post('/uploadimage/:adminId',upload.single('image'),uploadImage);
+router.put('/updatePersonalInfo/:adminId', updatePersonalInfo);
+router.put('/updateSocialLinks/:adminId', updateSocialLinks);
+router.put('/updatePassword/:adminId', updatePassword);
+router.put('/updateSkills/:adminId',updateTechSkills);
+router.post('/logout/:adminId',logout);
 // router.post('/update/:adminId',auth, updateInformation)
 
 export default router;

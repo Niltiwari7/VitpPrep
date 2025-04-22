@@ -13,7 +13,7 @@ import { toast } from "react-hot-toast";
 
 const UserLikedQuestion = () => {
 
-
+    
     const tableVariants = {
         hidden: { opacity: 0 },
         visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
@@ -26,7 +26,7 @@ const UserLikedQuestion = () => {
 
     return (
         <>
-            {/* Enhanced Header */}
+           
             <header className="w-full flex items-center justify-between px-6 py-4 bg-gradient-to-r from-[#1a1f2d] to-[#232837] shadow-2xl backdrop-blur-xl fixed top-0 left-0 right-0 z-50 border-b border-[#00C1B3]/30">
                 <div className="flex items-center space-x-3">
                     <div className="w-8 h-8 bg-gradient-to-tr from-[#00C1B3] to-[#00E3CC] rounded-full animate-pulse" />

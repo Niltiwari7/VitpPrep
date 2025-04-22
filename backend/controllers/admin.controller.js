@@ -141,7 +141,7 @@ export const logInAdmin = async (req, res) => {
                 fullName: admin.fullName,
                 email: admin.email,
             },
-            token, // Optional: Send token in response for frontend use
+            token, 
         });
     } catch (error) {
         // Handle server errors
@@ -157,7 +157,7 @@ export const logInAdmin = async (req, res) => {
 export const getAdminInfo = async (req, res) => {
     try {
         const adminId = req.params.adminId;
-        // Extract the adminId from req.params
+        
         const admin = await User.findById(adminId);
         if (!admin) {
             return res.status(404).json({

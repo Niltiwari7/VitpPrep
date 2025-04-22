@@ -8,10 +8,11 @@ const PrivateRoute = ({ requiredRole }) => {
   const adminRole = useSelector((state) => state.admin.role); // corrected
   const userRole = useSelector((state) => state.user.role);   // corrected
 
+  
   const isAdmin = adminAuth && adminRole === 'admin';
   const isUser = userAuth && userRole === 'user';
 
-  console.log('User auth:', userAuth,userRole,isUser);
+  
   // Admin has access to all routes
   if (isAdmin) return <Outlet />;
 
