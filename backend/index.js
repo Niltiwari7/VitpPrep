@@ -13,20 +13,25 @@ import helmet from 'helmet';
 dotenv.config();
 connectDB();
 const app = express();
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5175','http://localhost:5174','https://patternprep.vercel.app/'];
-
-// CORS configuration
-app.use(cors({
-    origin: (origin, callback) => {
-        if (allowedOrigins.includes(origin) || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
+const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:5175",
+    "http://localhost:5174",
+    "https://patternprep.vercel.app"
+  ];
+  
+  const corsOptions = {
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
     },
     credentials: true, 
-}));
-
+  };
+  
+app.use(cors(corsOptions));
 app.use(helmet());
 app.use(cookieParser());
 app.use(express.json());
