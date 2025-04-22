@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AiFillCopy, AiOutlineArrowLeft, AiOutlineBars, AiOutlineClose, AiOutlineDashboard } from 'react-icons/ai';
+import { AiFillCopy, AiOutlineArrowLeft, AiOutlineBars, AiOutlineClose, AiOutlineCopy, AiOutlineDashboard } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDarkMode } from '../utils/slices/theme.slice';
 import { FaBars, FaMoon, FaSun } from 'react-icons/fa';
@@ -31,7 +31,7 @@ import { LogOut } from 'lucide-react';
 import { Heart } from "lucide-react";
 import { User } from 'lucide-react';
 import { logout } from "../utils/slices/user.slice.js";
-import { classSnippet } from '../assets/OOPS_static_code.js';
+import { abstractionSnippet, classSnippet, constructorSnippet, destuructorSnippet, friendclassSnippet, friendfunctionSnippet, functionOverLoadingSnippet, hierarchicalInheritenceSnippet, hybridInheritenceSnippet, multilevelInheritenceSnippet, multipleInheritenceSnippet, ObjectSnippet, operatorOverLoadingSnippet, privateAccessSpecifierSnippet, protectedAccessSpecifierSnippet, publicAccessSpecifierSnippet, runTimePolymorphismSnippet, singleInheritenceSnippet } from '../assets/codeSnippets/oopExamples.js';
 
 
 const OOPS = () => {
@@ -147,8 +147,15 @@ const OOPS = () => {
         return () => clearTimeout(timeOut);
     }, []);
 
- 
-
+    const [copied, setCopied] = useState(false);
+    const handleCopy = (text) => {
+        navigator.clipboard.writeText(text).then(() => {
+            toast.success('Copied to clipboard');
+        }).catch((err) => {
+            toast.error('Failed to copy to clipboard');
+        })
+    }
+   
     return (
         <div className='gap-5'>
 
@@ -337,10 +344,22 @@ const OOPS = () => {
                             <div className="relative mt-3 rounded-lg shadow-md overflow-hidden">
 
                                 <button
-                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(classSnippet)}
                                     title="Copy Code"
+                                    aria-label="Copy code snippet"
                                 >
-                                    <AiFillCopy className="text-gray-600 dark:text-gray-300" size={18} />
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
                                 </button>
                                 <SyntaxHighlighter language="cpp"
                                     style={dracula}
@@ -365,31 +384,27 @@ const OOPS = () => {
                             <h3 className="mt-6 text-lg font-semibold text-gray-800 dark:text-gray-100">
                                 Example:
                             </h3>
-                            <div className="mt-3 rounded-lg shadow-md overflow-hidden">
+                            <div className="relative mt-3 rounded-lg shadow-md overflow-hidden">
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(classSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
                                 <SyntaxHighlighter language="cpp" style={dracula} className="rounded-md">
-                                    {`#include <iostream>
-using namespace std;
-
-class Student {
-public:
-    string name;
-    int age;
-
-    void display() {
-        cout << "The student name is " << name << endl;
-        cout << "The student age is " << age << endl;
-    }
-};
-
-int main() {
-    Student s1;   // Creating object of class Student
-    s1.name = "John";
-    s1.age = 20;
-
-    s1.display();
-
-    return 0;
-}`}
+                                    {ObjectSnippet}
                                 </SyntaxHighlighter>
                             </div>
 
@@ -454,43 +469,27 @@ The student age is 20`}
                             <h3 className="mt-8 text-xl font-semibold text-gray-800 dark:text-gray-100">
                                 Example:
                             </h3>
-                            <div className="mt-3 rounded-lg shadow-md overflow-hidden">
+                            <div className="relative mt-3 rounded-lg shadow-md overflow-hidden">
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(classSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
                                 <SyntaxHighlighter language="cpp" style={dracula} className="rounded-md">
-                                    {`class Student {
-public:
-    string name;
-    int age;
-    
-    Student() {
-        cout << "Default Constructor" << endl;
-    }
-    
-    Student(string n, int a) {
-        cout << "Parameterized Constructor" << endl;
-        name = n;
-        age = a;
-    }
-    
-    Student(const Student &s) {
-        cout << "Copy Constructor" << endl;
-        name = s.name;
-        age = s.age;
-    }
-    
-    void display() {
-        cout << "The student name is " << name << endl;
-        cout << "The student age is " << age << endl;
-    }
-};
-
-int main() {
-    Student s; // Default Constructor
-    Student s1("John", 20); // Parameterized Constructor
-    s1.display();
-    Student s2(s1); // Copy Constructor
-    s2.display();
-    return 0;
-}`}
+                                    {constructorSnippet}
                                 </SyntaxHighlighter>
                             </div>
 
@@ -552,35 +551,27 @@ The student age is 20`}
                             <h3 className="mt-8 text-xl font-semibold text-gray-800 dark:text-gray-100">
                                 Example:
                             </h3>
-                            <div className="mt-3 rounded-lg shadow-md overflow-hidden">
+                            <div className="relative mt-3 rounded-lg shadow-md overflow-hidden">
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(classSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
                                 <SyntaxHighlighter language="cpp" style={dracula} className="rounded-md">
-                                    {`class MyClass {
-public:
-    int x, y;
-
-    // Constructor
-    MyClass(int a, int b) {
-        x = a;
-        y = b;
-        cout << "Constructor called!" << endl;
-    }
-
-    // Destructor
-    ~MyClass() {
-        cout << "Destructor called!" << endl;
-    }
-
-    void display() {
-        cout << "x: " << x << ", y: " << y << endl;
-    }
-};
-
-int main() {
-    MyClass obj(10, 20);  // Constructor is called
-    obj.display();
-    // Destructor is called when obj goes out of scope
-    return 0;
-}`}
+                                    {destuructorSnippet}
                                 </SyntaxHighlighter>
                             </div>
 
@@ -663,37 +654,27 @@ Destructor called!`}
                             <h3 className="mt-6 text-xl font-semibold text-gray-800 dark:text-gray-100">
                                 Code Example in C++:
                             </h3>
-                            <div className="mt-3 rounded-lg shadow-md overflow-hidden">
+                            <div className="relative mt-3 rounded-lg shadow-md overflow-hidden">
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(classSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
                                 <SyntaxHighlighter language="cpp" style={dracula} className="rounded-md">
-                                    {`#include <iostream>
-using namespace std;
-
-class Car {
-public:
-    // Abstract method (Only declaration)
-    virtual void drive() = 0; 
-
-    // Regular method
-    void stop() {
-        cout << "The car has stopped." << endl;
-    }
-};
-
-class Tesla : public Car {
-public:
-    // Implementation of the abstract method
-    void drive() override {
-        cout << "Driving a Tesla... the car accelerates smoothly!" << endl;
-    }
-};
-
-int main() {
-    Tesla tesla;
-    tesla.drive();  // Calling the abstraction
-    tesla.stop();   // Calling the regular method
-
-    return 0;
-}`}
+                                    {abstractionSnippet}
                                 </SyntaxHighlighter>
                             </div>
 
@@ -773,55 +754,75 @@ The car has stopped.`}
                             </p>
 
                             {/* Function Overloading Code */}
-                            <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
-                                {`#include <iostream>
-using namespace std;
+                            <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(functionOverLoadingSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
 
-class Printer {
-public:
-    void print(int i) { cout << "Printing integer: " << i << endl; }
-    void print(double d) { cout << "Printing double: " << d << endl; }
-    void print(string s) { cout << "Printing string: " << s << endl; }
-};
+                                <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
+                                    {functionOverLoadingSnippet}
+                                </SyntaxHighlighter>
 
-int main() {
-    Printer p;
-    p.print(10);
-    p.print(3.14);
-    p.print("Hello");
-    return 0;
-}`}
-                            </SyntaxHighlighter>
+                            </div>
+
+                            <h3 className="mt-8 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                Output:
+                            </h3>
+                            <div className="mt-3 rounded-lg shadow-md overflow-hidden">
+                                <SyntaxHighlighter language="text" style={dracula} className="rounded-md">
+                                    {`Printing integer: 10
+Printing double: 3.14
+Printing string: Hello`}
+                                </SyntaxHighlighter>
+                            </div>
+
 
                             <p className="mt-4">
                                 <strong>b) Operator Overloading:</strong> Operator overloading allows defining the behavior of operators for user-defined classes.
                             </p>
 
                             {/* Operator Overloading Code */}
-                            <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
-                                {`#include <iostream>
-using namespace std;
+                            <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(operatorOverLoadingSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
 
-class Complex {
-public:
-    int real, imag;
+                                <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
+                                    {operatorOverLoadingSnippet}
+                                </SyntaxHighlighter>
 
-    Complex(int r, int i) : real(r), imag(i) {}
+                            </div>
 
-    Complex operator + (Complex const &other) {
-        return Complex(real + other.real, imag + other.imag);
-    }
-
-    void display() { cout << real << " + " << imag << "i" << endl; }
-};
-
-int main() {
-    Complex c1(3, 4), c2(1, 2);
-    Complex c3 = c1 + c2;
-    c3.display();
-    return 0;
-}`}
-                            </SyntaxHighlighter>
 
                             {/* Run-Time Polymorphism Section */}
                             <h4 className="mt-6 text-xl font-semibold text-gray-800 dark:text-gray-200">
@@ -833,37 +834,32 @@ int main() {
                             </p>
 
                             {/* Run-Time Polymorphism Code */}
-                            <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
-                                {`#include <iostream>
-using namespace std;
 
-class Animal {
-public:
-    virtual void sound() { cout << "Animal makes a sound." << endl; }
-};
+                            <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(runTimePolymorphismSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
 
-class Dog : public Animal {
-public:
-    void sound() override { cout << "Dog barks." << endl; }
-};
+                                <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
+                                    {runTimePolymorphismSnippet}
+                                </SyntaxHighlighter>
 
-class Cat : public Animal {
-public:
-    void sound() override { cout << "Cat meows." << endl; }
-};
-
-int main() {
-    Animal* animal1 = new Dog();
-    Animal* animal2 = new Cat();
-
-    animal1->sound();
-    animal2->sound();
-
-    delete animal1;
-    delete animal2;
-    return 0;
-}`}
-                            </SyntaxHighlighter>
+                            </div>
 
                             {/* Summary */}
                             <h4 className="mt-6 text-xl font-semibold text-gray-800 dark:text-gray-200">
@@ -924,31 +920,31 @@ int main() {
                                     </p>
 
                                     <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Example</h4>
-                                    <SyntaxHighlighter language='cpp' style={dracula} className='rounded-md shadow-md p-4 text-sm'>
-                                        {`#include <iostream>
-using namespace std;
+                                    <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                        <button
+                                            className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                            onClick={() => handleCopy(singleInheritenceSnippet)}
+                                            title="Copy Code"
+                                            aria-label="Copy code snippet"
+                                        >
+                                            {copied ? (
+                                                <AiOutlineCheck
+                                                    className="text-green-600 dark:text-green-400 transition-colors"
+                                                    size={18}
+                                                />
+                                            ) : (
+                                                <AiOutlineCopy
+                                                    className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                                    size={18}
+                                                />
+                                            )}
+                                        </button>
 
-class Animal {
-public:
-    void eat() {
-        cout << "Animal is eating." << endl;
-    }
-};
+                                        <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
+                                            {singleInheritenceSnippet}
+                                        </SyntaxHighlighter>
 
-class Dog : public Animal {
-public:
-    void bark() {
-        cout << "Dog is barking." << endl;
-    }
-};
-
-int main() {
-    Dog myDog;
-    myDog.eat();
-    myDog.bark();
-    return 0;
-}`}
-                                    </SyntaxHighlighter>
+                                    </div>
 
                                     <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Output</h4>
                                     <SyntaxHighlighter language='text' style={dracula} className='rounded-md shadow-md p-4 text-sm'>
@@ -967,39 +963,31 @@ Dog is barking.`}
                                     </p>
 
                                     <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Example</h4>
-                                    <SyntaxHighlighter language='cpp' style={dracula} className='rounded-md shadow-md p-4 text-sm'>
-                                        {`#include <iostream>
-using namespace std;
+                                    <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                        <button
+                                            className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                            onClick={() => handleCopy(multipleInheritenceSnippet)}
+                                            title="Copy Code"
+                                            aria-label="Copy code snippet"
+                                        >
+                                            {copied ? (
+                                                <AiOutlineCheck
+                                                    className="text-green-600 dark:text-green-400 transition-colors"
+                                                    size={18}
+                                                />
+                                            ) : (
+                                                <AiOutlineCopy
+                                                    className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                                    size={18}
+                                                />
+                                            )}
+                                        </button>
 
-class Engine {
-public:
-    void startEngine() {
-        cout << "Engine started." << endl;
-    }
-};
+                                        <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
+                                            {multipleInheritenceSnippet}
+                                        </SyntaxHighlighter>
 
-class Wheels {
-public:
-    void rotateWheels() {
-        cout << "Wheels are rotating." << endl;
-    }
-};
-
-class Car : public Engine, public Wheels {
-public:
-    void drive() {
-        cout << "Car is driving." << endl;
-    }
-};
-
-int main() {
-    Car myCar;
-    myCar.startEngine();
-    myCar.rotateWheels();
-    myCar.drive();
-    return 0;
-}`}
-                                    </SyntaxHighlighter>
+                                    </div>
 
                                     <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Output</h4>
                                     <SyntaxHighlighter language='text' style={dracula} className='rounded-md shadow-md p-4 text-sm'>
@@ -1019,39 +1007,31 @@ Car is driving.`}
                                     </p>
 
                                     <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Example</h4>
-                                    <SyntaxHighlighter language='cpp' style={dracula} className='rounded-md shadow-md p-4 text-sm'>
-                                        {`#include <iostream>
-using namespace std;
+                                    <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(multilevelInheritenceSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
 
-class Animal {
-public:
-    void eat() {
-        cout << "Animal is eating." << endl;
-    }
-};
+                                <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
+                                    {multilevelInheritenceSnippet}
+                                </SyntaxHighlighter>
 
-class Mammal : public Animal {
-public:
-    void walk() {
-        cout << "Mammal is walking." << endl;
-    }
-};
-
-class Dog : public Mammal {
-public:
-    void bark() {
-        cout << "Dog is barking." << endl;
-    }
-};
-
-int main() {
-    Dog myDog;
-    myDog.eat();
-    myDog.walk();
-    myDog.bark();
-    return 0;
-}`}
-                                    </SyntaxHighlighter>
+                            </div>
 
                                     <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Output</h4>
                                     <SyntaxHighlighter language='text' style={dracula} className='rounded-md shadow-md p-4 text-sm'>
@@ -1071,42 +1051,31 @@ Dog is barking.`}
                                     </p>
 
                                     <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Example</h4>
-                                    <SyntaxHighlighter language='cpp' style={dracula} className='rounded-md shadow-md p-4 text-sm'>
-                                        {`#include <iostream>
-using namespace std;
+                                    <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(hierarchicalInheritenceSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
 
-class Animal {
-public:
-    void sleep() {
-        cout << "Animal is sleeping." << endl;
-    }
-};
+                                <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
+                                    {hierarchicalInheritenceSnippet}
+                                </SyntaxHighlighter>
 
-class Dog : public Animal {
-public:
-    void bark() {
-        cout << "Dog is barking." << endl;
-    }
-};
-
-class Cat : public Animal {
-public:
-    void meow() {
-        cout << "Cat is meowing." << endl;
-    }
-};
-
-int main() {
-    Dog myDog;
-    Cat myCat;
-
-    myDog.sleep();
-    myDog.bark();
-    myCat.sleep();
-    myCat.meow();
-    return 0;
-}`}
-                                    </SyntaxHighlighter>
+                            </div>
 
                                     <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Output</h4>
                                     <SyntaxHighlighter language='text' style={dracula} className='rounded-md shadow-md p-4 text-sm'>
@@ -1127,47 +1096,31 @@ Cat is meowing.`}
                                     </p>
 
                                     <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Example</h4>
-                                    <SyntaxHighlighter language='cpp' style={dracula} className='rounded-md shadow-md p-4 text-sm'>
-                                        {`#include <iostream>
-using namespace std;
+                                    <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(hybridInheritenceSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
 
-class Engine {
-public:
-    void startEngine() {
-        cout << "Engine started." << endl;
-    }
-};
+                                <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
+                                    {hybridInheritenceSnippet}
+                                </SyntaxHighlighter>
 
-class Vehicle : public Engine {
-public:
-    void honk() {
-        cout << "Vehicle is honking." << endl;
-    }
-};
-
-class Wheels {
-public:
-    void rotateWheels() {
-        cout << "Wheels are rotating." << endl;
-    }
-};
-
-class Car : public Vehicle, public Wheels {
-public:
-    void drive() {
-        cout << "Car is driving." << endl;
-    }
-};
-
-int main() {
-    Car myCar;
-    myCar.startEngine();
-    myCar.honk();
-    myCar.rotateWheels();
-    myCar.drive();
-    return 0;
-}`}
-                                    </SyntaxHighlighter>
+                            </div>
 
                                     <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Output</h4>
                                     <SyntaxHighlighter language='text' style={dracula} className='rounded-md shadow-md p-4 text-sm'>
@@ -1274,37 +1227,31 @@ Car is driving.`}
                                     </ul>
 
                                     <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-200">Example</h4>
-                                    <div className="my-6 overflow-x-auto">
-                                        <SyntaxHighlighter
-                                            className="rounded-md shadow-md p-4 text-sm md:text-base"
-                                            style={dracula}
-                                            language="cpp"
-                                        >
-                                            {`#include <iostream>
-using namespace std;
+                                    <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(friendfunctionSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
 
-class Box {
-private:
-    int width;
-public:
-    Box(int w) : width(w) {}
+                                <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
+                                    {friendfunctionSnippet}
+                                </SyntaxHighlighter>
 
-    // Declaring a friend function
-    friend void printWidth(Box b);
-};
-
-// Friend function definition
-void printWidth(Box b) {
-    cout << "Width of the box: " << b.width << endl;
-}
-
-int main() {
-    Box b(10);
-    printWidth(b);  // Friend function can access private data
-    return 0;
-}`}
-                                        </SyntaxHighlighter>
-                                    </div>
+                            </div>
 
                                     <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-200">Output</h4>
                                     <div className="my-6 overflow-x-auto">
@@ -1335,40 +1282,31 @@ int main() {
                                         <li className="text-gray-700 dark:text-gray-300">Useful for tightly coupled classes</li>
                                     </ul>
 
-                                    <div className="my-6 overflow-x-auto">
-                                        <SyntaxHighlighter
-                                            className="rounded-md shadow-md p-4 text-sm md:text-base"
-                                            style={dracula}
-                                            language="cpp"
-                                        >
-                                            {`#include <iostream>
-using namespace std;
+                                    <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(friendclassSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
 
-class Engine {
-private:
-    int horsepower;
-public:
-    Engine(int hp) : horsepower(hp) {}
+                                <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
+                                    {friendclassSnippet}
+                                </SyntaxHighlighter>
 
-    // Declaring Car as a friend class
-    friend class Car;
-};
-
-class Car {
-public:
-    void showEnginePower(Engine e) {
-        cout << "Car engine power: " << e.horsepower << " HP" << endl;
-    }
-};
-
-int main() {
-    Engine e(200);
-    Car c;
-    c.showEnginePower(e);  // Friend class can access private members
-    return 0;
-}`}
-                                        </SyntaxHighlighter>
-                                    </div>
+                            </div>
 
                                     <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-200">Output</h4>
                                     <div className="my-6 overflow-x-auto">
@@ -1448,26 +1386,31 @@ int main() {
                             </ul>
 
                             <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Example</h4>
-                            <SyntaxHighlighter className="rounded-md shadow-md p-4 text-sm" style={dracula} language="cpp">
-                                {`#include <iostream>
-using namespace std;
+                            <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(privateAccessSpecifierSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
 
-class Car {
-private:
-    string model;  // Private member
+                                <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
+                                    {privateAccessSpecifierSnippet}
+                                </SyntaxHighlighter>
 
-public:
-    void setModel(string m) { model = m; }
-    string getModel() { return model; }
-};
-
-int main() {
-    Car myCar;
-    myCar.setModel("Tesla Model X");
-    cout << "Car Model: " << myCar.getModel() << endl;
-    return 0;
-}`}
-                            </SyntaxHighlighter>
+                            </div>
 
                             <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Output</h4>
                             <SyntaxHighlighter className="rounded-md shadow-md p-4 text-sm" style={dracula} language="text">
@@ -1482,22 +1425,31 @@ int main() {
                             </ul>
 
                             <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Example</h4>
-                            <SyntaxHighlighter className="rounded-md shadow-md p-4 text-sm" style={dracula} language="cpp">
-                                {`#include <iostream>
-using namespace std;
+                            <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(publicAccessSpecifierSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
 
-class Car {
-public:
-    string brand;
-};
+                                <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
+                                    {publicAccessSpecifierSnippet}
+                                </SyntaxHighlighter>
 
-int main() {
-    Car myCar;
-    myCar.brand = "BMW";  
-    cout << "Car Brand: " << myCar.brand << endl;
-    return 0;
-}`}
-                            </SyntaxHighlighter>
+                            </div>
 
                             <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Output</h4>
                             <SyntaxHighlighter className="rounded-md shadow-md p-4 text-sm" style={dracula} language="text">
@@ -1512,28 +1464,31 @@ int main() {
                             </ul>
 
                             <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Example</h4>
-                            <SyntaxHighlighter className="rounded-md shadow-md p-4 text-sm" style={dracula} language="cpp">
-                                {`#include <iostream>
-using namespace std;
+                            <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                <button
+                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                    onClick={() => handleCopy(protectedAccessSpecifierSnippet)}
+                                    title="Copy Code"
+                                    aria-label="Copy code snippet"
+                                >
+                                    {copied ? (
+                                        <AiOutlineCheck
+                                            className="text-green-600 dark:text-green-400 transition-colors"
+                                            size={18}
+                                        />
+                                    ) : (
+                                        <AiOutlineCopy
+                                            className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                            size={18}
+                                        />
+                                    )}
+                                </button>
 
-class Parent {
-protected:
-    int age;
-};
+                                <SyntaxHighlighter language="cpp" style={dracula} className="rounded-lg shadow-md mt-4">
+                                    {protectedAccessSpecifierSnippet}
+                                </SyntaxHighlighter>
 
-class Child : public Parent {
-public:
-    void setAge(int a) { age = a; }
-    void showAge() { cout << "Age: " << age << endl; }
-};
-
-int main() {
-    Child obj;
-    obj.setAge(25);
-    obj.showAge();
-    return 0;
-}`}
-                            </SyntaxHighlighter>
+                            </div>
 
                             <h4 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-100">Output</h4>
                             <SyntaxHighlighter className="rounded-md shadow-md p-4 text-sm" style={dracula} language="text">

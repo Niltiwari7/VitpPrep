@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setDarkMode } from '../utils/slices/theme.slice';
 import { Link, useNavigate } from 'react-router-dom';
-import { AiOutlineArrowLeft, AiOutlineBars, AiOutlineClose, AiOutlineDashboard } from 'react-icons/ai';
+import { AiOutlineArrowLeft, AiOutlineBars, AiOutlineClose, AiOutlineCopy, AiOutlineDashboard } from 'react-icons/ai';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import {
     Table,
@@ -31,6 +31,7 @@ import { LogOut } from 'lucide-react';
 import { Heart } from "lucide-react";
 import { User } from 'lucide-react';
 import { logout } from "../utils/slices/user.slice.js";
+import { crossJoinSnippet, fullJoinSnippet, innerJoinSnippet, leftJoinSnippet, rightJoinSnippet, viewSnippet } from '../assets/codeSnippets/sqlExamples.js';
 
 
 const DBMS = () => {
@@ -52,6 +53,15 @@ const DBMS = () => {
 
     const toggleTheme = () => {
         dispatch(setDarkMode(!darkMode));
+    }
+
+    const [copied, setCopied] = useState(false);
+    const handleCopy = (text) => {
+        navigator.clipboard.writeText(text).then(() => {
+            toast.success('Copied to clipboard');
+        }).catch((err) => {
+            toast.error('Failed to copy to clipboard');
+        })
     }
 
 
@@ -672,8 +682,8 @@ const DBMS = () => {
                     </section>
 
 
-                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8 ">
-                        < div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden" id='normalisation'>
+                    <section className="max-w-4xl mx-auto px-6 md:px-8 py-8 " id='normalisation'>
+                        < div className="bg-gradient-to-br from-[#F8F9FA] via-[#F1F3F5] to-[#E9ECEF] dark:from-[#0D1117] dark:via-[#1A202C] dark:to-[#0D1117] shadow-xl rounded-xl p-8 border border-[#00C1B3]/20 dark:border-[#00E3CC]/20 relative overflow-hidden" >
                             {/* Section Title */}
                             <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
                                 <svg className="w-10 h-10 text-[#00C1B3] dark:text-[#00E3CC]"
@@ -1190,20 +1200,30 @@ const DBMS = () => {
                                 </div>
 
                                 {/* Code Snippet */}
-                                <div className='relative group'>
-                                    <div className='absolute inset-0 bg-blue-500/5 rounded-xl transition'></div>
-                                    <SyntaxHighlighter
-                                        language='sql'
-                                        style={dracula}
-                                        className='rounded-xl p-6 text-sm border border-gray-200 dark:border-gray-700 hover:border-blue-300 transition-all'
+                                <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                    <button
+                                        className="absolute top-5 right-2 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                        onClick={() => handleCopy(innerJoinSnippet)}
+                                        title="Copy Code"
+                                        aria-label="Copy code snippet"
                                     >
-                                        {`SELECT student.name, course.course_name
-FROM student
-INNER JOIN course
-ON student.course_id = course.course_id;
+                                        {copied ? (
+                                            <AiOutlineCheck
+                                                className="text-green-600 dark:text-green-400 transition-colors"
+                                                size={18}
+                                            />
+                                        ) : (
+                                            <AiOutlineCopy
+                                                className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                                size={18}
+                                            />
+                                        )}
+                                    </button>
 
-`}
+                                    <SyntaxHighlighter language="sql" style={dracula} className="rounded-lg shadow-md mt-4">
+                                        {innerJoinSnippet}
                                     </SyntaxHighlighter>
+
                                 </div>
 
 
@@ -1262,21 +1282,31 @@ ON student.course_id = course.course_id;
                                 </div>
 
                                 {/* Code Snippet */}
-                                <div className='relative group'>
-                                    <div className='absolute inset-0 bg-blue-500/5 rounded-xl transition'></div>
-                                    <SyntaxHighlighter
-                                        language='sql'
-                                        style={dracula}
-                                        className='rounded-xl p-6 text-sm border border-gray-200 dark:border-gray-700 hover:border-blue-300 transition-all'
+                                <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                    <button
+                                        className="absolute top-5 right-2 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                        onClick={() => handleCopy(leftJoinSnippet)}
+                                        title="Copy Code"
+                                        aria-label="Copy code snippet"
                                     >
-                                        {`SELECT student.name, course.course_name
-FROM student
-LEFT JOIN course
-ON student.course_id = course.course_id;
-`}
-                                    </SyntaxHighlighter>
-                                </div>
+                                        {copied ? (
+                                            <AiOutlineCheck
+                                                className="text-green-600 dark:text-green-400 transition-colors"
+                                                size={18}
+                                            />
+                                        ) : (
+                                            <AiOutlineCopy
+                                                className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                                size={18}
+                                            />
+                                        )}
+                                    </button>
 
+                                    <SyntaxHighlighter language="sql" style={dracula} className="rounded-lg shadow-md mt-4">
+                                        {leftJoinSnippet}
+                                    </SyntaxHighlighter>
+
+                                </div>
 
 
                                 {/* Join Result */}
@@ -1337,19 +1367,30 @@ ON student.course_id = course.course_id;
                                 </div>
 
                                 {/* Code Snippet */}
-                                <div className='relative group'>
-                                    <div className='absolute inset-0 bg-blue-500/5 rounded-xl transition'></div>
-                                    <SyntaxHighlighter
-                                        language='sql'
-                                        style={dracula}
-                                        className='rounded-xl p-6 text-sm border border-gray-200 dark:border-gray-700 hover:border-blue-300 transition-all'
+                                <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                    <button
+                                        className="absolute top-5 right-2 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                        onClick={() => handleCopy(rightJoinSnippet)}
+                                        title="Copy Code"
+                                        aria-label="Copy code snippet"
                                     >
-                                        {`SELECT student.name, course.course_name
-FROM student
-RIGHT JOIN course
-ON student.course_id = course.course_id;
-`}
+                                        {copied ? (
+                                            <AiOutlineCheck
+                                                className="text-green-600 dark:text-green-400 transition-colors"
+                                                size={18}
+                                            />
+                                        ) : (
+                                            <AiOutlineCopy
+                                                className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                                size={18}
+                                            />
+                                        )}
+                                    </button>
+
+                                    <SyntaxHighlighter language="sql" style={dracula} className="rounded-lg shadow-md mt-4">
+                                        {rightJoinSnippet}
                                     </SyntaxHighlighter>
+
                                 </div>
 
 
@@ -1409,19 +1450,30 @@ ON student.course_id = course.course_id;
                                 </div>
 
                                 {/* Code Snippet */}
-                                <div className='relative group'>
-                                    <div className='absolute inset-0 bg-blue-500/5 rounded-xl transition'></div>
-                                    <SyntaxHighlighter
-                                        language='sql'
-                                        style={dracula}
-                                        className='rounded-xl p-6 text-sm border border-gray-200 dark:border-gray-700 hover:border-blue-300 transition-all'
+                                <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                    <button
+                                        className="absolute top-5 right-2 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                        onClick={() => handleCopy(fullJoinSnippet)}
+                                        title="Copy Code"
+                                        aria-label="Copy code snippet"
                                     >
-                                        {`SELECT student.name, course.course_name
-FROM student
-FULL OUTER JOIN course
-ON student.course_id = course.course_id;
-`}
+                                        {copied ? (
+                                            <AiOutlineCheck
+                                                className="text-green-600 dark:text-green-400 transition-colors"
+                                                size={18}
+                                            />
+                                        ) : (
+                                            <AiOutlineCopy
+                                                className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                                size={18}
+                                            />
+                                        )}
+                                    </button>
+
+                                    <SyntaxHighlighter language="sql" style={dracula} className="rounded-lg shadow-md mt-4">
+                                        {fullJoinSnippet}
                                     </SyntaxHighlighter>
+
                                 </div>
 
 
@@ -1484,18 +1536,30 @@ ON student.course_id = course.course_id;
                                 </div>
 
                                 {/* Code Snippet */}
-                                <div className='relative group'>
-                                    <div className='absolute inset-0 bg-blue-500/5 rounded-xl transition'></div>
-                                    <SyntaxHighlighter
-                                        language='sql'
-                                        style={dracula}
-                                        className='rounded-xl p-6 text-sm border border-gray-200 dark:border-gray-700 hover:border-blue-300 transition-all'
+                                <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                    <button
+                                        className="absolute top-5 right-2 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                        onClick={() => handleCopy(crossJoinSnippet)}
+                                        title="Copy Code"
+                                        aria-label="Copy code snippet"
                                     >
-                                        {`SELECT s.student_id, s.name, s.course_id, c.course_id AS joined_course_id, c.course_name
-FROM Student s
-CROSS JOIN Course c;
-`}
+                                        {copied ? (
+                                            <AiOutlineCheck
+                                                className="text-green-600 dark:text-green-400 transition-colors"
+                                                size={18}
+                                            />
+                                        ) : (
+                                            <AiOutlineCopy
+                                                className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                                size={18}
+                                            />
+                                        )}
+                                    </button>
+
+                                    <SyntaxHighlighter language="sql" style={dracula} className="rounded-lg shadow-md mt-4">
+                                        {crossJoinSnippet}
                                     </SyntaxHighlighter>
+
                                 </div>
 
 
@@ -1591,17 +1655,31 @@ CROSS JOIN Course c;
                                         <li>A <strong>view</strong> is a virtual table based on the result of an SQL query.</li>
                                         <li>Used for security, abstraction, and simplifying complex queries.</li>
                                     </ul>
-                                    <div className='relative group'>
-                                        <div className='absolute inset-0 bg-blue-500/5 rounded-xl transition'></div>
-                                        <SyntaxHighlighter
-                                            language='sql'
-                                            style={dracula}
-                                            className='rounded-xl p-6 text-sm border border-gray-200 dark:border-gray-700 hover:border-blue-300 transition-all'
-                                        >
-                                            {`CREATE VIEW StudentView AS
-SELECT Name, Course_ID FROM Students;`}
-                                        </SyntaxHighlighter>
-                                    </div>
+                                    <div className='relative mt-3 rounded-lg shadow-md overflow-hidden'>
+                                    <button
+                                        className="absolute top-5 right-2 z-10 p-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                                        onClick={() => handleCopy(viewSnippet)}
+                                        title="Copy Code"
+                                        aria-label="Copy code snippet"
+                                    >
+                                        {copied ? (
+                                            <AiOutlineCheck
+                                                className="text-green-600 dark:text-green-400 transition-colors"
+                                                size={18}
+                                            />
+                                        ) : (
+                                            <AiOutlineCopy
+                                                className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors"
+                                                size={18}
+                                            />
+                                        )}
+                                    </button>
+
+                                    <SyntaxHighlighter language="sql" style={dracula} className="rounded-lg shadow-md mt-4">
+                                        {viewSnippet}
+                                    </SyntaxHighlighter>
+
+                                </div>
                                 </div>
                             </div>
 
