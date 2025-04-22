@@ -8,11 +8,11 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/logout', logoutUser);
 router.get('/profile/:id', auth, getProfile);
-router.get('/count',auth,countUser);
+router.get('/count',countUser);
 router.put('/updatePersonalInfo/:userId',auth,updatePersonalInfo);
 router.put('/updateSocialLinks/:userId',auth,updateSocialLinks);
 router.put('/updatePassword/:userId',auth,updatePassword);
 router.put('/updateSkills/:userId',auth,updateTechSkills);
 router.get('/likequestion/:userId',auth,favQuestion)
 
-export default router;
+export default router;  

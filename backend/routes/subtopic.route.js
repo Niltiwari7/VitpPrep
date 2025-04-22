@@ -5,19 +5,19 @@ import { createSubtopic, getAllSubtopics, getSubtopicsByTopic, getSubtopicId, up
 
 const router = express.Router();
 
-router.post('/admin/create',auth,createSubtopic);
+router.post('/admin/create',createSubtopic);
 
-router.get('/',auth,getAllSubtopics);
+router.get('/',getAllSubtopics);
 
-router.get('/:topicId',auth,getSubtopicsByTopic);
+router.get('/:topicId',getSubtopicsByTopic);
 
-router.get('/:id',auth,getSubtopicId);
+router.get('/:id',getSubtopicId);
 
-router.put('/admin/update/:id',auth,updateSubtopic);
+router.put('/admin/update/:id',updateSubtopic);
 
-router.delete('/admin/delete/:id',auth,deleteSubtopic);
+router.delete('/admin/delete/:id',deleteSubtopic);
 
-router.get('/question/:subtopicId',auth,QuestionSubtopicById);
+router.get('/question/:subtopicId',QuestionSubtopicById);
 
 
 
