@@ -24,13 +24,13 @@ const Sidebar = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
-
+ const API_URL = import.meta.env.VITE_API_URL;
   const handleLogOut = async () => {
     if (!window.confirm('Are you sure you want to logout?')) return;
     
     try {
       setLogoutLoading(true);
-      const response = await fetch(`http://localhost:3000/admin/logout/${adminId}`, {
+      const response = await fetch(`${API_URL}/admin/logout/${adminId}`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

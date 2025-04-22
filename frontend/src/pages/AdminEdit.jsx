@@ -60,7 +60,8 @@ const AdminEdit = () => {
             [name]: value,
         }));
     };
-
+   
+   
 
     const handlePersonalInfoSubmit = async (e) => {
         e.preventDefault();
@@ -68,7 +69,7 @@ const AdminEdit = () => {
         setError("");
         setSuccess("");
         try {
-            const response = await fetch(`http://localhost:3000/admin/updatePersonalInfo/${adminId}`, {
+            const response = await fetch(`${API_URL}/admin/updatePersonalInfo/${adminId}`, {
                 method: "PUT",
                 credentials: "include",
                 headers: {
@@ -103,7 +104,7 @@ const AdminEdit = () => {
 
         try {
             const response = await fetch(
-                `http://localhost:3000/admin/updateSocialLinks/${adminId}`,
+                `${API_URL}/admin/updateSocialLinks/${adminId}`,
                 {
                     method: "PUT",
                     credentials: "include",

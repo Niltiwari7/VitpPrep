@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import Sidebar from "@/components/Sidebar";
+
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { setDarkMode } from "../utils/slices/theme.slice.js"
@@ -15,6 +15,7 @@ import { addTopic, updateTopic } from "../utils/slices/topic.slice.js";
 import { toast } from 'react-hot-toast';
 import { addSubTopic, updateSubtopics } from "../utils/slices/subtopic.slice.js";
 import { Loader2 } from "lucide-react";
+import Sidebar from "../components/sideBar.jsx";
 
 
 

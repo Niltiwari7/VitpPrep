@@ -69,6 +69,7 @@ function App() {
 
 
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
@@ -77,31 +78,32 @@ function App() {
         <Route path="/admin/signup" element={<AdminSignUp />} />
         <Route path="/admin/signin" element={<AdminSignIn />} />
         <Route path="/faq" element={<FAQ />} />
-        
 
-        {/* <Route path='/dashboard' element={<UserDashBoard />} /> */}
+        {/* User Protected Routes */}
         <Route element={<PrivateRoute requiredRole="user" />}>
-        <Route path="/dashboard" element={<UserDashBoard />} />
-          <Route path='/user/:userId' element={<UserProfile />} />
-          <Route path='/user/edit/:userId' element={<UserEdit />} />
-          <Route path='/user/likedQuestion/:userId' element={<UserLikedQuestion />} />
-          <Route path='/top-interview-questions-dsa' element={<Dsa150Question />} />
-          <Route path='/oops' element={<OOPS />} />
-          <Route path='/computer-network' element={<ComputerNetwork />} />
-          <Route path='/dbms' element={<DBMS />} />
-          <Route path='/os' element={<OS />} />
-          <Route path='/aptitude' element={<Aptitude />} />
+          <Route path="/dashboard" element={<UserDashBoard />} />
+          <Route path="/user/:userId" element={<UserProfile />} />
+          <Route path="/user/edit/:userId" element={<UserEdit />} />
+          <Route path="/user/likedQuestion/:userId" element={<UserLikedQuestion />} />
+          <Route path="/top-interview-questions-dsa" element={<Dsa150Question />} />
+          <Route path="/oops" element={<OOPS />} />
+          <Route path="/computer-network" element={<ComputerNetwork />} />
+          <Route path="/dbms" element={<DBMS />} />
+          <Route path="/os" element={<OS />} />
+          <Route path="/aptitude" element={<Aptitude />} />
         </Route>
-      
+
+        {/* Admin Protected Routes */}
         <Route element={<PrivateRoute requiredRole="admin" />}>
           <Route path="/admin/profile/:adminId" element={<AdminProfile />} />
           <Route path="/admin/edit/:adminId" element={<AdminEdit />} />
           <Route path="/admin/addQuestion" element={<AddQuestion />} />
           <Route path="/admin/topic/:adminId" element={<Topic />} />
-          <Route path='/admin/questions' element={<Quesion />} />
-          <Route path='/admin/edit-question/:questionId' element={<UpdateQuestion />} />
+          <Route path="/admin/questions" element={<Quesion />} />
+          <Route path="/admin/edit-question/:questionId" element={<UpdateQuestion />} />
         </Route>
       </Routes>
+
     </>
   );
 }

@@ -5,22 +5,15 @@ import { useSelector } from 'react-redux';
 const PrivateRoute = ({ requiredRole }) => {
   const adminAuth = useSelector((state) => state.admin.isAuthenticated);
   const userAuth = useSelector((state) => state.user.isAuthenticated);
-  const adminRole = useSelector((state) => state.admin.role); // corrected
-  const userRole = useSelector((state) => state.user.role);   // corrected
+  const adminRole = useSelector((state) => state.admin.role);
+  const userRole = useSelector((state) => state.user.role);
 
-  
-  const isAdmin = adminAuth && adminRole === 'admin';
-  const isUser = userAuth && userRole === 'user';
+  // Check if the user is authenticated with the required role
+  const isAuthorized =
+    (requiredRole === 'admin' && adminAuth && adminRole === 'admin') ||
+    (requiredRole === 'user' && userAuth && userRole === 'user');
 
-  
-  // Admin has access to all routes
-  if (isAdmin) return <Outlet />;
-
-  // Users have access only if requiredRole is 'user'
-  if (isUser && requiredRole === 'user') return <Outlet />;
-
-  // If not authenticated
-  return <Navigate to="/signin" replace />;
+  return isAuthorized ? <Outlet /> : <Navigate to="/signin" replace />;
 };
 
 export default PrivateRoute;
