@@ -118,9 +118,9 @@ const AdminEdit = () => {
             if (data.success) {
                 toast.success("Your social links have been updated successfully");
                 setSuccess(data.message);
-                dispatch(updateAdminInfo(data.admin)); // Dispatch updated admin info to Redux
-                console.log(data.admin); // Log the updated admin info
-                setError(""); // Clear error
+                dispatch(updateAdminInfo(data.admin)); 
+                console.log(data.admin);
+                setError(""); 
             } else {
                 toast.error("Failed to update social links. Please try again");
                 setError("Failed to update social links. Please try again");
@@ -128,30 +128,29 @@ const AdminEdit = () => {
         } catch (err) {
             toast.error(err.message || "An unexpected error occurred");
             setError("An error occurred while updating your info");
-            console.error(err); // Log the error for debugging
+            console.error(err);
         } finally {
             setSocialLinksLoading(false);
         }
     };
-
+    const API_URL = import.meta.env.VITE_API_URL;
     // handlePasswordSubmit
     const handlePasswordSubmit = async (e) => {
         e.preventDefault();
-        setPasswordLoading(true); // Set loading to true
-        setError(""); // Reset error
-        setSuccess(""); // Reset success message
-
+        setPasswordLoading(true);
+        setError(""); 
+        setSuccess(""); 
         try {
-            // API call to update the password
+    
             const response = await fetch(
-                `http://localhost:3000/admin/updatePassword/${adminId}`,
+                `${API_URL}/admin/updatePassword/${adminId}`,
                 {
                     method: "PUT",
                     credentials: "include",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(formData), // Ensure formData contains required fields
+                    body: JSON.stringify(formData), 
                 }
             );
 
@@ -160,8 +159,8 @@ const AdminEdit = () => {
             // Handle response
             if (data.success) {
                 toast.success("Your password has been updated successfully");
-                setSuccess(data.message); // Update success message
-                //  dispatch(updateAdminInfo(data.admin)); // Dispatch updated admin info to Redux
+                setSuccess(data.message); 
+                //  dispatch(updateAdminInfo(data.admin)); 
             } else {
                 toast.error("Failed to update password. Please try again.");
                 setError("Failed to update password. Please try again.");
@@ -169,9 +168,9 @@ const AdminEdit = () => {
         } catch (error) {
             toast.error(error.message || "An unexpected error occurred");
             setError("An error occurred while updating your password");
-            console.error(error); // Log the error for debugging
+            console.error(error); 
         } finally {
-            setPasswordLoading(false); // Reset loading state
+            setPasswordLoading(false); 
         }
     };
 
@@ -198,13 +197,13 @@ const AdminEdit = () => {
         setSuccess("");
         setSkillloading(true);
         try {
-            const response = await fetch(`http://localhost:3000/admin/updateSkills/${adminId}`, {
+            const response = await fetch(`${API_URL}/admin/updateSkills/${adminId}`, {
                 method: "PUT",
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(formData)  // Ensure formData contains required fields 
+                body: JSON.stringify(formData)  
             });
 
             const data = await response.json();

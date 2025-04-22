@@ -17,7 +17,9 @@ import { addSubTopic, updateSubtopics } from "../utils/slices/subtopic.slice.js"
 import { Loader2 } from "lucide-react";
 
 
-const API_URL = "http://localhost:3000";
+
+const API_URL= import.meta.env.VITE_API_URL;
+
 const AddContentPage = () => {
   const dispatch = useDispatch();
   const darkMode = useSelector((state) => state.theme.darkMode);

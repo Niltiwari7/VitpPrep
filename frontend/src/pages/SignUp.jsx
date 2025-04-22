@@ -53,13 +53,16 @@ const SignUp = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  
+  const API_URL= import.meta.env.VITE_API_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
 
     setIsSubmitting(true);
     try {
-      const response = await fetch('http://localhost:3000/users/register', {
+      const response = await fetch(`${API_URL}/users/register`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

@@ -50,7 +50,8 @@ const OOPS = () => {
     const toggleTheme = () => {
         dispatch(setDarkMode(!darkMode));
     };
-    const API_URL = 'http://localhost:3000';
+    
+  const API_URL= import.meta.env.VITE_API_URL;
     const links = [
         { id: '#oops_desc', text: 'OOPS Introduction', color: 'blue' },
         { id: '#Constructor', text: 'Constructor', color: 'red' },

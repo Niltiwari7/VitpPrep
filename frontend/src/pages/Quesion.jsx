@@ -12,7 +12,8 @@ import UpdateTopic from "../components/UpdateTopic.jsx";
 import UpdateSubtopic from "../components/UpdateSubtopic.jsx";
 
 
-const API_URL = 'http://localhost:3000';
+
+const API_URL= import.meta.env.VITE_API_URL;
 
 const Question = () => {
     const dispatch = useDispatch();

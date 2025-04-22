@@ -38,7 +38,8 @@ const DBMS = () => {
     const dispatch = useDispatch();
     const darkMode = useSelector((state) => state.theme.darkMode);
     const user = useSelector((state) => state.user.userInfo);
-    const API_URL = 'http://localhost:3000';
+   
+    const API_URL= import.meta.env.VITE_API_URL;
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [error, setError] = useState('');
     const [loader, setLoader] = useState(false);

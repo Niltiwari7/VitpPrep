@@ -9,10 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { toast } from "react-hot-toast";
 
-// ... other imports remain the same ...
+
 
 const UserLikedQuestion = () => {
-    // ... existing state and logic ...
+
 
     const tableVariants = {
         hidden: { opacity: 0 },
@@ -35,7 +35,6 @@ const UserLikedQuestion = () => {
                     </h3>
                 </div>
 
-                {/* ... profile dropdown remains the same ... */}
             </header>
 
             <div className="w-full min-h-screen bg-gradient-to-br from-[#0F172A] to-[#1E293B] text-white px-4 py-6 pt-[90px]">

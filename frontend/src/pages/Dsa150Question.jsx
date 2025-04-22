@@ -22,7 +22,8 @@ import { Heart } from "lucide-react";
 import { User } from 'lucide-react';
 import { logout } from "../utils/slices/user.slice.js";
 
-const API_URL = 'http://localhost:3000';
+
+const API_URL= import.meta.env.VITE_API_URL;
 
 const Dsa150Question = () => {
     const dispatch = useDispatch();

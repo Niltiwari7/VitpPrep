@@ -20,12 +20,14 @@ const AdminSignIn = () => {
     if (error) setError('');
   };
 
+   const API_URL = import.meta.env.VITE_API_URL;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setFormData(true);
         try {
-            const response = await fetch('http://localhost:3000/admin/login', {
+            const response = await fetch(`${API_URL}/admin/login`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

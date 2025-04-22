@@ -6,7 +6,8 @@ import { motion } from 'framer-motion';
 import { updateUserInfo } from '../utils/slices/user.slice.js';
 import { login } from '../utils/slices/user.slice.js';
 
-const API_URL = 'http://localhost:3000';
+
+const API_URL= import.meta.env.VITE_API_URL;
 
 const SignIn = () => {
   const dispatch = useDispatch();

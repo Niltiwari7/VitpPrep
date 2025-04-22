@@ -29,7 +29,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { AiOutlineArrowLeft, AiOutlineDashboard } from 'react-icons/ai';
 
 const UserLikedQuestion = () => {
-    const API_URL = 'http://localhost:3000';
+    const API_URL = import.meta.env.VITE_API_URL;
     const user = useSelector((state) => state.user?.userInfo || {});
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);

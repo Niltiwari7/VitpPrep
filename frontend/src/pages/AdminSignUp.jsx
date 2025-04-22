@@ -20,7 +20,8 @@ const AdminSignUp = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+  
+  const API_URL = import.meta.env.VITE_API_URL;
   // Form validation
   const validateForm = () => {
     const newErrors = {};
@@ -51,7 +52,7 @@ const AdminSignUp = () => {
     setErrors({})
     if (validateForm()) {
       try {
-        const response = await fetch('http://localhost:3000/admin/create', {
+        const response = await fetch(`${API_URL}/admin/create`, {
           method: 'POST',
           credentials: 'include',
           headers: {

@@ -41,7 +41,7 @@ const ComputerNetwork = () => {
     const user = useSelector((state) => state.user.userInfo);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [step, setStep] = useState(1);
-    const API_URL = 'http://localhost:3000';
+    const API_URL = import.meta.env.VITE_API_URL;
     const [error, setError] = useState('');
     const [loader, setLoader] = useState(false);
     const navigate = useNavigate();
