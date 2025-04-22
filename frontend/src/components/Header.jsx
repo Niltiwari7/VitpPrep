@@ -46,7 +46,7 @@ const Header = () => {
           className="flex items-center space-x-3"
         >
           <img
-            src="/src/assets/public/logo.png"
+            src="/logo.png"
             alt="PatternPrep Logo"
             className="h-12 w-12 object-contain rounded-full border-2 border-white/20 hover:scale-105 transition-transform"
           />

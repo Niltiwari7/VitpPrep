@@ -11,7 +11,7 @@ const HomePage = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
-  
+
   const fadeIn = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.8 } }
@@ -55,14 +55,17 @@ const HomePage = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <Link
-              to='/signin'
-              className="inline-flex items-center bg-white text-blue-600 px-8 py-4 rounded-full font-bold hover:bg-opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
-            >
-              <FaRocket className="mr-2" />
-              Start Learning Now
-            </Link>
+            <div className="group relative inline-flex rounded-full p-[3px] bg-gradient-to-r from-purple-500 via-blue-500 to-black-500 hover:via-purple-400 transition-all duration-300 shadow-lg hover:shadow-xl">
+              <Link
+                to="/signin"
+                className="relative flex items-center justify-center w-full h-full px-8 py-4 bg-white text-blue-600 rounded-full font-bold hover:bg-opacity-90 transition-all duration-300"
+              >
+                <FaRocket className="mr-2 z-10" />
+                <span className="z-10">Start Learning Now</span>
+              </Link>
+            </div>
           </motion.div>
+
         </div>
 
 

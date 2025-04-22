@@ -13,7 +13,7 @@ import helmet from 'helmet';
 dotenv.config();
 connectDB();
 const app = express();
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5175','http://localhost:5174'];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5175','http://localhost:5174','https://patternprep.vercel.app/'];
 
 // CORS configuration
 app.use(cors({
@@ -24,7 +24,7 @@ app.use(cors({
             callback(new Error('Not allowed by CORS'));
         }
     },
-    credentials: true, // Allow cookies to be sent with requests
+    credentials: true, 
 }));
 
 app.use(helmet());
