@@ -30,7 +30,8 @@ const UserProfile = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const user = useSelector((state) => state.user.userInfo);
-   
+    
+    
     const toggleTheme = () => {
         dispatch(setDarkMode(!darkMode));
     };
@@ -104,7 +105,7 @@ const learningTopics = [
             }
         };
     
-    
+     console.log(user._id)
     const [activeTopicIndex, setActiveTopicIndex] = useState(0);
     return (
         <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-[#101927] text-gray-100' : 'bg-[#F3F4F6]text-gray-900'}`}>

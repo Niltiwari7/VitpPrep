@@ -244,7 +244,7 @@ const UserDashBoard = () => {
           navigateTo={"/aptitude"}
         />
       </main>
-      <Footer />
+
     </div>
   );
 };

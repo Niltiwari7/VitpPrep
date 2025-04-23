@@ -1,5 +1,6 @@
 import express from 'express';
 import { countUser, favQuestion, getProfile, loginUser, logoutUser, registerUser, updatePassword, updatePersonalInfo, updateSocialLinks, updateTechSkills } from '../controllers/user.controller.js';
+import { auth } from '../middlewares/auth.middleware.js';
 
 
 const router = express.Router();
@@ -7,12 +8,12 @@ const router = express.Router();
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/logout', logoutUser);
-router.get('/profile/:id',  getProfile);
+router.get('/profile/:id', auth, getProfile);
 router.get('/count',countUser);
-router.put('/updatePersonalInfo/:userId',updatePersonalInfo);
-router.put('/updateSocialLinks/:userId',updateSocialLinks);
-router.put('/updatePassword/:userId',updatePassword);
-router.put('/updateSkills/:userId',updateTechSkills);
-router.get('/likequestion/:userId',favQuestion)
+router.put('/updatePersonalInfo/:userId',auth,updatePersonalInfo);
+router.put('/updateSocialLinks/:userId',auth,updateSocialLinks);
+router.put('/updatePassword/:userId',auth,updatePassword);
+router.put('/updateSkills/:userId',auth,updateTechSkills);
+router.get('/likequestion/:userId',auth,favQuestion)
 
 export default router;  
