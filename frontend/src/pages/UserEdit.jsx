@@ -62,10 +62,9 @@ const UserEdit = () => {
         dispatch(setDarkMode(!darkMode));
     };
 
+    const API_URL = import.meta.env.VITE_API_URL;
 
-    console.log("website", formData.website);
-
-
+    
     useEffect(() => { }, []);
     const handleChange = (e) => {
         const { name, value } = e.target;

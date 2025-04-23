@@ -138,7 +138,7 @@ const Dsa150Question = () => {
                 {subtopic.length > 0 ? (
                     subtopic.map((value) => (
                         <div key={value._id} className="px-2">
-                            {/* Click anywhere on this div to expand/collapse */}
+                          
                             <div
                                 className="p-3 border-b last:border-b-0 flex justify-between items-center 
                                     transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 
@@ -183,7 +183,7 @@ const Dsa150Question = () => {
                         VitpPrep
                     </h3>
 
-                    {/* <h3 className="text-2xl font-extrabold text-gray-900">PatternPrep</h3> */}
+               
 
                     <div className="h-4 w-1 bg-gradient-to-b from-[#00C1B3] to-[#00E3CC] rounded-full animate-pulse"></div>
                 </Link>

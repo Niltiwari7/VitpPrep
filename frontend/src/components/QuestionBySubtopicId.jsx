@@ -9,7 +9,7 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import { useSelector } from 'react-redux';
 
 const QuestionBySubtopicId = ({ selectSubtopic, isUser }) => {
-    const API_URL = 'http://localhost:3000';
+    const API_URL = import.meta.env.VITE_API_URL;
     const user = useSelector((state) => state.user?.userInfo || {});
     const [questionByLoading, setQuestionByLoading] = useState(false);
     const [question, setQuestion] = useState(null);
