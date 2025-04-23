@@ -127,15 +127,7 @@ const SignIn = () => {
               </div>
             </div>
 
-            {/* Forgot Password */}
-            <div className="flex justify-end">
-              <a
-                href="/forgot-password"
-                className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400"
-              >
-                Forgot Password?
-              </a>
-            </div>
+           
 
             {/* Error Message */}
             {error && (
