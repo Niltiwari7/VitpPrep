@@ -9,7 +9,7 @@ const PrivateRoute = ({ requiredRole }) => {
   const userRole = useSelector((state) => state.user.role);
 
   // Check if the user is authenticated with the required role
-
+  
   const isAuthorized =
     (requiredRole === 'admin' && adminAuth && adminRole === 'admin') ||
     (requiredRole === 'user' && userAuth && userRole === 'user');
