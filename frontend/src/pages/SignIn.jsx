@@ -168,15 +168,16 @@ const SignIn = () => {
             </button>
 
             {/* Sign Up Link */}
-            <p className="text-center text-gray-600 dark:text-gray-400">
-              Don't have an account?{' '}
-              <a
-                href="/signup"
-                className="text-blue-600 hover:text-blue-700 dark:text-blue-400"
-              >
-                Create account
-              </a>
-            </p>
+           <p className="text-center text-gray-600 dark:text-gray-400">
+                   Don't have an account?{' '}
+                  <Link
+                      to="/signup"
+                      className="text-blue-600 hover:text-blue-700 dark:text-blue-400"
+                  >
+           Create account
+           </Link>
+       </p>
+
           </form>
 
 
