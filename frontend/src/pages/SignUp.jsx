@@ -140,7 +140,7 @@ const SignUp = () => {
                 value={formData.fullName}
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                placeholder="John Doe"
+                placeholder="Enter your full name"
                 autoFocus
               />
               {errors.fullName && (

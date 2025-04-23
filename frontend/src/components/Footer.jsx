@@ -98,7 +98,7 @@ const Footer = () => {
         {/* Copyright Section */}
         <div className="border-t border-gray-300 dark:border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p className="text-sm text-gray-700 dark:text-gray-400">
-            © 2025 PatternPrep. All rights reserved.
+            © 2025 VitpPrep. All rights reserved.
           </p>
 
           {/* Back to Top Button */}

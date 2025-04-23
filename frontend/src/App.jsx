@@ -1,8 +1,6 @@
-import { Routes, Route, Router } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
 import SignUp from "./pages/SignUp";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -13,9 +11,6 @@ import AdminProfile from "./pages/AdminProfile";
 import AdminEdit from "./pages/AdminEdit";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-
-
-// Import the Toaster component
 import { Toaster } from "react-hot-toast";
 import AddQuestion from "./pages/AddQuestion";
 import Topic from "./components/Topic";

@@ -196,7 +196,7 @@ const UserDashBoard = () => {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pt-24">
         <FeatureCard
-          imageUrl="src/assets/public/maqsds.png"
+          imageUrl="/maqsds.png"
           title="Crack DSA Interviews"
           description="Master Data Structures and Algorithms with top coding questions asked by FAANG companies."
           buttonText="Start Learning"
@@ -204,7 +204,7 @@ const UserDashBoard = () => {
         />
 
         <FeatureCard
-          imageUrl="src/assets/public/oop.jpg"
+          imageUrl="/oop.jpg"
           title="Object-Oriented Design"
           description="Understand OOP principles, design patterns, and best practices for scalable applications."
           buttonText="Explore OOP"
@@ -212,7 +212,7 @@ const UserDashBoard = () => {
         />
 
         <FeatureCard
-          imageUrl="src/assets/public/cn.png"
+          imageUrl="/cn.png"
           title="Networking Essentials"
           description="Get a solid grasp on networking concepts like OSI model, TCP/IP, and cloud computing."
           buttonText="Learn More"
@@ -220,7 +220,7 @@ const UserDashBoard = () => {
         />
 
         <FeatureCard
-          imageUrl="src/assets/public/dbms.png"
+          imageUrl="/dbms.png"
           title="Database Management"
           description="Learn SQL queries, normalization, transactions, indexing, and more to ace DBMS interviews."
           buttonText="Start Practicing"
@@ -228,7 +228,7 @@ const UserDashBoard = () => {
         />
 
         <FeatureCard
-          imageUrl="src/assets/public/os.png"
+          imageUrl="/os.png"
           title="Operating Systems"
           description="Understand memory management, concurrency, process scheduling, and OS internals."
           buttonText="Explore Topics"
@@ -236,7 +236,7 @@ const UserDashBoard = () => {
         />
 
         <FeatureCard
-          imageUrl="src/assets/public/aptitude.png"
+          imageUrl="/aptitude.png"
           title="Aptitude"
           description="Prepare for placements with essential aptitude questions and solutions."
           buttonText="Start Practicing"

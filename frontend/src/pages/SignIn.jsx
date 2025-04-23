@@ -3,8 +3,9 @@ import { Loader2, Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { updateUserInfo } from '../utils/slices/user.slice.js';
 import { login } from '../utils/slices/user.slice.js';
+import Header from '../components/Header.jsx';
+import Footer from '../components/Footer.jsx';
 
 
 const API_URL= import.meta.env.VITE_API_URL;
@@ -35,14 +36,14 @@ const SignIn = () => {
       });
 
       const data = await response.json();
-      console.log(data);
+    
       
       if (data.success) {
-        dispatch(login((data.user)));
-        console.log(data);
-        
+        dispatch(login(data.user));
+        console.log('Navigating to dashboard...');
         navigate('/dashboard');
-      } else {
+      } 
+       else {
         setError(data.message || 'Invalid credentials. Please try again.');
       }
     } catch (error) {
@@ -54,7 +55,11 @@ const SignIn = () => {
   };
 
   return (
+    <>
+    <Header/>
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
+    
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -178,6 +183,8 @@ const SignIn = () => {
         </div>
       </motion.div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

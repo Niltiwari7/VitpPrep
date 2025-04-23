@@ -80,7 +80,7 @@ const About = () => {
             <div className="flex flex-col items-center mb-8">
               <div className="relative group">
                 <img
-                  src="\src\assets\public\nilesh.png"
+                  src="\nilesh.png"
                   alt="Nilesh Tiwari"
                   className="w-40 h-40 rounded-full object-cover mb-4 border-4 border-blue-100 dark:border-blue-800 shadow-lg transform transition-transform duration-300 hover:scale-105"
                 />
