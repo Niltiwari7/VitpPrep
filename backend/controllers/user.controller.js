@@ -1,115 +1,135 @@
 import bcrypt from 'bcryptjs';
 import User from '../models/user.model.js';
 import jwt from 'jsonwebtoken'
+
+
 export const registerUser = async (req, res) => {
   try {
     const { fullName, email, password } = req.body;
 
-    // Check if all fields are provided
+    // Validate required fields
     if (!fullName || !email || !password) {
       return res.status(400).json({
-        status: 'error',  // Indicate error status
-        message: 'All fields are required'
+        status: 'error',
+        message: 'All fields are required',
+      });
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'User already exists',
       });
     }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Check if the user already exists
-    const findUser = await User.findOne({ email });
-    if (findUser) {
-      return res.status(400).json({
-        status: false,
-        statusCode: 400,
-        message: 'User already exists'
-      });
-    }
-
-    // Create the new user
+    // Create new user
     const newUser = await User.create({
       fullName,
       email,
-      password: hashedPassword
+      password: hashedPassword,
     });
 
-    // Create a JWT token
+    // Generate JWT
     const token = jwt.sign(
-      { email: newUser.email, id: newUser._id },
+      { id: newUser._id, email: newUser.email },
       process.env.JWT_SECRET,
       { expiresIn: '1d' }
     );
 
-    // Set the token in an HTTP-only cookie
-    res.cookie('token', token, { httpOnly: true });
-
-    // Respond with status, message, user data, and token
-    res.status(200).json({
-      status: 'success',  // Indicate success status
-      message: 'User created successfully',
-      user: newUser,
-      token: token
+    // Set HTTPs-only cookie
+    res.cookie('token', token, {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,                   
+      maxAge: 24 * 60 * 60 * 1000,                   // 1 day
     });
 
+    // Return success response (omit password)
+    const { password: _, ...userWithoutPassword } = newUser.toObject();
+
+    res.status(201).json({
+      status: 'success',
+      message: 'User registered successfully',
+      user: userWithoutPassword,
+    });
   } catch (error) {
     res.status(500).json({
-      status: 'error',  // Indicate error status
-      message: error.message
+      status: 'error',
+      message: error.message || 'Server error',
     });
   }
 };
 
 
 
+
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    // Validate input
     if (!email || !password) {
       return res.status(400).json({
-        statusCode: 400,
         success: false,
-        message: 'All fields are required'
+        message: 'All fields are required',
       });
     }
 
+    // Find user
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({
-        statusCode: 404,
+      return res.status(401).json({
         success: false,
-        message: 'Credentials are not valid'
+        message: 'Invalid credentials',
       });
     }
 
+    // Check password
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
-
     if (!isPasswordCorrect) {
-      return res.status(404).json({
-        statusCode: 404,
+      return res.status(401).json({
         success: false,
-        message: 'Credentials are not valid'
+        message: 'Invalid credentials',
       });
     }
 
-    const token = jwt.sign({ email: user.email, id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-    res.cookie('token', token, { httpOnly: true });
+    // Create JWT token
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
 
-
-    res.status(200).json({
-      message: 'User logged in successfully',
-      statusCode: 200,
-      token,
-      user,
-      success: true
+    // Set secure cookie
+    res.cookie('token', token, {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,                   
+      maxAge: 24 * 60 * 60 * 1000,                   // 1 day
     });
+
+    // Remove sensitive data before sending user back
+    const { password: _, ...userWithoutPassword } = user.toObject();
+
+    // Success response
+    res.status(200).json({
+      success: true,
+      message: 'User logged in successfully',
+      user: userWithoutPassword,
+    });
+
   } catch (error) {
     res.status(500).json({
-      statusCode: 500,
       success: false,
-      message: error.message
+      message: error.message || 'Server error',
     });
   }
-}
+};
 
 export const logoutUser = async (req, res) => {
   try {

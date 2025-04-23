@@ -13,6 +13,7 @@ import helmet from 'helmet';
 dotenv.config();
 connectDB();
 const app = express();
+app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:5173",
   "https://vitpprep.vercel.app"
@@ -31,7 +32,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(helmet());
-app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use('/admin',AdminRouter);
