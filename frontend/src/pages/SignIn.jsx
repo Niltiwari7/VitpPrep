@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Loader2, Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { login } from '../utils/slices/user.slice.js';
 import Header from '../components/Header.jsx';
